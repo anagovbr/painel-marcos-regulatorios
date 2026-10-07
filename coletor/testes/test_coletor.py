@@ -121,3 +121,18 @@ def test_busca_anterior_recua_30_dias_so_para_quem_falta():
     com = sar_portal.ultimas_medicoes(res, HOJE, 365, ler)
     assert com[1]["data"] == date(2026, 8, 22) and com[2]["data"] == date(2026, 10, 6)
     assert pedidos == [HOJE, date(2026, 9, 7), date(2026, 8, 8)]
+
+
+# ---------------------------------------------------------------- e-mail dos avisos
+def test_email_sem_secrets_nao_envia_e_nao_quebra(capsys):
+    from coletor import email_aviso
+    assert email_aviso.enviar("x", "y", env={}) is False
+    assert "faltam os secrets" in capsys.readouterr().out
+
+
+def test_email_monta_destinatarios():
+    from coletor import email_aviso
+    env = {"AVISO_SMTP_HOST": "smtp.exemplo", "AVISO_SMTP_USUARIO": "robo@exemplo", "AVISO_SMTP_SENHA": "x",
+           "AVISO_PARA": "a@exemplo, b@exemplo"}
+    m = email_aviso.mensagem("Assunto", "Corpo", env)
+    assert m["To"] == "a@exemplo, b@exemplo" and m["From"] == "robo@exemplo" and m["Subject"] == "Assunto"

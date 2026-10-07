@@ -56,9 +56,24 @@ uma data, devolve a medição mais próxima dentro de 30 dias. O painel mostra a
 
 ## Avisos
 
-Os avisos são issues deste repositório: o vigia abre uma quando algo pede atenção, e os robôs abrem uma quando falham.
-Cada issue cita os usuários de `AVISAR` em `coletor/config.py` (hoje `dlpena`); a citação notifica a pessoa por e-mail
-mesmo que ela não acompanhe o repositório, porque ele é público.
+Quando algo pede atenção (boletim que não bate com o cadastro, sistema que entra ou sai, link fora do ar) ou um robô
+falha, abre-se uma issue neste repositório **e sai um e-mail** (`coletor/email_aviso.py`), que não depende das
+notificações do GitHub. Em falha que se repete, só a primeira gera issue e e-mail. As issues também citam os usuários
+de `AVISAR` em `coletor/config.py`.
+
+Para o e-mail funcionar, cadastre uma vez estes secrets em Settings > Secrets and variables > Actions > New repository
+secret:
+
+| Secret | Valor |
+|---|---|
+| `AVISO_SMTP_HOST` | servidor SMTP da conta remetente (Gmail: `smtp.gmail.com`) |
+| `AVISO_SMTP_PORTA` | `465` (SSL) ou `587` (STARTTLS); se não cadastrar, usa 465 |
+| `AVISO_SMTP_USUARIO` | endereço da conta remetente |
+| `AVISO_SMTP_SENHA` | senha da conta; no Gmail, uma "senha de app" (exige verificação em duas etapas) |
+| `AVISO_PARA` | quem recebe, separado por vírgula |
+
+Depois, rode à mão **Actions > Teste do aviso por e-mail > Run workflow**: o e-mail de teste tem de chegar. Sem os
+secrets, os robôs funcionam normalmente e o log diz que o e-mail não foi enviado.
 
 ## Transferência para a organização da ANA
 
@@ -68,7 +83,8 @@ mesmo que ela não acompanhe o repositório, porque ele é público.
   dona, que pode depender de aprovação de um administrador, ou um token criado pela própria ANA), e as URLs dos dois
   jobs passam a ter o nome da organização.
 - Ligar o GitHub Pages no repositório transferido (branch `main`, pasta `/docs`) e conferir os workflows na aba Actions.
-- Rodar `vigia.yml` à mão uma vez e conferir que a issue de aviso, se houver, cita quem está em `AVISAR`.
+- Cadastrar de novo os secrets `AVISO_*` (secrets não acompanham a transferência) e rodar **Teste do aviso por
+  e-mail**.
 
 ## Rodar localmente
 

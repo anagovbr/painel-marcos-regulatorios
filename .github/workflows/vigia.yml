@@ -21,6 +21,13 @@ jobs:
   vigia:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # e-mail dos avisos (coletor/email_aviso.py); sem os secrets, o envio é pulado
+      AVISO_SMTP_HOST: ${{ secrets.AVISO_SMTP_HOST }}
+      AVISO_SMTP_PORTA: ${{ secrets.AVISO_SMTP_PORTA }}
+      AVISO_SMTP_USUARIO: ${{ secrets.AVISO_SMTP_USUARIO }}
+      AVISO_SMTP_SENHA: ${{ secrets.AVISO_SMTP_SENHA }}
+      AVISO_PARA: ${{ secrets.AVISO_PARA }}
     steps:
       - uses: actions/checkout@v4
 
@@ -48,11 +55,14 @@ jobs:
           git pull --rebase
           git push
 
-      - name: Abrir issue com os avisos
+      - name: Abrir issue com os avisos e mandar por e-mail
         if: hashFiles('avisos.md') != ''
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh issue create --title "Avisos do vigia dos boletins ($(TZ=America/Sao_Paulo date '+%d/%m/%Y'))" --body-file avisos.md
+        run: |
+          T="Avisos do vigia dos boletins ($(TZ=America/Sao_Paulo date '+%d/%m/%Y'))"
+          URL=$(gh issue create --title "$T" --body-file avisos.md)
+          python3 -m coletor.email_aviso --assunto "[Painel alocação] $T" --arquivo avisos.md --link "$URL"
 
       - name: Abrir issue se falhou
         if: failure()
@@ -61,6 +71,9 @@ jobs:
         run: |
           T="Falha no vigia dos boletins"
           CC=$(python -c "from coletor import config; print(config.citacao())" 2>/dev/null || true)
+          RODADA="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          # só na primeira falha (sem issue aberta), para não mandar um e-mail por hora enquanto a falha durar
           if [ -z "$(gh issue list --state open --search "$T in:title" --json number --jq '.[0].number')" ]; then
-            gh issue create --title "$T" --body "A rodada ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} falhou. O painel continua com os últimos dados publicados. $CC"
+            URL=$(gh issue create --title "$T" --body "A rodada $RODADA falhou. O painel continua com os últimos dados publicados. $CC")
+            python3 -m coletor.email_aviso --assunto "[Painel alocação] $T" --texto "A rodada $RODADA falhou. O painel continua com os últimos dados publicados." --link "$URL"
           fi
