@@ -22,9 +22,13 @@ const SECOES = [
   ["acudes", "Açudes"],
   ["sobre", "Sobre os dados"]
 ];
+const ICONE = {
+  sistemas: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1"/><rect x="9" y="1.5" width="5.5" height="5.5" rx="1"/><rect x="1.5" y="9" width="5.5" height="5.5" rx="1"/><rect x="9" y="9" width="5.5" height="5.5" rx="1"/></svg>',
+  tabela: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3h13M1.5 6.5h13M1.5 10h13M1.5 13.5h13"/></svg>'
+};
 const VISTAS = [
-  ["sistemas", "Por sistema hídrico"],
-  ["tabela", "Tabela"]
+  ["sistemas", "Por sistema hídrico", "Cada sistema traz o boletim mais recente e o acesso aos termos e boletins anteriores."],
+  ["tabela", "Tabela", "Todos os açudes numa lista, ordenada por UF. Para usar em planilha, baixe o CSV."]
 ];
 
 /* ---------- utilitários (os do protótipo: fmt, dBR) ---------- */
@@ -99,24 +103,26 @@ function carimbo(pag) {
 
 function esqueleto(pag) {
   const sec = (id, n, titulo, sub, corpo, baixar = "") =>
-    `<section class="cartao secao" id="${id}">${baixar}<h2><small>${n}</small>${titulo}</h2><p class="sub">${sub}</p>${corpo}</section>`;
+    `<section class="cartao secao" id="${id}">${baixar}<h2><small>${n}</small>${titulo}</h2>${sub ? `<p class="sub">${sub}</p>` : ""}${corpo}</section>`;
   const btn = (id, rot) =>
     `<div class="baixar"><button type="button" id="${id}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>${rot}</button></div>`;
   document.getElementById("conteudo").innerHTML =
     `<nav class="indice" aria-label="Seções da página">${SECOES.map(([id, t]) => `<a href="#${id}">${t}</a>`).join("")}</nav>` +
-    `<div class="intro"><p>A ANA acompanha, com os órgãos gestores estaduais e os usuários, a alocação de água de sistemas ` +
-    `hídricos do Semiárido e publica, a cada mês, um boletim de acompanhamento de cada um. Aqui estão os açudes desses ` +
-    `sistemas, com a última medição de cada um e o boletim mais recente. Termos de alocação, apresentações e boletins ` +
-    `anteriores estão na <a href="${esc(pag.P.fontes.boletins.url)}">página de alocação de água e marcos regulatórios da ANA</a>.</p></div>` +
+    `<div class="intro"><p>A alocação de água é um processo de gestão empregado para disciplinar os usos múltiplos da ` +
+    `água em sistemas hídricos com conflito pelo uso, situação emergencial ou estiagem intensa. As decisões, tomadas em ` +
+    `reuniões com órgãos gestores, operadores de reservatórios e usuários, são registradas no Termo de Alocação de Água ` +
+    `e acompanhadas em boletins mensais. Esta página reúne os açudes desses sistemas, com a última medição de cada um e ` +
+    `o boletim mais recente.</p></div>` +
     `<div class="filtros" role="search" aria-label="Filtrar açudes"><div class="presets" id="presets-uf" role="group" aria-label="Filtrar por UF"></div>` +
     `<input type="search" id="busca" placeholder="Buscar açude ou sistema" aria-label="Buscar açude ou sistema">` +
     `<span class="contagem" id="contagem" aria-live="polite"></span></div>` +
-    sec("mapa", 1, "Mapa", "Cada triângulo é um açude. <span class=\"dica\">Clique ou toque num triângulo para ir até o açude.</span>",
+    sec("mapa", 1, "Mapa", "Cada triângulo é um açude. <span class=\"dica\">Clique ou toque para ver os dados dele.</span>",
       `<div id="mapa-acudes" role="region" aria-label="Mapa dos açudes"></div>`, btn("baixar-kmz", "KMZ")) +
-    sec("acudes", 2, "Açudes", "Última medição de cada açude e o boletim de acompanhamento do seu sistema hídrico.",
-      `<div class="presets vistas" id="vistas" role="group" aria-label="Visualização"></div><div id="lista-acudes"></div>`,
+    sec("acudes", 2, "Açudes", "",
+      `<div class="abas" id="vistas" role="tablist" aria-label="Visualização dos açudes"></div>` +
+      `<p class="dica-aba" id="dica-aba"></p><div id="lista-acudes" role="tabpanel"></div>`,
       btn("baixar-csv", "CSV")) +
-    sec("sobre", 3, "Sobre os dados", "De onde vêm as informações desta página.", `<div class="fontes" id="sobre-corpo"></div>`);
+    sec("sobre", 3, "Sobre os dados", "Origem e significado dos números.", `<div class="fontes" id="sobre-corpo"></div>`);
 }
 
 /* índice: chips no celular (nav.indice) e lista na barra lateral no desktop, como no protótipo */
@@ -246,10 +252,18 @@ function irPara(pag, id) {
 /* ---------- 2. açudes: por sistema hídrico (cartões) ou tabela ---------- */
 function vistas(pag) {
   const v = document.getElementById("vistas");
-  v.innerHTML = VISTAS.map(([id, t]) => `<button type="button" class="preset" data-vista="${id}">${t}</button>`).join("");
+  v.innerHTML = VISTAS.map(([id, t]) => `<button type="button" role="tab" data-vista="${id}">${ICONE[id]}${t}</button>`).join("");
   v.addEventListener("click", ev => {
     const b = ev.target.closest("button");
     if (b) trocarVista(pag, b.dataset.vista);
+  });
+  // setas do teclado trocam de aba, como em qualquer lista de abas
+  v.addEventListener("keydown", ev => {
+    if (ev.key !== "ArrowRight" && ev.key !== "ArrowLeft") return;
+    const i = VISTAS.findIndex(([id]) => id === pag.vista);
+    const j = (i + (ev.key === "ArrowRight" ? 1 : VISTAS.length - 1)) % VISTAS.length;
+    trocarVista(pag, VISTAS[j][0]);
+    v.querySelector(`[data-vista="${VISTAS[j][0]}"]`).focus();
   });
   document.getElementById("baixar-csv").addEventListener("click", () => baixarCSV(pag));
 }
@@ -260,9 +274,11 @@ function trocarVista(pag, vista) {
 }
 function desenharVista(pag) {
   document.querySelectorAll("#vistas button").forEach(b => {
-    b.classList.toggle("ativo", b.dataset.vista === pag.vista);
-    b.setAttribute("aria-pressed", b.dataset.vista === pag.vista);
+    const sel = b.dataset.vista === pag.vista;
+    b.setAttribute("aria-selected", sel);
+    b.tabIndex = sel ? 0 : -1;
   });
+  document.getElementById("dica-aba").textContent = VISTAS.find(([id]) => id === pag.vista)[2];
   const host = document.getElementById("lista-acudes");
   if (!pag.vis.length) {
     host.innerHTML = `<p class="vazio">Nenhum açude com esses filtros. <button type="button" class="acao sec" id="limpar">Limpar filtros</button></p>`;
@@ -293,7 +309,7 @@ function sistemasHTML(pag) {
       const b = s.boletim;
       return `<article class="sis"><h3>${esc(s.nome)} <span class="uf">${esc(s.ufs)}</span></h3>` +
         `<p class="links"><a class="acao sec" href="${esc(b.url)}">Boletim de ${esc(b.rotulo)} (PDF)</a>` +
-        `<a href="${esc(s.pagina_comar)}">Página da alocação (termos e boletins anteriores)</a></p>` +
+        `<a href="${esc(s.pagina_comar)}">Termos e boletins anteriores</a></p>` +
         `<div class="cards">${porSis[s.id].map(r => cartaoAcude(r, pag)).join("")}</div>` + (s.nota ? `<p class="nota">${esc(s.nota)}</p>` : "") + `</article>`;
     })
     .join("");
@@ -373,12 +389,11 @@ function sobre(pag) {
   const f = pag.P.fontes;
   document.getElementById("sobre-corpo").innerHTML = `<dl>` +
     `<dt>Medições</dt><dd><a href="${esc(f.medicao.url)}">Sistema de Acompanhamento de Reservatórios (SAR)</a>, da ANA. ` +
-    `Cada valor é a última medição publicada do açude, e a data ao lado é a da medição. O volume em % é o volume ` +
-    `armazenado em relação à capacidade do açude. Quando o açude não tem medição nos últimos ${janela(pag)} dias, ` +
-    `aparece a última medição disponível, com esse aviso; no SAR, ele aparece como sem informação.</dd>` +
-    `<dt>Boletins</dt><dd>Boletins mensais de acompanhamento da alocação de água, publicados pela ANA na ` +
-    `<a href="${esc(f.boletins.url)}">página de alocação de água e marcos regulatórios</a>.</dd>` +
-    `<dt>Atualização</dt><dd>Medições lidas em ${hBR(f.medicao.lido_em)}; boletins conferidos em ${hBR(f.boletins.lido_em)}.</dd></dl>`;
+    `O volume em % é o volume armazenado em relação à capacidade do açude, e a data é a da medição. Açude sem ` +
+    `medição nos últimos ${janela(pag)} dias mostra a última disponível, com aviso; no SAR, ele aparece como sem ` +
+    `informação.</dd>` +
+    `<dt>Boletins</dt><dd>Publicados pela ANA na <a href="${esc(f.boletins.url)}">página de alocação de água e marcos ` +
+    `regulatórios</a>, com os termos de alocação e os boletins anteriores de cada sistema.</dd></dl>`;
 }
 
 document.addEventListener("DOMContentLoaded", iniciar);

@@ -178,8 +178,58 @@
   font-size: 13px;
   color: var(--apagado);
 }
-.vistas {
-  margin: 0 0 16px;
+/* abas da seção dos açudes: o padrão de abas do protótipo (sublinhado marinho de 3 px na ativa), com ícone */
+.abas {
+  display: flex;
+  gap: 2px;
+  border-bottom: 1px solid var(--linha);
+  margin: 10px 0 0;
+}
+.abas button {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 9px;
+  margin-bottom: -1px;
+  font: 600 14.5px var(--sans);
+  color: var(--tinta-2);
+  border-bottom: 3px solid transparent;
+  border-radius: 6px 6px 0 0;
+}
+.abas button svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+.abas button:hover {
+  color: var(--ana);
+  background: var(--ana-gelo);
+}
+.abas button[aria-selected="true"] {
+  color: var(--ana);
+  border-bottom-color: var(--ana);
+}
+.abas button:focus-visible {
+  outline: 2px solid var(--ana-medio);
+  outline-offset: 2px;
+}
+.dica-aba {
+  margin: 10px 0 16px;
+  font-size: 13.5px;
+  color: var(--apagado);
+}
+@media (max-width: 640px) {
+  .abas button {
+    flex: 1;
+    justify-content: center;
+    padding-inline: 8px;
+  }
 }
 .vazio {
   display: flex;
