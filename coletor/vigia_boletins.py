@@ -3,11 +3,14 @@
 
     py -m coletor.vigia_boletins [--avisos arquivo.md] [--sem-links]
 
-- último boletim de cada sistema do cadastro (link, mês, data de publicação, campanha e açudes do PDF);
+- lê todo PDF novo da pasta e reconhece os boletins pelo conteúdo (coletor/boletins.py), qualquer que seja o nome do
+  arquivo; o último boletim de cada sistema do cadastro vai para o painel;
 - quais sistemas ficam no painel (regra em config.JANELA_BOLETIM_MESES) e quais entraram ou saíram;
-- boletim recente de slug que não está no cadastro nem na lista de ignorados (sistema novo a cadastrar);
-- açudes do boletim diferentes dos do cadastro;
-- links do cadastro que deixaram de abrir (só os novos, para não repetir o aviso todo dia).
+- links do cadastro que deixaram de abrir.
+
+Vira aviso (issue) só o que pede ação ou que o Diego pediu para saber: entrada e saída de sistema, boletim que não
+bate com nenhum sistema do cadastro, açudes diferentes dos do cadastro e link fora do ar. O que o vigia resolve
+sozinho (boletim novo, nome de arquivo fora do padrão) vai só para o log.
 """
 import argparse
 import csv
@@ -19,7 +22,6 @@ import requests
 
 from . import boletins as B
 from . import cadastro, config
-
 
 # Só 404 e 410 dizem que o arquivo saiu do ar. O gov.br derruba parte das conexões seguidas vindas do runner do GitHub
 # (07/10/2026: 20 de cerca de 70 links com ConnectionError, todos abrindo normalmente fora dele); erro de conexão vai
@@ -49,6 +51,25 @@ def ignorados():
         return {l["slug"]: l["motivo"] for l in csv.DictReader(f, delimiter=";")}
 
 
+def links_quebrados(sistemas, anterior, avisos, sessao):
+    """Página da alocação de cada sistema; avisa só link novo fora do ar."""
+    quebrados = {}
+    for s_ in sistemas.values():
+        url = s_["pagina_comar"]
+        if url in quebrados:
+            continue
+        st = checar_link(url, sessao)
+        time.sleep(0.5)
+        if st in QUEBRADO:
+            quebrados[url] = f"{s_['nome']}: {st}"
+        elif st != 200:
+            print(f"   link não conferido ({st}): {url}")
+    for url, txt in quebrados.items():
+        if url not in anterior.get("links_quebrados", {}):
+            avisos.append(f"Link da página da alocação que não abre ({txt}): {url}")
+    return quebrados
+
+
 def main(argv=None):
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
@@ -58,72 +79,45 @@ def main(argv=None):
 
     agora = B.hoje_brasilia()
     sistemas = cadastro.sistemas()
-    acudes_cadastro = {}
+    acudes = {}
     for r in cadastro.reservatorios():
-        acudes_cadastro.setdefault(r["sistema"], set()).add(r["nome_boletim"])
-    anterior = json.loads(config.BOLETINS.read_text(encoding="utf-8")) if config.BOLETINS.exists() else {"sistemas": {}}
+        acudes.setdefault(r["sistema"], set()).add(r["nome_boletim"])
+    anterior = json.loads(config.BOLETINS.read_text(encoding="utf-8")) if config.BOLETINS.exists() else {}
 
     with requests.Session() as s:
-        por_slug = B.boletins_por_slug(B.listar_pasta(s), agora.date())
-        mais_recente = max(m for v in por_slug.values() for (m, _, _) in v)
-        ultimos = B.ultimo_por_sistema(sistemas, por_slug)
+        bols, registro, notas, avisos = B.classificar(B.listar_pasta(s), sistemas, acudes, ignorados(),
+                                                      anterior.get("registro", {}), agora.date(), lambda u: B.ler_pdf(u, s))
+        mais_recente = max(b["mes"] for b in bols)
+        ultimos = B.ultimo_por_sistema(bols)
         dentro = B.no_painel(ultimos, mais_recente)
-        avisos = []
+        saida = {sid: {k: b[k] for k in ("mes", "url", "publicado_em", "slug", "via", "campanha", "acudes")}
+                 | {"rotulo": B.rotulo_mes(b["mes"]), "no_painel": sid in dentro} for sid, b in sorted(ultimos.items())}
+        for sid, b in saida.items():
+            ant = anterior.get("sistemas", {}).get(sid, {})
+            if ant and ant.get("url") != b["url"]:
+                notas.append(f"Boletim novo de {sistemas[sid]['nome']}: {b['rotulo']} — {b['url']}")
 
-        saida = {}
-        for sid, b in sorted(ultimos.items()):
-            ant = anterior["sistemas"].get(sid, {})
-            if ant.get("url") == b["url"] and "acudes" in ant:
-                pdf = {"campanha": ant.get("campanha"), "acudes": ant["acudes"]}
-            else:
-                pdf = B.ler_pdf(b["url"], s)
-                if ant:
-                    avisos.append(f"Boletim novo de **{sistemas[sid]['nome']}**: {B.rotulo_mes(b['mes'])} — {b['url']}")
-            if pdf["acudes"] and set(pdf["acudes"]) != acudes_cadastro.get(sid, set()):
-                avisos.append(f"Açudes do boletim de **{sistemas[sid]['nome']}** ({', '.join(pdf['acudes'])}) diferentes "
-                              f"dos do cadastro ({', '.join(sorted(acudes_cadastro.get(sid, [])))}).")
-            saida[sid] = {**b, "rotulo": B.rotulo_mes(b["mes"]), **pdf, "no_painel": sid in dentro}
+        antes = {sid for sid, v in anterior.get("sistemas", {}).items() if v.get("no_painel")}
+        if anterior:
+            for sid in sorted(dentro - antes):
+                avisos.append(f"Entra no painel: **{sistemas[sid]['nome']}** (boletim de {saida[sid]['rotulo']}).")
+            for sid in sorted(antes - dentro):
+                avisos.append(f"Sai do painel: **{sistemas[sid]['nome']}** "
+                              f"(último boletim: {saida.get(sid, {}).get('rotulo', 'nenhum')}).")
 
-        antes = {sid for sid, v in anterior["sistemas"].items() if v.get("no_painel")}
-        for sid in sorted(dentro - antes):
-            avisos.append(f"Entra no painel: **{sistemas[sid]['nome']}** (boletim de {saida[sid]['rotulo']}).")
-        for sid in sorted(antes - dentro):
-            mes = saida.get(sid, {}).get("rotulo", "sem boletim")
-            avisos.append(f"Sai do painel: **{sistemas[sid]['nome']}** (último boletim: {mes}).")
-
-        conhecidos = {slug for s_ in sistemas.values() for slug in s_["slugs"]} | set(ignorados())
-        for slug, v in sorted(por_slug.items()):
-            mes, url, _ = max(v)
-            if slug not in conhecidos and B.meses_entre(mes, mais_recente) <= config.JANELA_BOLETIM_MESES:
-                avisos.append(f"Boletim recente de sistema fora do cadastro: `{slug}` ({B.rotulo_mes(mes)}) — {url}. "
-                              "Cadastrar (açudes e código SAR) ou acrescentar em cadastro/slugs_ignorados.csv.")
-
-        quebrados = {}
-        if not args.sem_links:
-            for sid, s_ in sistemas.items():
-                for campo in ("pagina_comar", "termo_link", "marco_link"):
-                    if s_.get(campo):
-                        st = checar_link(s_[campo], s)
-                        time.sleep(0.5)
-                        if st in QUEBRADO:
-                            quebrados[s_[campo]] = f"{s_['nome']}, {campo}: {st}"
-                        elif st != 200:
-                            print(f"   link não conferido ({st}): {s_[campo]}")
-            ja = set(anterior.get("links_quebrados", {}))
-            for url, txt in quebrados.items():
-                if url not in ja:
-                    avisos.append(f"Link que não abre ({txt}): {url}")
-        else:
-            quebrados = anterior.get("links_quebrados", {})
+        quebrados = anterior.get("links_quebrados", {}) if args.sem_links else links_quebrados(sistemas, anterior, avisos, s)
 
     config.BOLETINS.parent.mkdir(parents=True, exist_ok=True)
     novo = {"lido_em": agora.isoformat(timespec="minutes"), "fonte": config.PASTA_COMAR, "mais_recente": mais_recente,
-            "janela_meses": config.JANELA_BOLETIM_MESES, "sistemas": saida, "links_quebrados": quebrados}
+            "janela_meses": config.JANELA_BOLETIM_MESES, "sistemas": saida, "links_quebrados": quebrados,
+            "registro": registro}
     config.BOLETINS.write_text(json.dumps(novo, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"{len(saida)} sistemas com boletim; {len(dentro)} no painel; boletim mais recente: {mais_recente}; "
-          f"{len(avisos)} avisos")
+          f"{len(registro)} PDFs lidos guardados; {len(avisos)} avisos")
+    for n in notas:
+        print(" · " + n)
     for a in avisos:
-        print(" -", a)
+        print(" - " + a)
     if args.avisos and avisos:
         with open(args.avisos, "w", encoding="utf-8") as f:
             f.write("Avisos do vigia dos boletins da COMAR em " + agora.strftime("%d/%m/%Y %H:%M") + ":\n\n")

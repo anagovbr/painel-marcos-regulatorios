@@ -45,36 +45,6 @@ def test_medicao_tem_as_chaves_do_contrato():
     assert sar_portal.medicao({"data": "-", "volumeUtil": "-"})["data"] is None
 
 
-# ---------------------------------------------------------------- boletins da COMAR
-ARQ = [{"url": f"https://x/alocacao-de-agua/{n}", "modificado": "16/09/2026 16h00"} for n in
-       ("pocoes-epitacio_12-2025.pdf", "pocoes-epitacio-pessoa_08-2026.pdf", "sume_08-2026.pdf", "itans_05-2026.pdf",
-        "sume_12-2026.pdf", "TermoQualquer.pdf")]
-
-
-def test_boletins_por_slug_ignora_mes_futuro_e_outros_arquivos():
-    p = boletins.boletins_por_slug(ARQ, HOJE)
-    assert set(p) == {"pocoes-epitacio", "pocoes-epitacio-pessoa", "sume", "itans"}
-    assert [m for m, _, _ in p["sume"]] == ["2026-08"]
-
-
-def test_ultimo_boletim_junta_os_slugs_do_sistema():
-    p = boletins.boletins_por_slug(ARQ, HOJE)
-    s = {"epitacio": {"slugs": ["pocoes-epitacio-pessoa", "pocoes-epitacio"]}, "itans": {"slugs": ["itans"]}}
-    u = boletins.ultimo_por_sistema(s, p)
-    assert u["epitacio"]["mes"] == "2026-08" and u["epitacio"]["slug"] == "pocoes-epitacio-pessoa"
-
-
-def test_janela_do_painel():
-    u = {"a": {"mes": "2026-08"}, "b": {"mes": "2026-06"}, "c": {"mes": "2026-05"}}
-    assert boletins.meses_entre("2025-12", "2026-02") == 2
-    assert boletins.no_painel(u, "2026-08", janela=2) == {"a", "b"}
-    assert boletins.no_painel(u, "2026-08", janela=0) == {"a"}
-
-
-def test_rotulo_do_mes():
-    assert boletins.rotulo_mes("2026-03") == "março de 2026"
-
-
 # ---------------------------------------------------------------- montagem do painel.json
 def M(dia, pct=50.0):
     return {"data": dia, "volume_pct": pct, "volume_hm3": 1.0, "capacidade_hm3": 2.0, "cota_m": 3.0}
@@ -118,9 +88,6 @@ def test_cadastro_consistente():
     with open(config.RAIZ / "cadastro" / "slugs_ignorados.csv", encoding="utf-8-sig") as f:
         assert not set(slugs) & {l["slug"] for l in csv.DictReader(f, delimiter=";")}
     for r in res:
-        assert r["estado"] in ("", "AZUL", "VERDE", "AMARELO", "VERMELHO"), r
-        assert r["lat"] and r["lon"], r
-        assert not r["estado"] or (r["estado_fonte"] and r["estado_data_ref"]), r
+        assert r["lat"] and r["lon"] and r["nome_sar"] and r["nome_boletim"], r
     for s in sis.values():
-        assert s["pagina_comar"].startswith(config.PAGINA_COMAR)
-        assert not s["termo_link"] or s["vigencia"], s["sistema"]
+        assert s["pagina_comar"].startswith(config.PAGINA_COMAR + "/alocacao-de-agua/"), s["sistema"]

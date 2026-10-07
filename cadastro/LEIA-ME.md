@@ -4,19 +4,21 @@ Os açudes e sistemas hídricos que o painel conhece. Os arquivos `.csv` usam `;
 abrir direto no Excel. Editar, salvar no mesmo formato e rodar `py -m pytest coletor/testes`, que confere a consistência.
 
 Entrar no cadastro não põe o açude no painel: ele aparece enquanto o sistema tiver boletim recente da COMAR
-(`coletor/config.py`, `JANELA_BOLETIM_MESES`). O vigia (`coletor/vigia_boletins.py`) avisa por issue quando um sistema
-entra ou sai, quando aparece boletim de sistema fora do cadastro e quando um link deixa de abrir.
+(`coletor/config.py`, `JANELA_BOLETIM_MESES`). O vigia (`coletor/vigia_boletins.py`) reconhece os boletins pelo
+conteúdo do PDF (açudes, cabeçalho e UF) e avisa por issue quando um sistema entra ou sai, quando um boletim não bate
+com nenhum sistema do cadastro e quando o link da página da alocação sai do ar.
+
+Versão enxuta (07/10/2026): sem estado hidrológico, termo e resolução. O cadastro com essas colunas está no branch
+`modelo-completo`.
 
 ## sistemas.csv (um sistema hídrico por linha)
 
 | Coluna | O que é |
 |---|---|
 | `sistema` | identificador (o slug atual do boletim) |
-| `nome`, `ufs` | como aparecem na página |
-| `slugs` | todos os nomes que o boletim do sistema já teve na pasta da COMAR, separados por `\|`; o primeiro é o atual |
-| `pagina_comar` | aba da UF e da campanha na página de alocação de água |
-| `campanha`, `termo_link`, `vigencia`, `reuniao` | termo de alocação publicado; vigência e reunião como escritas no termo |
-| `marco`, `marco_link` | resolução do marco regulatório citada no termo (ou na página de marcos); vazio = só alocação |
+| `nome`, `ufs` | como aparecem na página; as UFs também conferem o cabeçalho do boletim |
+| `slugs` | nomes que o arquivo do boletim do sistema já teve na pasta da COMAR, separados por `\|`; servem para os boletins antigos, que não são lidos, e como prova a mais quando o conteúdo deixa dúvida |
+| `pagina_comar` | página de alocação de água da UF (abre na campanha mais recente; não muda de um ano para o outro) |
 | `nota` | nota pública, mostrada abaixo dos açudes do sistema |
 
 ## reservatorios.csv (um açude por linha)
@@ -26,13 +28,10 @@ entra ou sai, quando aparece boletim de sistema fora do cadastro e quando um lin
 | `res_id` | código do açude no SAR |
 | `sistema` | sistema hídrico (coluna `sistema` de sistemas.csv) |
 | `nome` | nome mostrado na página |
-| `nome_boletim` | como aparece no boletim ("AÇUDE ..."); o vigia compara com o PDF |
+| `nome_boletim` | como aparece no boletim ("AÇUDE ..."); é por ele que o vigia reconhece o boletim |
 | `nome_sar`, `uf` | nome e UF na fonte da medição; é por eles que o coletor casa o açude |
 | `lat`, `lon` | posição no mapa (serviço de mapas do SAR no SNIRH) |
-| `estado`, `estado_detalhe`, `estado_data_ref`, `estado_fonte` | estado hidrológico declarado no termo de alocação, com a data do volume de referência e o item do termo; vazio quando o termo não declara ou não foi publicado |
-| `termo_data_ref`, `termo_cota_m`, `termo_volume_hm3` | cota e volume de referência citados no termo (conferência da identidade do açude contra o SAR) |
 
 ## slugs_ignorados.csv
 
 Boletins que existem na pasta da COMAR mas não entram no painel (sistema de rio, açude fora do SAR), com o motivo.
-Sem esta lista, o vigia avisaria todo dia de um "sistema novo".

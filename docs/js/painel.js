@@ -1,16 +1,11 @@
-/* Painel dos açudes com alocação de água e marco regulatório.
+/* Painel dos açudes com boletim de acompanhamento da alocação de água.
    Lê só o contrato dados/painel.json (gerado por coletor/atualiza.py) e desenha: título com o carimbo, mapa, açudes
    por sistema hídrico, tabela e fontes. Formatação e componentes seguem o protótipo do novo SAR (js/base.js,
-   js/exportacao.js de dlpena/prototipo-sar-design). */
+   js/exportacao.js de dlpena/prototipo-sar-design). Versão enxuta: o modelo com estado hidrológico, termo e resolução
+   está no branch modelo-completo. */
 "use strict";
 
 const COR = {};
-const ESTADOS = {
-  VERDE: { rot: "Verde", cls: "verde" },
-  AMARELO: { rot: "Amarelo", cls: "amarelo" },
-  VERMELHO: { rot: "Vermelho", cls: "vermelho" },
-  AZUL: { rot: "Azul", cls: "azul" }
-};
 const ALERTAS = {
   sem_medicao: () => "Sem medição no SAR",
   medicao_antiga: r => `Última medição há ${diasDesde(r.medicao.data)} dias`,
@@ -37,21 +32,14 @@ const esc = s =>
 const semAcento = s =>
   s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9 ]+/g, "").replace(/\s+/g, " ");
 function diasDesde(iso) {
-  const hoje = new Date();
+  const h = new Date();
   const d = new Date(iso + "T12:00:00");
-  return Math.round((Date.UTC(hoje.getFullYear(), hoje.getMonth(), hoje.getDate()) - Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5);
+  return Math.round((Date.UTC(h.getFullYear(), h.getMonth(), h.getDate()) - Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5);
 }
-function lerCores() {
-  const cs = getComputedStyle(document.documentElement);
-  for (const k of ["verde", "amarelo", "vermelho", "azul", "sem"]) COR[k] = cs.getPropertyValue(`--eh-${k}`).trim();
-  COR.ana = cs.getPropertyValue("--ana").trim();
-  COR.azul = cs.getPropertyValue("--ana-medio").trim();
-}
-const corEstado = e => COR[(ESTADOS[e] || { cls: "sem" }).cls];
 
 /* ---------- partida ---------- */
 async function iniciar() {
-  lerCores();
+  COR.ana = getComputedStyle(document.documentElement).getPropertyValue("--ana").trim();
   let P;
   try {
     const r = await fetch("dados/painel.json", { cache: "no-cache" });
@@ -86,14 +74,13 @@ function esqueleto(pag) {
   document.getElementById("conteudo").innerHTML =
     `<nav class="indice" aria-label="Seções da página">${SECOES.map(([id, t]) => `<a href="#${id}">${t}</a>`).join("")}</nav>` +
     `<div class="intro"><p>A ANA acompanha, com os órgãos gestores estaduais e os usuários, a alocação de água de sistemas ` +
-    `hídricos do Semiárido e, em vários deles, as regras do marco regulatório. Esta página reúne os açudes com boletim de ` +
-    `acompanhamento recente: a última medição publicada no SAR, o estado hidrológico definido no termo de alocação e os ` +
-    `links para o boletim, o termo e a resolução. Os documentos completos estão na <a href="${esc(pag.P.fontes.boletins.url)}">página de ` +
-    `alocação de água e marcos regulatórios da ANA</a>.</p></div>` +
-    sec("mapa", 1, "Mapa", "Cada triângulo é um açude, na cor do estado hidrológico definido no termo de alocação. " +
+    `hídricos do Semiárido e publica, a cada mês, um boletim de acompanhamento de cada um. Esta página reúne os açudes com ` +
+    `boletim recente: a última medição publicada no SAR e o link para o boletim. Termos de alocação, apresentações e boletins ` +
+    `anteriores estão na <a href="${esc(pag.P.fontes.boletins.url)}">página de alocação de água e marcos regulatórios da ANA</a>.</p></div>` +
+    sec("mapa", 1, "Mapa", "Cada triângulo é um açude com boletim de acompanhamento recente. " +
       "<span class=\"dica\">Passe o mouse para ver o volume; clique para ir ao cartão do açude.</span>",
       `<div id="mapa-acudes" role="region" aria-label="Mapa dos açudes"></div>`, btn("baixar-kmz", "KMZ")) +
-    sec("acudes", 2, "Açudes por sistema hídrico", "Última medição publicada no SAR, estado hidrológico do termo e documentos de cada sistema.",
+    sec("acudes", 2, "Açudes por sistema hídrico", "Última medição publicada no SAR e o boletim de acompanhamento de cada sistema.",
       `<div class="filtros"><div class="presets" id="presets-uf" role="group" aria-label="Filtrar por UF"></div>` +
       `<input type="search" id="busca" placeholder="Buscar açude ou sistema" aria-label="Buscar açude ou sistema"></div><div id="lista-sis"></div>`) +
     sec("tabela", 3, "Tabela", "Todos os açudes do painel, com a última medição publicada no SAR.",
@@ -115,18 +102,7 @@ function indices() {
   SECOES.forEach(([id]) => obs.observe(document.getElementById(id)));
 }
 
-/* ---------- 1. mapa ---------- */
-function icone(cor) {
-  return L.divIcon({
-    className: "acude-mapa",
-    iconSize: [18, 16],
-    iconAnchor: [9, 8],
-    html: `<svg width="18" height="16" viewBox="0 0 18 16"><path d="M9 1 L17 15 L1 15 Z" fill="${cor}" stroke="#ffffff" stroke-width="1.4"/></svg>`
-  });
-}
-function rotuloEstado(r) {
-  return ESTADOS[r.estado] ? `Estado hidrológico no termo: ${ESTADOS[r.estado].rot}` : "Sem estado hidrológico no termo";
-}
+/* ---------- 1. mapa: triângulo = açude, sem cor por valor (regra do protótipo) ---------- */
 function mapa(pag) {
   const host = document.getElementById("mapa-acudes");
   if (typeof L === "undefined") {
@@ -143,12 +119,18 @@ function mapa(pag) {
     L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", { maxZoom: 18 })
   ]);
   L.control.layers({ "Mapa": claro, "Satélite": satelite }, null, { position: "topright" }).addTo(mp);
+  const icone = L.divIcon({
+    className: "acude-mapa",
+    iconSize: [18, 16],
+    iconAnchor: [9, 8],
+    html: `<svg width="18" height="16" viewBox="0 0 18 16"><path d="M9 1 L17 15 L1 15 Z" fill="${COR.ana}" stroke="#ffffff" stroke-width="1.4"/></svg>`
+  });
   const pts = pag.P.reservatorios.filter(r => r.lat != null);
   pts.forEach(r => {
-    const m = L.marker([r.lat, r.lon], { icon: icone(corEstado(r.estado)), alt: r.nome }).addTo(mp);
+    const m = L.marker([r.lat, r.lon], { icon: icone, alt: r.nome }).addTo(mp);
     const med = r.medicao ? `${fmt(r.medicao.volume_pct)}% em ${dBR(r.medicao.data)}` : "sem medição no SAR";
-    m.bindTooltip(`<div class="pop"><b>${esc(r.nome)} (${r.uf})</b>${esc(pag.sis[r.sistema].nome)}<div class="l"><span>Volume</span><span>${med}</span></div>` +
-      `<div class="l"><span>${rotuloEstado(r)}</span></div></div>`, { direction: "top", offset: [0, -8], opacity: 1 });
+    m.bindTooltip(`<div class="pop"><b>${esc(r.nome)} (${r.uf})</b>${esc(pag.sis[r.sistema].nome)}` +
+      `<div class="l"><span>Volume</span><span>${med}</span></div></div>`, { direction: "top", offset: [0, -8], opacity: 1 });
     m.on("click", () => irPara(r.res_id));
   });
   // reenquadra quando o contêiner muda de tamanho (carga, giro do celular), enquanto o usuário não mexer no mapa
@@ -162,20 +144,7 @@ function mapa(pag) {
     if (!mexeu) mp.fitBounds(limites);
   }).observe(host);
   mp.fitBounds(limites);
-  legendaMapa(mp);
   document.getElementById("baixar-kmz").addEventListener("click", () => baixarKMZ(pag));
-}
-function legendaMapa(mp) {
-  const leg = L.control({ position: "bottomleft" });
-  leg.onAdd = () => {
-    const d = L.DomUtil.create("div", "legenda-mapa");
-    d.innerHTML =
-      `<b>Estado hidrológico</b><span class="nota">definido no termo de alocação da campanha</span>` +
-      ["VERDE", "AMARELO", "VERMELHO"].map(e => `<i class="tri" style="background:${corEstado(e)}"></i>${ESTADOS[e].rot}<br>`).join("") +
-      `<i class="tri" style="background:${COR.sem}"></i>Sem estado no termo`;
-    return d;
-  };
-  leg.addTo(mp);
 }
 function irPara(id) {
   const c = document.getElementById("acude-" + id);
@@ -189,36 +158,23 @@ function irPara(id) {
 /* ---------- 2. açudes por sistema ---------- */
 function cartaoAcude(r) {
   const m = r.medicao;
-  const e = ESTADOS[r.estado];
   const valor = m && m.volume_pct != null ? `${fmt(m.volume_pct)}<small>%</small>` : "–";
   const linhas = m
     ? `<div class="n">${fmt(m.volume_hm3, 2)} de ${fmt(m.capacidade_hm3, 2)} hm³ · cota ${fmt(m.cota_m, 2)} m</div>` +
       `<div class="n">Medição de ${dBR(m.data)}${diasDesde(m.data) > 1 ? ` (há ${diasDesde(m.data)} dias)` : ""}</div>`
     : "";
   const alertas = r.alertas.map(a => `<span class="alerta">${ALERTAS[a] ? ALERTAS[a](r) : a}</span>`).join("");
-  const det = [r.estado_detalhe, r.estado_data_ref && `volume de referência em ${r.estado_data_ref}`, r.estado_fonte]
-    .filter(Boolean).join("; ");
-  const eh = e
-    ? `<div class="eh ${e.cls}"><b>Estado hidrológico ${e.rot.toLowerCase()}</b><small>${esc(det)}</small></div>`
-    : `<div class="eh"><b>Sem estado hidrológico</b><small>${esc(r.estado_detalhe || "não definido no termo")}</small></div>`;
-  return `<div class="card fixo acude" id="acude-${r.res_id}"><div class="r">${esc(r.nome)}</div><div class="v num">${valor}</div>${linhas}${alertas}${eh}</div>`;
+  return `<div class="card fixo acude" id="acude-${r.res_id}"><div class="r">${esc(r.nome)}</div><div class="v num">${valor}</div>${linhas}${alertas}</div>`;
 }
 function blocoSistema(s, rs) {
   const b = s.boletim;
-  const meta = [
-    s.campanha ? `Alocação ${s.campanha}${s.vigencia ? `, vigência de ${esc(s.vigencia)}` : ""}` : "",
-    s.marco ? `Marco regulatório: ${s.marco_link ? `<a href="${esc(s.marco_link)}">${esc(s.marco)}</a>` : esc(s.marco)}` : ""
-  ].filter(Boolean).join(" · ");
-  const links = [
-    `<a class="acao sec" href="${esc(b.url)}">Boletim de ${esc(b.rotulo)} (PDF)</a>`,
-    `<a href="${esc(s.pagina_comar)}">Página da alocação</a>`,
-    s.termo_link ? `<a href="${esc(s.termo_link)}">Termo de alocação ${esc(s.campanha)} (PDF)</a>` : ""
-  ].filter(Boolean).join("");
   return `<article class="sis" data-ufs="${esc(s.ufs)}" data-busca="${esc(semAcento(s.nome + " " + rs.map(r => r.nome).join(" ")))}">` +
-    `<h3>${esc(s.nome)} <span class="uf">${esc(s.ufs)}</span></h3>${meta ? `<p class="meta">${meta}</p>` : ""}` +
-    `<p class="links">${links}</p><div class="cards">${rs.map(cartaoAcude).join("")}</div>` +
-    (s.nota ? `<p class="nota">${esc(s.nota)}</p>` : "") + `</article>`;
+    `<h3>${esc(s.nome)} <span class="uf">${esc(s.ufs)}</span></h3>` +
+    `<p class="links"><a class="acao sec" href="${esc(b.url)}">Boletim de ${esc(b.rotulo)} (PDF)</a>` +
+    `<a href="${esc(s.pagina_comar)}">Página da alocação (termos e boletins anteriores)</a></p>` +
+    `<div class="cards">${rs.map(cartaoAcude).join("")}</div>` + (s.nota ? `<p class="nota">${esc(s.nota)}</p>` : "") + `</article>`;
 }
+let limparFiltros = () => {};
 function acudes(pag) {
   const porSis = {};
   pag.P.reservatorios.forEach(r => (porSis[r.sistema] = porSis[r.sistema] || []).push(r));
@@ -235,19 +191,17 @@ function acudes(pag) {
     pres.querySelectorAll("button").forEach(x => x.classList.toggle("ativo", x === b));
     filtrar(pag);
   });
-  document.getElementById("busca").addEventListener("input", ev => {
-    pag.busca = semAcento(ev.target.value.trim());
+  const busca = document.getElementById("busca");
+  busca.addEventListener("input", () => {
+    pag.busca = semAcento(busca.value.trim());
     filtrar(pag);
   });
-  pag.limpar = () => {
-    pag.filtroUF = pag.busca = "";
-    document.getElementById("busca").value = "";
+  limparFiltros = () => {
+    pag.filtroUF = pag.busca = busca.value = "";
     pres.querySelectorAll("button").forEach(x => x.classList.toggle("ativo", x.dataset.uf === ""));
     filtrar(pag);
   };
-  limparFiltros = pag.limpar;
 }
-let limparFiltros = () => {};
 function filtrar(pag) {
   document.querySelectorAll("#lista-sis .sis").forEach(el => {
     const okUF = !pag.filtroUF || el.dataset.ufs.includes(pag.filtroUF);
@@ -262,25 +216,23 @@ function linhasTabela(pag) {
     .map(r => ({ r, s: pag.sis[r.sistema], m: r.medicao || {} }));
 }
 function tabela(pag) {
-  const L_ = linhasTabela(pag);
   document.getElementById("tab-acudes").innerHTML =
     `<thead><tr><th>Açude</th><th>UF</th><th>Sistema hídrico</th><th class="num">Volume</th><th class="num">Volume</th>` +
-    `<th class="num">Cota</th><th class="num">Capacidade</th><th>Medição</th><th>Estado no termo</th></tr>` +
-    `<tr class="unid"><th></th><th></th><th></th><th class="num">%</th><th class="num">hm³</th><th class="num">m</th><th class="num">hm³</th><th></th><th></th></tr></thead>` +
-    `<tbody>${L_.map(({ r, s, m }) =>
+    `<th class="num">Cota</th><th class="num">Capacidade</th><th>Medição</th></tr>` +
+    `<tr class="unid"><th></th><th></th><th></th><th class="num">%</th><th class="num">hm³</th><th class="num">m</th><th class="num">hm³</th><th></th></tr></thead>` +
+    `<tbody>${linhasTabela(pag).map(({ r, s, m }) =>
       `<tr><td><span class="nm">${esc(r.nome)}</span></td><td>${r.uf}</td><td>${esc(s.nome)}</td>` +
       `<td class="num">${fmt(m.volume_pct)}</td><td class="num">${fmt(m.volume_hm3, 2)}</td><td class="num">${fmt(m.cota_m, 2)}</td>` +
-      `<td class="num">${fmt(m.capacidade_hm3, 2)}</td><td class="num">${m.data ? dBR(m.data) : "sem medição"}</td>` +
-      `<td><span class="eh-ponto" style="background:${corEstado(r.estado)}"></span>${ESTADOS[r.estado] ? ESTADOS[r.estado].rot : "—"}</td></tr>`).join("")}</tbody>`;
+      `<td class="num">${fmt(m.capacidade_hm3, 2)}</td><td class="num">${m.data ? dBR(m.data) : "sem medição"}</td></tr>`).join("")}</tbody>`;
   document.getElementById("baixar-csv").addEventListener("click", () => baixarCSV(pag));
 }
 /* CSV como no protótipo (salvarCSV): BOM, ';', vírgula decimal, data dd/mm/aaaa */
 function baixarCSV(pag) {
   const n = (v, d) => (v == null ? "" : fmt(v, d).replace(/\./g, ""));
   const cab = ["codigo_sar", "acude", "uf", "sistema_hidrico", "volume_pct", "volume_hm3", "capacidade_hm3", "cota_m",
-    "data_medicao", "estado_hidrologico_termo", "estado_data_referencia", "boletim", "termo_alocacao", "marco_regulatorio"];
+    "data_medicao", "boletim", "pagina_alocacao"];
   const linhas = linhasTabela(pag).map(({ r, s, m }) => [r.res_id, r.nome, r.uf, s.nome, n(m.volume_pct, 2), n(m.volume_hm3, 2),
-    n(m.capacidade_hm3, 2), n(m.cota_m, 2), m.data ? dBR(m.data) : "", r.estado, r.estado_data_ref, s.boletim.url, s.termo_link, s.marco]);
+    n(m.capacidade_hm3, 2), n(m.cota_m, 2), m.data ? dBR(m.data) : "", s.boletim.url, s.pagina_comar]);
   const q = v => (/[;"\n]/.test(String(v ?? "")) ? `"${String(v).replace(/"/g, '""')}"` : String(v ?? ""));
   const txt = [cab, ...linhas].map(l => l.map(q).join(";")).join("\r\n");
   baixarArquivo(new Blob(["﻿" + txt], { type: "text/csv;charset=utf-8" }), `acudes_alocacao_${pag.P.gerado_em.slice(0, 10)}.csv`);
@@ -292,7 +244,7 @@ function baixarArquivo(blob, nome) {
   setTimeout(() => (URL.revokeObjectURL(a.href), a.remove()), 1000);
 }
 
-/* ---------- KMZ do mapa: ícones PNG com a forma e a cor da página e a legenda como sobreposição ---------- */
+/* ---------- KMZ do mapa: ícone PNG com a forma e a cor da página ---------- */
 function pngTriangulo(cor) {
   const c = Object.assign(document.createElement("canvas"), { width: 36, height: 32 });
   const g = c.getContext("2d");
@@ -311,20 +263,18 @@ function pngTriangulo(cor) {
 async function baixarKMZ(pag) {
   if (typeof JSZip === "undefined") return;
   const zip = new JSZip();
-  const cls = e => (ESTADOS[e] || { cls: "sem" }).cls;
-  ["verde", "amarelo", "vermelho", "azul", "sem"].forEach(k => zip.file(`icones/${k}.png`, pngTriangulo(COR[k]), { base64: true }));
-  const estilos = ["verde", "amarelo", "vermelho", "azul", "sem"]
-    .map(k => `<Style id="${k}"><IconStyle><scale>1</scale><Icon><href>icones/${k}.png</href></Icon></IconStyle></Style>`).join("");
+  zip.file("icones/acude.png", pngTriangulo(COR.ana), { base64: true });
   const marcas = pag.P.reservatorios.filter(r => r.lat != null).map(r => {
     const s = pag.sis[r.sistema];
     const m = r.medicao;
-    const desc = `${s.nome}<br>${m ? `Volume ${fmt(m.volume_pct)}% em ${dBR(m.data)}` : "Sem medição no SAR"}<br>${rotuloEstado(r)}<br>` +
+    const desc = `${s.nome}<br>${m ? `Volume ${fmt(m.volume_pct)}% em ${dBR(m.data)}` : "Sem medição no SAR"}<br>` +
       `<a href="${esc(s.boletim.url)}">Boletim de ${esc(s.boletim.rotulo)}</a>`;
-    return `<Placemark><name>${esc(r.nome)}</name><description><![CDATA[${desc}]]></description><styleUrl>#${cls(r.estado)}</styleUrl>` +
+    return `<Placemark><name>${esc(r.nome)}</name><description><![CDATA[${desc}]]></description><styleUrl>#acude</styleUrl>` +
       `<Point><coordinates>${r.lon},${r.lat},0</coordinates></Point></Placemark>`;
   }).join("");
   const kml = `<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document>` +
-    `<name>Açudes com alocação de água (${dBR(pag.P.gerado_em)})</name>${estilos}${marcas}</Document></kml>`;
+    `<name>Açudes com boletim de alocação de água (${dBR(pag.P.gerado_em)})</name>` +
+    `<Style id="acude"><IconStyle><scale>1</scale><Icon><href>icones/acude.png</href></Icon></IconStyle></Style>${marcas}</Document></kml>`;
   zip.file("doc.kml", kml);
   baixarArquivo(await zip.generateAsync({ type: "blob" }), `acudes_alocacao_${pag.P.gerado_em.slice(0, 10)}.kmz`);
 }
@@ -337,13 +287,10 @@ function fontes(pag) {
     `<dt>Medição dos açudes</dt><dd><a href="${esc(f.medicao.url)}">${esc(f.medicao.nome)}</a>: última medição publicada de cada açude, ` +
     `lida em ${hBR(f.medicao.lido_em)}. O volume em % é o volume armazenado dividido pela capacidade do açude no SAR. ` +
     `A data ao lado de cada valor é a da medição, que pode ser anterior à leitura.</dd>` +
-    `<dt>Boletins, termos e resoluções</dt><dd><a href="${esc(f.boletins.url)}">${esc(f.boletins.nome)}</a>, lida em ${hBR(f.boletins.lido_em)}.</dd>` +
+    `<dt>Boletins de acompanhamento</dt><dd><a href="${esc(f.boletins.url)}">${esc(f.boletins.nome)}</a>, lida em ${hBR(f.boletins.lido_em)}.</dd>` +
     `<dt>Quais açudes entram</dt><dd>Os açudes que têm página no boletim de acompanhamento da alocação de água publicado pela ANA ` +
     `nos ${P.criterio.janela_meses} meses anteriores ao boletim mais recente (${esc(P.criterio.rotulo)}). Quando sai um boletim novo, ` +
-    `o açude entra; quando o boletim deixa de sair, o açude sai do painel.</dd>` +
-    `<dt>Estado hidrológico</dt><dd>O declarado no termo de alocação da campanha para cada açude, a partir do volume na data de ` +
-    `referência indicada no termo. Vale para toda a campanha e não é recalculado com a medição atual. Sem termo publicado, o ` +
-    `açude aparece sem estado.</dd></dl>`;
+    `o açude entra; quando o boletim deixa de sair, o açude sai do painel.</dd></dl>`;
 }
 
 document.addEventListener("DOMContentLoaded", iniciar);

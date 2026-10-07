@@ -16,11 +16,10 @@ import sys
 from . import boletins as B
 from . import cadastro, config, fontes
 
-# a coluna "pendencia" do cadastro é interna (divergências a confirmar com a COMAR) e não vai para a página
-CAMPOS_SISTEMA = ("nome", "ufs", "pagina_comar", "campanha", "termo_link", "vigencia", "reuniao", "marco", "marco_link",
-                  "nota")
-CAMPOS_RESERVATORIO = ("res_id", "sistema", "nome", "uf", "lat", "lon", "estado", "estado_detalhe", "estado_data_ref",
-                       "estado_fonte")
+# Versão enxuta (Diego, 07/10/2026): medição do SAR, boletim e página da alocação. O modelo com estado hidrológico,
+# termo e resolução está no branch modelo-completo, para quando a COMAR pedir.
+CAMPOS_SISTEMA = ("nome", "ufs", "pagina_comar", "nota")
+CAMPOS_RESERVATORIO = ("res_id", "sistema", "nome", "uf", "lat", "lon")
 
 
 def alertas(m, hoje):
@@ -111,7 +110,7 @@ def main(argv=None):
     for r in painel["reservatorios"]:
         m = r["medicao"] or {}
         print(f"{r['res_id']} {r['nome'][:26]:26s} {r['uf']} {str(m.get('volume_pct')):>7s}% {str(m.get('data')):10s} "
-              f"{r['estado'] or '—':9s} {' '.join(r['alertas'])}")
+              f"{' '.join(r['alertas'])}")
     print(f"{len(painel['sistemas'])} sistemas, {len(painel['reservatorios'])} reservatórios no painel")
     if args.seco:
         return 0

@@ -1,11 +1,12 @@
 # Painel dos açudes com alocação de água e marco regulatório
 
 Situação atual dos açudes do SAR (Sistema de Acompanhamento de Reservatórios, ANA) que têm boletim de acompanhamento
-da alocação de água publicado pela COMAR/ANA: última medição, estado hidrológico definido no termo de alocação e links
-para o boletim, o termo e a resolução do marco regulatório. Identidade visual do protótipo do novo SAR
+da alocação de água publicado pela COMAR/ANA: a última medição de cada açude e o link para o boletim e para a página da
+alocação da UF (termos, apresentações e boletins anteriores). Identidade visual do protótipo do novo SAR
 ([dlpena/prototipo-sar-design](https://github.com/dlpena/prototipo-sar-design), tema B2).
 
-Em teste.
+Em teste. Versão enxuta, para quase não precisar de manutenção; o modelo com estado hidrológico, termo de alocação e
+resolução do marco está no branch `modelo-completo`, para quando a COMAR pedir.
 
 ## Como funciona
 
@@ -23,7 +24,10 @@ coletor/vigia_boletins.py ─> dados/boletins.json + issue com os avisos
   - `fontes/sar_portal.py`: API do portal do SAR. Quando sair a API do novo SAR (ou a leitura pelo Databricks),
     escreve-se outro módulo com a mesma função `ultimas_medicoes`, confere-se com
     `py -m coletor.atualiza --comparar sar_portal <novo>` e troca-se `FONTE` em `coletor/config.py`.
-  - `vigia_boletins.py`: lê a pasta de boletins da COMAR, decide quem fica no painel e escreve os avisos.
+  - `vigia_boletins.py` e `boletins.py`: leem todo PDF novo da pasta da COMAR e reconhecem o boletim pelo conteúdo
+    (açudes com página no boletim, nome do sistema e UF do cabeçalho), qualquer que seja o nome do arquivo. Na dúvida
+    não ligam: o sistema fica com o boletim anterior e sai um aviso. Testes com 242 boletins reais de 10/2025 a 08/2026
+    (`coletor/testes/test_boletins.py` cobre os casos sintéticos, inclusive os falsos positivos a evitar).
 - **Robôs** (`.github/workflows/`): `atualiza.yml` a cada 3 horas e `vigia.yml` uma vez por dia, disparados pelo
   cron-job.org (o `schedule` do Actions atrasa e fica só como rede de segurança). Falha ou aviso vira issue.
 
