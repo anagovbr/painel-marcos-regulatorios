@@ -17,7 +17,7 @@ jobs:
           curl -sS -m 90 -G -o pb.json -w "HTTP %{http_code} em %{time_total}s, %{size_download} bytes\n" \
             "https://www.ana.gov.br/sar/restportal/api/retornaMedicoes" \
             --data-urlencode "tipoSistema=1" --data-urlencode "siglaUf=PB" --data-urlencode "data=$D"
-          python3 -c "import json;j=json.load(open('pb.json'));print(len(j),'reservatórios');print([x for x in j if x['reservatorio'].startswith('EPIT')])"
+          python3 -c "import json;j=json.load(open('pb.json'));print(len(j),'reservatórios');print([x for x in j if (x['reservatorio'] or '').startswith('EPIT')])"
       - name: Página da COMAR (listagem da pasta de alocação)
         run: |
           curl -sS -m 120 -A "Mozilla/5.0" -o lista.html -w "HTTP %{http_code} em %{time_total}s, %{size_download} bytes\n" \
