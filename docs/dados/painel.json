@@ -1,11 +1,11 @@
 {
  "versao": 1,
- "gerado_em": "2026-10-07T18:06-03:00",
+ "gerado_em": "2026-10-07T18:15-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-10-07T18:06-03:00"
+   "lido_em": "2026-10-07T18:15-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
@@ -150,7 +150,7 @@
    "nome": "Marechal Dutra",
    "ufs": "RN",
    "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/rn",
-   "nota": "O sistema hídrico inclui também o açude Dourado, que não tem página no boletim.",
+   "nota": "",
    "boletim": {
     "mes": "2026-08",
     "rotulo": "agosto de 2026",
