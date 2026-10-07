@@ -57,12 +57,15 @@ uma data, devolve a medição mais próxima dentro de 30 dias. O painel mostra a
 ## Avisos
 
 Quando algo pede atenção (boletim que não bate com o cadastro, sistema que entra ou sai, link fora do ar) ou um robô
-falha, abre-se uma issue neste repositório **e sai um e-mail** (`coletor/email_aviso.py`), que não depende das
-notificações do GitHub. Em falha que se repete, só a primeira gera issue e e-mail. As issues também citam os usuários
-de `AVISAR` em `coletor/config.py`.
+falha, abre-se uma issue neste repositório. Em falha que se repete, só a primeira gera issue.
 
-Para o e-mail funcionar, cadastre uma vez estes secrets em Settings > Secrets and variables > Actions > New repository
-secret:
+**Para receber por e-mail, sem permissão nenhuma no repositório:** como ele é público, qualquer conta do GitHub pode
+acompanhá-lo. Na página do repositório, **Watch > Custom > Issues** (ou **All Activity**): cada issue nova chega no
+e-mail da conta. As issues também citam os usuários de `AVISAR` em `coletor/config.py`, o que notifica essas contas.
+
+**Opcional, e-mail direto do robô** (`coletor/email_aviso.py`), para mandar os avisos de uma caixa institucional sem
+depender do GitHub: quem tem acesso Admin ao repositório cadastra estes secrets em Settings > Secrets and variables >
+Actions > New repository secret:
 
 | Secret | Valor |
 |---|---|
@@ -83,8 +86,9 @@ secrets, os robôs funcionam normalmente e o log diz que o e-mail não foi envia
   dona, que pode depender de aprovação de um administrador, ou um token criado pela própria ANA), e as URLs dos dois
   jobs passam a ter o nome da organização.
 - Ligar o GitHub Pages no repositório transferido (branch `main`, pasta `/docs`) e conferir os workflows na aba Actions.
-- Cadastrar de novo os secrets `AVISO_*` (secrets não acompanham a transferência) e rodar **Teste do aviso por
-  e-mail**.
+- Quem precisa receber os avisos clica em **Watch > Custom > Issues** no repositório transferido. Se o e-mail direto
+  do robô for usado, um Admin cadastra de novo os secrets `AVISO_*` (não acompanham a transferência) e roda **Teste do
+  aviso por e-mail**.
 
 ## Rodar localmente
 
