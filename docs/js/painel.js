@@ -299,8 +299,8 @@ function tabelaHTML(pag) {
   return `<table id="tab-acudes"><thead><tr><th>Açude</th><th>UF</th><th>Sistema hídrico</th><th class="num">Volume</th>` +
     `<th class="num">Volume</th><th class="num">Cota</th><th class="num">Capacidade</th><th>Medição</th><th>Boletim</th></tr>` +
     `<tr class="unid"><th></th><th></th><th></th><th class="num">%</th><th class="num">hm³</th><th class="num">m</th><th class="num">hm³</th><th></th><th></th></tr></thead>` +
-    `<tbody>${ordenadas(pag).map(({ r, s, m }) =>
-      `<tr><td><span class="nm">${esc(r.nome)}</span></td><td>${r.uf}</td><td>${esc(s.nome)}</td>` +
+    `<tbody>${ordenadas(pag).map(({ r, s, m }, i, todas) =>
+      `<tr${i && todas[i - 1].r.uf !== r.uf ? ' class="nova-uf"' : ""}><td><span class="nm">${esc(r.nome)}</span></td><td>${r.uf}</td><td>${esc(s.nome)}</td>` +
       `<td class="num">${fmt(m.volume_pct)}</td><td class="num">${fmt(m.volume_hm3, 2)}</td><td class="num">${fmt(m.cota_m, 2)}</td>` +
       `<td class="num">${fmt(m.capacidade_hm3, 2)}</td><td class="num">${m.data ? dBR(m.data) : "–"}</td>` +
       `<td><a href="${esc(s.boletim.url)}" aria-label="Boletim de ${esc(s.boletim.rotulo)} de ${esc(s.nome)}">${mesCurto(s.boletim.mes)}</a></td></tr>`).join("")}</tbody></table>`;

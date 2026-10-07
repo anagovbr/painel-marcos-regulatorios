@@ -129,6 +129,10 @@
 #tab-acudes th.num {
   text-align: right;
 }
+/* linha mais grossa onde muda a UF (a tabela vem ordenada por UF) */
+#tab-acudes tr.nova-uf td {
+  border-top: 2px solid var(--linha-forte);
+}
 @container (max-width: 980px) {
   #tab-acudes :is(th, td):is(:nth-child(3), :nth-child(7)) {
     display: none;
