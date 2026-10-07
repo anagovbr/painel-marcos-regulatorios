@@ -111,7 +111,7 @@ function esqueleto(pag) {
     `<div class="filtros" role="search" aria-label="Filtrar açudes"><div class="presets" id="presets-uf" role="group" aria-label="Filtrar por UF"></div>` +
     `<input type="search" id="busca" placeholder="Buscar açude ou sistema" aria-label="Buscar açude ou sistema">` +
     `<span class="contagem" id="contagem" aria-live="polite"></span></div>` +
-    sec("mapa", 1, "Mapa", "Cada triângulo é um açude. <span class=\"dica\">Passe o mouse para ver o volume; clique para ver o açude.</span>",
+    sec("mapa", 1, "Mapa", "Cada triângulo é um açude. <span class=\"dica\">Clique ou toque num triângulo para ir até o açude.</span>",
       `<div id="mapa-acudes" role="region" aria-label="Mapa dos açudes"></div>`, btn("baixar-kmz", "KMZ")) +
     sec("acudes", 2, "Açudes", "Última medição de cada açude e o boletim de acompanhamento do seu sistema hídrico.",
       `<div class="presets vistas" id="vistas" role="group" aria-label="Visualização"></div><div id="lista-acudes"></div>`,

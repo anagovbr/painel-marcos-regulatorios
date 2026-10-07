@@ -193,3 +193,20 @@
 .lateral-pe span {
   line-height: 1.4;
 }
+
+/* celular e tablet: a barra lateral do desktop vira faixa no topo e repetiria o título da página; some, e a ANA aparece
+   em linha discreta acima do título (no desktop ela fica no pé da barra lateral) */
+.so-estreito {
+  display: none;
+}
+@media (max-width: 1023px) {
+  header.faixa {
+    display: none;
+  }
+  .so-estreito {
+    display: block;
+  }
+  main {
+    padding-top: 6px;
+  }
+}
