@@ -7,7 +7,8 @@
 - quais sistemas ficam no painel (regra em config.JANELA_BOLETIM_MESES) e quais entraram ou saíram;
 - boletim recente de slug que não está no cadastro nem na lista de ignorados (sistema novo a cadastrar);
 - açudes do boletim diferentes dos do cadastro;
-- links do cadastro que deixaram de abrir (só os novos, para não repetir o aviso todo dia).
+- links do cadastro que deixaram de abrir (só os novos, para não repetir o aviso todo dia);
+- aba de campanha nova e termo de alocação novo na página da COMAR (coletor/termos.py).
 """
 import argparse
 import csv
@@ -19,6 +20,7 @@ import requests
 
 from . import boletins as B
 from . import cadastro, config
+from . import termos as T
 
 
 # Só 404 e 410 dizem que o arquivo saiu do ar. O gov.br derruba parte das conexões seguidas vindas do runner do GitHub
@@ -42,6 +44,32 @@ def checar_link(url, sessao, tentativas=3):
             erro = type(e).__name__
         time.sleep(3 * (i + 1))
     return erro
+
+
+def termos_novos(sistemas, anterior, avisos, sessao):
+    """Aba de campanha nova e termo novo nas UFs do cadastro. Na primeira rodada só registra o que já existe."""
+    ufs = sorted({s["pagina_comar"].split("/alocacao-de-agua/")[1].split("/")[0] for s in sistemas.values()})
+    no_cadastro = {s["termo_link"] for s in sistemas.values() if s["termo_link"]}
+    abas_ant, termos_ant = set(anterior.get("abas_vistas", [])), set(anterior.get("termos_vistos", []))
+    primeira = "termos_vistos" not in anterior
+    abas_vistas, termos_vistos = set(abas_ant), set(termos_ant)
+    for uf in ufs:
+        try:
+            aba = T.abas(T.baixar(T.ALOCACAO + uf, sessao))[0]
+            achados = T.termos(T.baixar(aba, sessao))
+        except (requests.RequestException, IndexError) as e:
+            print(f"   aba da UF {uf.upper()} não conferida ({type(e).__name__})")
+            continue
+        if aba not in abas_ant and not primeira:
+            avisos.append(f"Aba de campanha nova na página da COMAR ({uf.upper()}): {aba}. Atualizar `pagina_comar` no cadastro.")
+        abas_vistas.add(aba)
+        for sistema, rotulo, url in achados:
+            if url not in no_cadastro and url not in termos_ant and not primeira:
+                avisos.append(f"Termo publicado na página da COMAR ({uf.upper()}, {sistema}): {rotulo} — {url}. "
+                              "Ler o termo e atualizar o cadastro (estado hidrológico, vigência, reunião, link).")
+            termos_vistos.add(url)
+        time.sleep(0.5)
+    return sorted(abas_vistas), sorted(termos_vistos)
 
 
 def ignorados():
@@ -116,9 +144,12 @@ def main(argv=None):
         else:
             quebrados = anterior.get("links_quebrados", {})
 
+        abas_vistas, termos_vistos = termos_novos(sistemas, anterior, avisos, s)
+
     config.BOLETINS.parent.mkdir(parents=True, exist_ok=True)
     novo = {"lido_em": agora.isoformat(timespec="minutes"), "fonte": config.PASTA_COMAR, "mais_recente": mais_recente,
-            "janela_meses": config.JANELA_BOLETIM_MESES, "sistemas": saida, "links_quebrados": quebrados}
+            "janela_meses": config.JANELA_BOLETIM_MESES, "sistemas": saida, "links_quebrados": quebrados,
+            "abas_vistas": abas_vistas, "termos_vistos": termos_vistos}
     config.BOLETINS.write_text(json.dumps(novo, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"{len(saida)} sistemas com boletim; {len(dentro)} no painel; boletim mais recente: {mais_recente}; "
           f"{len(avisos)} avisos")

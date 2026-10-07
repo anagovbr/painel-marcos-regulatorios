@@ -124,3 +124,21 @@ def test_cadastro_consistente():
     for s in sis.values():
         assert s["pagina_comar"].startswith(config.PAGINA_COMAR)
         assert not s["termo_link"] or s["vigencia"], s["sistema"]
+
+
+# ---------------------------------------------------------------- termos na página da COMAR
+from coletor import termos  # noqa: E402
+
+ABA = """<div id="content-core"><p>Bacia do rio Paraíba</p><p>Sumé</p>
+<p><a href="https://x/sume_08-2026.pdf">- Boletim de Acompanhamento da Alocação - Agosto/2026</a></p>
+<p><a href="https://x/TermodeAlocaodeguaSum20262027assinado.pdf">- Termo de Alocação de Água 2026 - 2027</a></p>
+<p>Condado</p><p>- Termo de Alocação de Água 2023 - 2024</p></div><footer>"""
+
+
+def test_termos_da_aba():
+    assert termos.termos(ABA) == [("Sumé", "Termo de Alocação de Água 2026 - 2027", "https://x/TermodeAlocaodeguaSum20262027assinado.pdf")]
+
+
+def test_abas_da_uf_na_ordem_da_pagina():
+    h = '<a data-url="https://x/pb/2026-2027"></a><a data-url="https://x/ba/2016%20-%202017"></a>'
+    assert termos.abas(h) == ["https://x/pb/2026-2027", "https://x/ba/2016 - 2017"]
