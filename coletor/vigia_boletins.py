@@ -13,6 +13,7 @@ import argparse
 import csv
 import json
 import sys
+import time
 
 import requests
 
@@ -20,14 +21,27 @@ from . import boletins as B
 from . import cadastro, config
 
 
-def checar_link(url, sessao):
-    try:
-        r = sessao.head(url, headers=B.UA, timeout=60, allow_redirects=True)
-        if r.status_code in (403, 405):
-            r = sessao.get(url, headers=B.UA, timeout=60, stream=True)
-        return r.status_code
-    except requests.RequestException as e:
-        return type(e).__name__
+# Só 404 e 410 dizem que o arquivo saiu do ar. O gov.br derruba parte das conexões seguidas vindas do runner do GitHub
+# (07/10/2026: 20 de cerca de 70 links com ConnectionError, todos abrindo normalmente fora dele); erro de conexão vai
+# para o log e não vira aviso.
+QUEBRADO = (404, 410)
+
+
+def checar_link(url, sessao, tentativas=3):
+    erro = None
+    for i in range(tentativas):
+        try:
+            r = sessao.head(url, headers=B.UA, timeout=60, allow_redirects=True)
+            if r.status_code in (403, 405):
+                r = sessao.get(url, headers=B.UA, timeout=60, stream=True)
+                r.close()
+            if r.status_code < 500:
+                return r.status_code
+            erro = r.status_code
+        except requests.RequestException as e:
+            erro = type(e).__name__
+        time.sleep(3 * (i + 1))
+    return erro
 
 
 def ignorados():
@@ -90,8 +104,11 @@ def main(argv=None):
                 for campo in ("pagina_comar", "termo_link", "marco_link"):
                     if s_.get(campo):
                         st = checar_link(s_[campo], s)
-                        if st != 200:
+                        time.sleep(0.5)
+                        if st in QUEBRADO:
                             quebrados[s_[campo]] = f"{s_['nome']}, {campo}: {st}"
+                        elif st != 200:
+                            print(f"   link não conferido ({st}): {s_[campo]}")
             ja = set(anterior.get("links_quebrados", {}))
             for url, txt in quebrados.items():
                 if url not in ja:
