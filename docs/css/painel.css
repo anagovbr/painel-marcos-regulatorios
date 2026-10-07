@@ -14,7 +14,7 @@
   }
 }
 
-/* filtros da seção dos açudes: os presets do protótipo e uma busca */
+/* filtro único da página (UF e busca), acima do mapa: vale para o mapa e para as duas visualizações dos açudes */
 .filtros {
   display: flex;
   flex-wrap: wrap;
@@ -117,9 +117,6 @@
 
 /* tabela sem rolagem lateral: as colunas saem conforme a largura do próprio cartão (com a barra lateral do desktop a
    área de conteúdo fica estreita mesmo em tela larga); o que sai continua no CSV */
-#tabela {
-  container-type: inline-size;
-}
 #tab-acudes td:last-child {
   white-space: nowrap;
 }
@@ -132,15 +129,18 @@
 #tab-acudes th.num {
   text-align: right;
 }
-@container (max-width: 900px) {
+@container (max-width: 980px) {
   #tab-acudes :is(th, td):is(:nth-child(3), :nth-child(7)) {
     display: none;
   }
 }
-@container (max-width: 560px) {
-  #tab-acudes :is(th, td):is(:nth-child(3), :nth-child(5), :nth-child(6), :nth-child(7)) {
+@container (max-width: 600px) {
+  #tab-acudes :is(th, td):is(:nth-child(2), :nth-child(3), :nth-child(5), :nth-child(6), :nth-child(7)) {
     display: none;
   }
+}
+#acudes {
+  container-type: inline-size;
 }
 .fontes dl {
   margin: 0;
@@ -163,4 +163,24 @@
   .fontes dd {
     margin-bottom: 10px;
   }
+}
+
+.filtros .contagem {
+  font-size: 13px;
+  color: var(--apagado);
+}
+.vistas {
+  margin: 0 0 16px;
+}
+.vazio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  color: var(--tinta-2);
+  font-size: 14px;
+  margin: 8px 0;
+}
+.lateral-pe span {
+  line-height: 1.4;
 }

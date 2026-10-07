@@ -1,22 +1,24 @@
-/* Painel dos açudes com boletim de acompanhamento da alocação de água.
-   Lê só o contrato dados/painel.json (gerado por coletor/atualiza.py) e desenha: título com o carimbo, mapa, açudes
-   por sistema hídrico, tabela e fontes. Formatação e componentes seguem o protótipo do novo SAR (js/base.js,
-   js/exportacao.js de dlpena/prototipo-sar-design). Versão enxuta: o modelo com estado hidrológico, termo e resolução
-   está no branch modelo-completo. */
+/* Situação dos açudes com boletim de acompanhamento da alocação de água (ANA).
+   Lê só dados/painel.json (gerado por coletor/atualiza.py). Um filtro único (UF e busca) vale para o mapa e para as
+   duas visualizações dos açudes: por sistema hídrico (cartões) ou em tabela. Formatação e componentes seguem o
+   protótipo do novo SAR (js/base.js e js/exportacao.js de dlpena/prototipo-sar-design). */
 "use strict";
 
 const COR = {};
 const ALERTAS = {
-  sem_medicao: () => "Sem medição no SAR",
+  sem_medicao: () => "Sem medição publicada",
   medicao_antiga: r => `Última medição há ${diasDesde(r.medicao.data)} dias`,
-  data_futura: () => "Data da medição no futuro: erro de carga no SAR",
-  volume_fora_da_faixa: () => "Volume fora da faixa esperada"
+  data_futura: () => "Data de medição a confirmar",
+  volume_fora_da_faixa: () => "Valor a confirmar"
 };
 const SECOES = [
   ["mapa", "Mapa"],
-  ["acudes", "Açudes por sistema hídrico"],
-  ["tabela", "Tabela"],
-  ["fontes", "Fontes e critérios"]
+  ["acudes", "Açudes"],
+  ["sobre", "Sobre os dados"]
+];
+const VISTAS = [
+  ["sistemas", "Por sistema hídrico"],
+  ["tabela", "Tabela"]
 ];
 
 /* ---------- utilitários (os do protótipo: fmt, dBR) ---------- */
@@ -26,6 +28,7 @@ const fmt = (v, n = 1) =>
     : Number(v).toLocaleString("pt-BR", { minimumFractionDigits: n, maximumFractionDigits: n });
 const dBR = iso => iso.slice(8, 10) + "/" + iso.slice(5, 7) + "/" + iso.slice(0, 4);
 const hBR = iso => dBR(iso) + ", " + iso.slice(11, 16);
+const mesCurto = mes => ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"][+mes.slice(5, 7) - 1] + "/" + mes.slice(0, 4);
 const esc = s =>
   String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 // busca sem acento nem pontuação: "mae dagua" acha "Mãe d'Água"
@@ -36,6 +39,20 @@ function diasDesde(iso) {
   const d = new Date(iso + "T12:00:00");
   return Math.round((Date.UTC(h.getFullYear(), h.getMonth(), h.getDate()) - Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5);
 }
+const lembrar = (k, v) => {
+  try {
+    localStorage.setItem("alocacao." + k, v);
+  } catch (e) {
+    /* sem armazenamento: só não lembra */
+  }
+};
+const lembrado = k => {
+  try {
+    return localStorage.getItem("alocacao." + k);
+  } catch (e) {
+    return null;
+  }
+};
 
 /* ---------- partida ---------- */
 async function iniciar() {
@@ -48,22 +65,30 @@ async function iniciar() {
     document.getElementById("carimbo").innerHTML = "<span>Não foi possível carregar os dados. Tente recarregar a página.</span>";
     return;
   }
-  const pag = { P, sis: Object.fromEntries(P.sistemas.map(s => [s.id, s])), filtroUF: "", busca: "" };
+  const vista = lembrado("vista");
+  const pag = {
+    P,
+    sis: Object.fromEntries(P.sistemas.map(s => [s.id, s])),
+    uf: "",
+    busca: "",
+    vista: VISTAS.some(([v]) => v === vista) ? vista : "sistemas"
+  };
   carimbo(pag);
   esqueleto(pag);
   indices();
+  filtros(pag);
   mapa(pag);
-  acudes(pag);
-  tabela(pag);
-  fontes(pag);
+  vistas(pag);
+  sobre(pag);
+  aplicar(pag);
 }
 
 function carimbo(pag) {
   const { P } = pag;
   document.getElementById("carimbo").innerHTML =
-    `<span>Medições do SAR lidas em <b>${hBR(P.fontes.medicao.lido_em)}</b></span>` +
+    `<span>Atualizado em <b>${hBR(P.fontes.medicao.lido_em)}</b></span>` +
     `<span><b>${P.reservatorios.length}</b> açudes em <b>${P.sistemas.length}</b> sistemas hídricos</span>` +
-    `<span>Boletins da COMAR até <b>${esc(P.criterio.rotulo)}</b></span>`;
+    `<span>Boletim mais recente: <b>${esc(P.criterio.rotulo)}</b></span>`;
 }
 
 function esqueleto(pag) {
@@ -74,18 +99,18 @@ function esqueleto(pag) {
   document.getElementById("conteudo").innerHTML =
     `<nav class="indice" aria-label="Seções da página">${SECOES.map(([id, t]) => `<a href="#${id}">${t}</a>`).join("")}</nav>` +
     `<div class="intro"><p>A ANA acompanha, com os órgãos gestores estaduais e os usuários, a alocação de água de sistemas ` +
-    `hídricos do Semiárido e publica, a cada mês, um boletim de acompanhamento de cada um. Esta página reúne os açudes com ` +
-    `boletim recente: a última medição publicada no SAR e o link para o boletim. Termos de alocação, apresentações e boletins ` +
+    `hídricos do Semiárido e publica, a cada mês, um boletim de acompanhamento de cada um. Aqui estão os açudes desses ` +
+    `sistemas, com a última medição de cada um e o boletim mais recente. Termos de alocação, apresentações e boletins ` +
     `anteriores estão na <a href="${esc(pag.P.fontes.boletins.url)}">página de alocação de água e marcos regulatórios da ANA</a>.</p></div>` +
-    sec("mapa", 1, "Mapa", "Cada triângulo é um açude com boletim de acompanhamento recente. " +
-      "<span class=\"dica\">Passe o mouse para ver o volume; clique para ir ao cartão do açude.</span>",
+    `<div class="filtros" role="search" aria-label="Filtrar açudes"><div class="presets" id="presets-uf" role="group" aria-label="Filtrar por UF"></div>` +
+    `<input type="search" id="busca" placeholder="Buscar açude ou sistema" aria-label="Buscar açude ou sistema">` +
+    `<span class="contagem" id="contagem" aria-live="polite"></span></div>` +
+    sec("mapa", 1, "Mapa", "Cada triângulo é um açude. <span class=\"dica\">Passe o mouse para ver o volume; clique para ver o açude.</span>",
       `<div id="mapa-acudes" role="region" aria-label="Mapa dos açudes"></div>`, btn("baixar-kmz", "KMZ")) +
-    sec("acudes", 2, "Açudes por sistema hídrico", "Última medição publicada no SAR e o boletim de acompanhamento de cada sistema.",
-      `<div class="filtros"><div class="presets" id="presets-uf" role="group" aria-label="Filtrar por UF"></div>` +
-      `<input type="search" id="busca" placeholder="Buscar açude ou sistema" aria-label="Buscar açude ou sistema"></div><div id="lista-sis"></div>`) +
-    sec("tabela", 3, "Tabela", "Todos os açudes do painel, com a última medição publicada no SAR.",
-      `<table id="tab-acudes"></table>`, btn("baixar-csv", "CSV")) +
-    sec("fontes", 4, "Fontes e critérios", "De onde vem cada informação e quais açudes entram no painel.", `<div class="fontes" id="fontes-corpo"></div>`);
+    sec("acudes", 2, "Açudes", "Última medição de cada açude e o boletim de acompanhamento do seu sistema hídrico.",
+      `<div class="presets vistas" id="vistas" role="group" aria-label="Visualização"></div><div id="lista-acudes"></div>`,
+      btn("baixar-csv", "CSV")) +
+    sec("sobre", 3, "Sobre os dados", "De onde vêm as informações desta página.", `<div class="fontes" id="sobre-corpo"></div>`);
 }
 
 /* índice: chips no celular (nav.indice) e lista na barra lateral no desktop, como no protótipo */
@@ -100,6 +125,49 @@ function indices() {
     { rootMargin: "-20% 0px -70% 0px" }
   );
   SECOES.forEach(([id]) => obs.observe(document.getElementById(id)));
+}
+
+/* ---------- filtro único: UF e busca valem para o mapa e para as duas visualizações ---------- */
+function filtros(pag) {
+  const ufs = [...new Set(pag.P.reservatorios.map(r => r.uf))].sort();
+  const pres = document.getElementById("presets-uf");
+  pres.innerHTML = [["", "Todas as UFs"], ...ufs.map(u => [u, u])]
+    .map(([v, t]) => `<button type="button" class="preset${v === "" ? " ativo" : ""}" data-uf="${v}" aria-pressed="${v === ""}">${t}</button>`)
+    .join("");
+  pres.addEventListener("click", ev => {
+    const b = ev.target.closest("button");
+    if (!b) return;
+    pag.uf = b.dataset.uf;
+    aplicar(pag);
+  });
+  const busca = document.getElementById("busca");
+  busca.addEventListener("input", () => {
+    pag.busca = semAcento(busca.value.trim());
+    aplicar(pag);
+  });
+}
+function visiveis(pag) {
+  return pag.P.reservatorios.filter(r => {
+    const s = pag.sis[r.sistema];
+    return (!pag.uf || r.uf === pag.uf) && (!pag.busca || semAcento(r.nome + " " + s.nome).includes(pag.busca));
+  });
+}
+function limpar(pag) {
+  pag.uf = pag.busca = "";
+  document.getElementById("busca").value = "";
+  aplicar(pag);
+}
+function aplicar(pag) {
+  pag.vis = visiveis(pag);
+  document.querySelectorAll("#presets-uf button").forEach(b => {
+    b.classList.toggle("ativo", b.dataset.uf === pag.uf);
+    b.setAttribute("aria-pressed", b.dataset.uf === pag.uf);
+  });
+  const n = pag.vis.length;
+  const total = pag.P.reservatorios.length;
+  document.getElementById("contagem").textContent = n === total ? "" : `${n} de ${total} açudes`;
+  marcadores(pag);
+  desenharVista(pag);
 }
 
 /* ---------- 1. mapa: triângulo = açude, sem cor por valor (regra do protótipo) ---------- */
@@ -125,37 +193,78 @@ function mapa(pag) {
     iconAnchor: [9, 8],
     html: `<svg width="18" height="16" viewBox="0 0 18 16"><path d="M9 1 L17 15 L1 15 Z" fill="${COR.ana}" stroke="#ffffff" stroke-width="1.4"/></svg>`
   });
-  const pts = pag.P.reservatorios.filter(r => r.lat != null);
-  pts.forEach(r => {
-    const m = L.marker([r.lat, r.lon], { icon: icone, alt: r.nome }).addTo(mp);
-    const med = r.medicao ? `${fmt(r.medicao.volume_pct)}% em ${dBR(r.medicao.data)}` : "sem medição no SAR";
+  const camada = L.layerGroup().addTo(mp);
+  const marcas = {};
+  pag.P.reservatorios.filter(r => r.lat != null).forEach(r => {
+    const m = L.marker([r.lat, r.lon], { icon: icone, alt: r.nome });
+    const med = r.medicao ? `${fmt(r.medicao.volume_pct)}% em ${dBR(r.medicao.data)}` : "sem medição publicada";
     m.bindTooltip(`<div class="pop"><b>${esc(r.nome)} (${r.uf})</b>${esc(pag.sis[r.sistema].nome)}` +
       `<div class="l"><span>Volume</span><span>${med}</span></div></div>`, { direction: "top", offset: [0, -8], opacity: 1 });
-    m.on("click", () => irPara(r.res_id));
+    m.on("click", () => irPara(pag, r.res_id));
+    marcas[r.res_id] = m;
   });
-  // reenquadra quando o contêiner muda de tamanho (carga, giro do celular), enquanto o usuário não mexer no mapa
-  const limites = L.latLngBounds(pts.map(r => [r.lat, r.lon])).pad(0.08);
-  let mexeu = false;
-  mp.on("dragstart", () => (mexeu = true));
-  mp.getContainer().addEventListener("wheel", () => (mexeu = true), { passive: true });
-  mp.getContainer().querySelector(".leaflet-control-zoom").addEventListener("click", () => (mexeu = true));
+  // reenquadra nos açudes visíveis quando o filtro muda ou o contêiner muda de tamanho (enquanto o usuário não mexer)
+  pag.mapa = { mp, camada, marcas, mexeu: false };
+  mp.on("dragstart", () => (pag.mapa.mexeu = true));
+  mp.getContainer().addEventListener("wheel", () => (pag.mapa.mexeu = true), { passive: true });
+  mp.getContainer().querySelector(".leaflet-control-zoom").addEventListener("click", () => (pag.mapa.mexeu = true));
   new ResizeObserver(() => {
     mp.invalidateSize();
-    if (!mexeu) mp.fitBounds(limites);
+    if (!pag.mapa.mexeu) enquadrar(pag);
   }).observe(host);
-  mp.fitBounds(limites);
   document.getElementById("baixar-kmz").addEventListener("click", () => baixarKMZ(pag));
 }
-function irPara(id) {
+function marcadores(pag) {
+  if (!pag.mapa) return;
+  const { camada, marcas } = pag.mapa;
+  camada.clearLayers();
+  pag.vis.forEach(r => marcas[r.res_id] && camada.addLayer(marcas[r.res_id]));
+  pag.mapa.mexeu = false;
+  enquadrar(pag);
+}
+function enquadrar(pag) {
+  const pts = (pag.vis || []).filter(r => r.lat != null);
+  if (!pts.length) return;
+  const b = L.latLngBounds(pts.map(r => [r.lat, r.lon]));
+  pag.mapa.mp.fitBounds(b.pad(0.08), { maxZoom: 10, animate: false });
+}
+function irPara(pag, id) {
+  if (pag.vista !== "sistemas") trocarVista(pag, "sistemas");
   const c = document.getElementById("acude-" + id);
   if (!c) return;
-  if (c.closest(".sis").hidden) limparFiltros();
   c.scrollIntoView({ behavior: "smooth", block: "center" });
   document.querySelectorAll(".card.acude.destaque").forEach(x => x.classList.remove("destaque"));
   c.classList.add("destaque");
 }
 
-/* ---------- 2. açudes por sistema ---------- */
+/* ---------- 2. açudes: por sistema hídrico (cartões) ou tabela ---------- */
+function vistas(pag) {
+  const v = document.getElementById("vistas");
+  v.innerHTML = VISTAS.map(([id, t]) => `<button type="button" class="preset" data-vista="${id}">${t}</button>`).join("");
+  v.addEventListener("click", ev => {
+    const b = ev.target.closest("button");
+    if (b) trocarVista(pag, b.dataset.vista);
+  });
+  document.getElementById("baixar-csv").addEventListener("click", () => baixarCSV(pag));
+}
+function trocarVista(pag, vista) {
+  pag.vista = vista;
+  lembrar("vista", vista);
+  desenharVista(pag);
+}
+function desenharVista(pag) {
+  document.querySelectorAll("#vistas button").forEach(b => {
+    b.classList.toggle("ativo", b.dataset.vista === pag.vista);
+    b.setAttribute("aria-pressed", b.dataset.vista === pag.vista);
+  });
+  const host = document.getElementById("lista-acudes");
+  if (!pag.vis.length) {
+    host.innerHTML = `<p class="vazio">Nenhum açude com esses filtros. <button type="button" class="acao sec" id="limpar">Limpar filtros</button></p>`;
+    document.getElementById("limpar").addEventListener("click", () => limpar(pag));
+    return;
+  }
+  host.innerHTML = pag.vista === "tabela" ? tabelaHTML(pag) : sistemasHTML(pag);
+}
 function cartaoAcude(r) {
   const m = r.medicao;
   const valor = m && m.volume_pct != null ? `${fmt(m.volume_pct)}<small>%</small>` : "–";
@@ -163,75 +272,45 @@ function cartaoAcude(r) {
     ? `<div class="n">${fmt(m.volume_hm3, 2)} de ${fmt(m.capacidade_hm3, 2)} hm³ · cota ${fmt(m.cota_m, 2)} m</div>` +
       `<div class="n">Medição de ${dBR(m.data)}${diasDesde(m.data) > 1 ? ` (há ${diasDesde(m.data)} dias)` : ""}</div>`
     : "";
-  const alertas = r.alertas.map(a => `<span class="alerta">${ALERTAS[a] ? ALERTAS[a](r) : a}</span>`).join("");
+  const alertas = r.alertas.map(a => `<span class="alerta">${ALERTAS[a] ? ALERTAS[a](r) : ""}</span>`).join("");
   return `<div class="card fixo acude" id="acude-${r.res_id}"><div class="r">${esc(r.nome)}</div><div class="v num">${valor}</div>${linhas}${alertas}</div>`;
 }
-function blocoSistema(s, rs) {
-  const b = s.boletim;
-  return `<article class="sis" data-ufs="${esc(s.ufs)}" data-busca="${esc(semAcento(s.nome + " " + rs.map(r => r.nome).join(" ")))}">` +
-    `<h3>${esc(s.nome)} <span class="uf">${esc(s.ufs)}</span></h3>` +
-    `<p class="links"><a class="acao sec" href="${esc(b.url)}">Boletim de ${esc(b.rotulo)} (PDF)</a>` +
-    `<a href="${esc(s.pagina_comar)}">Página da alocação (termos e boletins anteriores)</a></p>` +
-    `<div class="cards">${rs.map(cartaoAcude).join("")}</div>` + (s.nota ? `<p class="nota">${esc(s.nota)}</p>` : "") + `</article>`;
-}
-let limparFiltros = () => {};
-function acudes(pag) {
+function sistemasHTML(pag) {
   const porSis = {};
-  pag.P.reservatorios.forEach(r => (porSis[r.sistema] = porSis[r.sistema] || []).push(r));
-  const ordem = [...pag.P.sistemas].sort((a, b) => a.ufs.localeCompare(b.ufs) || a.nome.localeCompare(b.nome, "pt-BR"));
-  document.getElementById("lista-sis").innerHTML = ordem.map(s => blocoSistema(s, porSis[s.id])).join("");
-  const ufs = [...new Set(pag.P.reservatorios.map(r => r.uf))].sort();
-  const pres = document.getElementById("presets-uf");
-  pres.innerHTML = [["", "Todas as UFs"], ...ufs.map(u => [u, u])]
-    .map(([v, t]) => `<button type="button" class="preset${v === "" ? " ativo" : ""}" data-uf="${v}">${t}</button>`).join("");
-  pres.addEventListener("click", ev => {
-    const b = ev.target.closest("button");
-    if (!b) return;
-    pag.filtroUF = b.dataset.uf;
-    pres.querySelectorAll("button").forEach(x => x.classList.toggle("ativo", x === b));
-    filtrar(pag);
-  });
-  const busca = document.getElementById("busca");
-  busca.addEventListener("input", () => {
-    pag.busca = semAcento(busca.value.trim());
-    filtrar(pag);
-  });
-  limparFiltros = () => {
-    pag.filtroUF = pag.busca = busca.value = "";
-    pres.querySelectorAll("button").forEach(x => x.classList.toggle("ativo", x.dataset.uf === ""));
-    filtrar(pag);
-  };
+  pag.vis.forEach(r => (porSis[r.sistema] = porSis[r.sistema] || []).push(r));
+  return pag.P.sistemas
+    .filter(s => porSis[s.id])
+    .sort((a, b) => a.ufs.localeCompare(b.ufs) || a.nome.localeCompare(b.nome, "pt-BR"))
+    .map(s => {
+      const b = s.boletim;
+      return `<article class="sis"><h3>${esc(s.nome)} <span class="uf">${esc(s.ufs)}</span></h3>` +
+        `<p class="links"><a class="acao sec" href="${esc(b.url)}">Boletim de ${esc(b.rotulo)} (PDF)</a>` +
+        `<a href="${esc(s.pagina_comar)}">Página da alocação (termos e boletins anteriores)</a></p>` +
+        `<div class="cards">${porSis[s.id].map(cartaoAcude).join("")}</div>` + (s.nota ? `<p class="nota">${esc(s.nota)}</p>` : "") + `</article>`;
+    })
+    .join("");
 }
-function filtrar(pag) {
-  document.querySelectorAll("#lista-sis .sis").forEach(el => {
-    const okUF = !pag.filtroUF || el.dataset.ufs.includes(pag.filtroUF);
-    el.hidden = !(okUF && (!pag.busca || el.dataset.busca.includes(pag.busca)));
-  });
-}
-
-/* ---------- 3. tabela e CSV ---------- */
-function linhasTabela(pag) {
-  return [...pag.P.reservatorios]
+function ordenadas(pag) {
+  return [...pag.vis]
     .sort((a, b) => a.uf.localeCompare(b.uf) || a.nome.localeCompare(b.nome, "pt-BR"))
     .map(r => ({ r, s: pag.sis[r.sistema], m: r.medicao || {} }));
 }
-function tabela(pag) {
-  document.getElementById("tab-acudes").innerHTML =
-    `<thead><tr><th>Açude</th><th>UF</th><th>Sistema hídrico</th><th class="num">Volume</th><th class="num">Volume</th>` +
-    `<th class="num">Cota</th><th class="num">Capacidade</th><th>Medição</th></tr>` +
-    `<tr class="unid"><th></th><th></th><th></th><th class="num">%</th><th class="num">hm³</th><th class="num">m</th><th class="num">hm³</th><th></th></tr></thead>` +
-    `<tbody>${linhasTabela(pag).map(({ r, s, m }) =>
+function tabelaHTML(pag) {
+  return `<table id="tab-acudes"><thead><tr><th>Açude</th><th>UF</th><th>Sistema hídrico</th><th class="num">Volume</th>` +
+    `<th class="num">Volume</th><th class="num">Cota</th><th class="num">Capacidade</th><th>Medição</th><th>Boletim</th></tr>` +
+    `<tr class="unid"><th></th><th></th><th></th><th class="num">%</th><th class="num">hm³</th><th class="num">m</th><th class="num">hm³</th><th></th><th></th></tr></thead>` +
+    `<tbody>${ordenadas(pag).map(({ r, s, m }) =>
       `<tr><td><span class="nm">${esc(r.nome)}</span></td><td>${r.uf}</td><td>${esc(s.nome)}</td>` +
       `<td class="num">${fmt(m.volume_pct)}</td><td class="num">${fmt(m.volume_hm3, 2)}</td><td class="num">${fmt(m.cota_m, 2)}</td>` +
-      `<td class="num">${fmt(m.capacidade_hm3, 2)}</td><td class="num">${m.data ? dBR(m.data) : "sem medição"}</td></tr>`).join("")}</tbody>`;
-  document.getElementById("baixar-csv").addEventListener("click", () => baixarCSV(pag));
+      `<td class="num">${fmt(m.capacidade_hm3, 2)}</td><td class="num">${m.data ? dBR(m.data) : "–"}</td>` +
+      `<td><a href="${esc(s.boletim.url)}" aria-label="Boletim de ${esc(s.boletim.rotulo)} de ${esc(s.nome)}">${mesCurto(s.boletim.mes)}</a></td></tr>`).join("")}</tbody></table>`;
 }
-/* CSV como no protótipo (salvarCSV): BOM, ';', vírgula decimal, data dd/mm/aaaa */
+/* CSV como no protótipo (salvarCSV): BOM, ';', vírgula decimal, data dd/mm/aaaa; leva o que está filtrado */
 function baixarCSV(pag) {
   const n = (v, d) => (v == null ? "" : fmt(v, d).replace(/\./g, ""));
   const cab = ["codigo_sar", "acude", "uf", "sistema_hidrico", "volume_pct", "volume_hm3", "capacidade_hm3", "cota_m",
     "data_medicao", "boletim", "pagina_alocacao"];
-  const linhas = linhasTabela(pag).map(({ r, s, m }) => [r.res_id, r.nome, r.uf, s.nome, n(m.volume_pct, 2), n(m.volume_hm3, 2),
+  const linhas = ordenadas(pag).map(({ r, s, m }) => [r.res_id, r.nome, r.uf, s.nome, n(m.volume_pct, 2), n(m.volume_hm3, 2),
     n(m.capacidade_hm3, 2), n(m.cota_m, 2), m.data ? dBR(m.data) : "", s.boletim.url, s.pagina_comar]);
   const q = v => (/[;"\n]/.test(String(v ?? "")) ? `"${String(v).replace(/"/g, '""')}"` : String(v ?? ""));
   const txt = [cab, ...linhas].map(l => l.map(q).join(";")).join("\r\n");
@@ -244,7 +323,7 @@ function baixarArquivo(blob, nome) {
   setTimeout(() => (URL.revokeObjectURL(a.href), a.remove()), 1000);
 }
 
-/* ---------- KMZ do mapa: ícone PNG com a forma e a cor da página ---------- */
+/* ---------- KMZ do mapa (o que está filtrado): ícone PNG com a forma e a cor da página ---------- */
 function pngTriangulo(cor) {
   const c = Object.assign(document.createElement("canvas"), { width: 36, height: 32 });
   const g = c.getContext("2d");
@@ -264,33 +343,31 @@ async function baixarKMZ(pag) {
   if (typeof JSZip === "undefined") return;
   const zip = new JSZip();
   zip.file("icones/acude.png", pngTriangulo(COR.ana), { base64: true });
-  const marcas = pag.P.reservatorios.filter(r => r.lat != null).map(r => {
+  const marcas = pag.vis.filter(r => r.lat != null).map(r => {
     const s = pag.sis[r.sistema];
     const m = r.medicao;
-    const desc = `${s.nome}<br>${m ? `Volume ${fmt(m.volume_pct)}% em ${dBR(m.data)}` : "Sem medição no SAR"}<br>` +
+    const desc = `${s.nome}<br>${m ? `Volume ${fmt(m.volume_pct)}% em ${dBR(m.data)}` : "Sem medição publicada"}<br>` +
       `<a href="${esc(s.boletim.url)}">Boletim de ${esc(s.boletim.rotulo)}</a>`;
     return `<Placemark><name>${esc(r.nome)}</name><description><![CDATA[${desc}]]></description><styleUrl>#acude</styleUrl>` +
       `<Point><coordinates>${r.lon},${r.lat},0</coordinates></Point></Placemark>`;
   }).join("");
   const kml = `<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document>` +
-    `<name>Açudes com boletim de alocação de água (${dBR(pag.P.gerado_em)})</name>` +
+    `<name>Açudes com alocação de água (${dBR(pag.P.gerado_em)})</name>` +
     `<Style id="acude"><IconStyle><scale>1</scale><Icon><href>icones/acude.png</href></Icon></IconStyle></Style>${marcas}</Document></kml>`;
   zip.file("doc.kml", kml);
   baixarArquivo(await zip.generateAsync({ type: "blob" }), `acudes_alocacao_${pag.P.gerado_em.slice(0, 10)}.kmz`);
 }
 
-/* ---------- 4. fontes e critérios ---------- */
-function fontes(pag) {
-  const { P } = pag;
-  const f = P.fontes;
-  document.getElementById("fontes-corpo").innerHTML = `<dl>` +
-    `<dt>Medição dos açudes</dt><dd><a href="${esc(f.medicao.url)}">${esc(f.medicao.nome)}</a>: última medição publicada de cada açude, ` +
-    `lida em ${hBR(f.medicao.lido_em)}. O volume em % é o volume armazenado dividido pela capacidade do açude no SAR. ` +
-    `A data ao lado de cada valor é a da medição, que pode ser anterior à leitura.</dd>` +
-    `<dt>Boletins de acompanhamento</dt><dd><a href="${esc(f.boletins.url)}">${esc(f.boletins.nome)}</a>, lida em ${hBR(f.boletins.lido_em)}.</dd>` +
-    `<dt>Quais açudes entram</dt><dd>Os açudes que têm página no boletim de acompanhamento da alocação de água publicado pela ANA ` +
-    `nos ${P.criterio.janela_meses} meses anteriores ao boletim mais recente (${esc(P.criterio.rotulo)}). Quando sai um boletim novo, ` +
-    `o açude entra; quando o boletim deixa de sair, o açude sai do painel.</dd></dl>`;
+/* ---------- 3. sobre os dados (para o público: fontes e definições) ---------- */
+function sobre(pag) {
+  const f = pag.P.fontes;
+  document.getElementById("sobre-corpo").innerHTML = `<dl>` +
+    `<dt>Medições</dt><dd><a href="${esc(f.medicao.url)}">Sistema de Acompanhamento de Reservatórios (SAR)</a>, da ANA. ` +
+    `Cada valor é a última medição publicada do açude, e a data ao lado é a da medição. O volume em % é o volume ` +
+    `armazenado em relação à capacidade do açude.</dd>` +
+    `<dt>Boletins</dt><dd>Boletins mensais de acompanhamento da alocação de água, publicados pela ANA na ` +
+    `<a href="${esc(f.boletins.url)}">página de alocação de água e marcos regulatórios</a>.</dd>` +
+    `<dt>Atualização</dt><dd>Medições lidas em ${hBR(f.medicao.lido_em)}; boletins conferidos em ${hBR(f.boletins.lido_em)}.</dd></dl>`;
 }
 
 document.addEventListener("DOMContentLoaded", iniciar);
