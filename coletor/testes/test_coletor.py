@@ -94,6 +94,7 @@ def test_cadastro_consistente():
 
 
 def test_regra_dos_30_dias_do_sar(monkeypatch):
+    monkeypatch.setattr(config, "BUSCA_MEDICAO_ANTERIOR_DIAS", 0)          # só a regra do SAR
     assert atualiza.na_janela(M(date(2026, 9, 7)), HOJE) is not None      # 30 dias: ainda vale
     assert atualiza.na_janela(M(date(2026, 9, 6)), HOJE) is None          # 31 dias: sem informação
     monkeypatch.setattr(config, "BUSCA_MEDICAO_ANTERIOR_DIAS", 365)

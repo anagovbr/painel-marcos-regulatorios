@@ -7,11 +7,16 @@
 const COR = {};
 // "sem_informacao" não vira etiqueta: o cartão mostra "Sem informação" no lugar do valor
 const ALERTAS = {
-  medicao_antiga: r => `Medição de ${diasDesde(r.medicao.data)} dias atrás`,
+  medicao_antiga: (r, pag) => `Sem medição nos últimos ${janela(pag)} dias`,
   data_futura: () => "Data de medição a confirmar",
   volume_fora_da_faixa: () => "Valor a confirmar"
 };
 const janela = pag => pag.P.criterio.janela_medicao_dias || 30;
+// até onde a última medição é buscada (sem nada nesse prazo, o açude fica "sem informação")
+const prazoBusca = pag => {
+  const d = Math.max(pag.P.criterio.busca_medicao_dias || 0, janela(pag));
+  return d >= 365 && d % 365 === 0 ? `${d / 365} ano${d > 365 ? "s" : ""}` : `${d} dias`;
+};
 const SECOES = [
   ["mapa", "Mapa"],
   ["acudes", "Açudes"],
@@ -270,12 +275,12 @@ function cartaoAcude(r, pag) {
   const m = r.medicao;
   if (!m) {
     return `<div class="card fixo acude" id="acude-${r.res_id}"><div class="r">${esc(r.nome)}</div><div class="v sem">Sem informação</div>` +
-      `<div class="n">Nenhuma medição nos últimos ${janela(pag)} dias</div></div>`;
+      `<div class="n">Nenhuma medição nos últimos ${prazoBusca(pag)}</div></div>`;
   }
   const valor = m.volume_pct != null ? `${fmt(m.volume_pct)}<small>%</small>` : "–";
   const linhas = `<div class="n">${fmt(m.volume_hm3, 2)} de ${fmt(m.capacidade_hm3, 2)} hm³ · cota ${fmt(m.cota_m, 2)} m</div>` +
     `<div class="n">Medição de ${dBR(m.data)}${diasDesde(m.data) > 1 ? ` (há ${diasDesde(m.data)} dias)` : ""}</div>`;
-  const alertas = r.alertas.filter(a => ALERTAS[a]).map(a => `<span class="alerta">${ALERTAS[a](r)}</span>`).join("");
+  const alertas = r.alertas.filter(a => ALERTAS[a]).map(a => `<span class="alerta">${ALERTAS[a](r, pag)}</span>`).join("");
   return `<div class="card fixo acude" id="acude-${r.res_id}"><div class="r">${esc(r.nome)}</div><div class="v num">${valor}</div>${linhas}${alertas}</div>`;
 }
 function sistemasHTML(pag) {
@@ -313,8 +318,8 @@ function baixarCSV(pag) {
   const n = (v, d) => (v == null ? "" : fmt(v, d).replace(/\./g, ""));
   const cab = ["codigo_sar", "acude", "uf", "sistema_hidrico", "volume_pct", "volume_hm3", "capacidade_hm3", "cota_m",
     "data_medicao", "observacao", "boletim", "pagina_alocacao"];
-  const obs = r => (r.medicao ? r.alertas.filter(a => ALERTAS[a]).map(a => ALERTAS[a](r)).join("; ")
-    : `sem informação: nenhuma medição nos últimos ${janela(pag)} dias`);
+  const obs = r => (r.medicao ? r.alertas.filter(a => ALERTAS[a]).map(a => ALERTAS[a](r, pag)).join("; ")
+    : `sem informação: nenhuma medição nos últimos ${prazoBusca(pag)}`);
   const linhas = ordenadas(pag).map(({ r, s, m }) => [r.res_id, r.nome, r.uf, s.nome, n(m.volume_pct, 2), n(m.volume_hm3, 2),
     n(m.capacidade_hm3, 2), n(m.cota_m, 2), m.data ? dBR(m.data) : "", obs(r), s.boletim.url, s.pagina_comar]);
   const q = v => (/[;"\n]/.test(String(v ?? "")) ? `"${String(v).replace(/"/g, '""')}"` : String(v ?? ""));
@@ -369,8 +374,8 @@ function sobre(pag) {
   document.getElementById("sobre-corpo").innerHTML = `<dl>` +
     `<dt>Medições</dt><dd><a href="${esc(f.medicao.url)}">Sistema de Acompanhamento de Reservatórios (SAR)</a>, da ANA. ` +
     `Cada valor é a última medição publicada do açude, e a data ao lado é a da medição. O volume em % é o volume ` +
-    `armazenado em relação à capacidade do açude. Como no SAR, o açude sem nenhuma medição nos últimos ` +
-    `${janela(pag)} dias aparece como sem informação.</dd>` +
+    `armazenado em relação à capacidade do açude. Quando o açude não tem medição nos últimos ${janela(pag)} dias, ` +
+    `aparece a última medição disponível, com esse aviso; no SAR, ele aparece como sem informação.</dd>` +
     `<dt>Boletins</dt><dd>Boletins mensais de acompanhamento da alocação de água, publicados pela ANA na ` +
     `<a href="${esc(f.boletins.url)}">página de alocação de água e marcos regulatórios</a>.</dd>` +
     `<dt>Atualização</dt><dd>Medições lidas em ${hBR(f.medicao.lido_em)}; boletins conferidos em ${hBR(f.boletins.lido_em)}.</dd></dl>`;

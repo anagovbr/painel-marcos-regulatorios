@@ -71,7 +71,8 @@ def montar(sistemas, reservatorios, bol, medicoes, fonte, agora):
                                  "e Alocação de Água (COMAR)", "url": config.PAGINA_COMAR, "lido_em": bol["lido_em"]},
         },
         "criterio": {"boletim_mais_recente": bol["mais_recente"], "rotulo": B.rotulo_mes(bol["mais_recente"]),
-                     "janela_meses": bol["janela_meses"], "janela_medicao_dias": config.JANELA_MEDICAO_DIAS},
+                     "janela_meses": bol["janela_meses"], "janela_medicao_dias": config.JANELA_MEDICAO_DIAS,
+                     "busca_medicao_dias": config.BUSCA_MEDICAO_ANTERIOR_DIAS},
         "sistemas": sis,
         "reservatorios": res,
     }

@@ -46,13 +46,13 @@ Um job para cada workflow, com POST em
 
 As duas rodadas usam a mesma fila (`concurrency: dados`) e só fazem commit quando o dado muda.
 
-## Medição sem informação
+## Última medição disponível
 
-Como no SAR, o açude sem medição nos últimos 30 dias aparece como "sem informação" (`JANELA_MEDICAO_DIAS` em
-`coletor/config.py`). A API atual já aplica a regra: pedindo uma data, devolve a medição mais próxima dentro de 30 dias.
-Se a COMAR quiser a última medição qualquer que seja a idade, basta pôr `BUSCA_MEDICAO_ANTERIOR_DIAS = 365` (por
-exemplo): o coletor pergunta de novo pelos açudes sem informação, recuando 30 dias por vez, e a página mostra o valor
-com o aviso da idade.
+No SAR, o açude sem medição nos últimos 30 dias aparece como "sem informação". A API atual aplica essa regra: pedindo
+uma data, devolve a medição mais próxima dentro de 30 dias. O painel mostra a última medição disponível (Diego,
+07/10/2026): para o açude sem medição na janela, o coletor pergunta de novo recuando 30 dias por vez, até 2 anos
+(`BUSCA_MEDICAO_ANTERIOR_DIAS = 730` em `coletor/config.py`), e a página mostra o valor com o aviso "Sem medição nos
+últimos 30 dias". Sem nada em 2 anos, o açude fica "sem informação". Para voltar à regra do SAR, `0`.
 
 ## Rodar localmente
 
