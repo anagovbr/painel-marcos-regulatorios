@@ -96,6 +96,11 @@
   font-weight: 600;
   color: var(--tinta);
 }
+.card.acude .v.sem {
+  font-size: 18px;
+  color: var(--apagado);
+  line-height: 1.5;
+}
 .card.acude .v small {
   font-size: 15px;
   margin-left: 2px;

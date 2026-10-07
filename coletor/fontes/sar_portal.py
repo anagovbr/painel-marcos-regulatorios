@@ -74,8 +74,25 @@ def casar(reservatorios, linhas_por_uf):
     return saida
 
 
-def ultimas_medicoes(reservatorios, hoje):
+def ultimas_medicoes(reservatorios, hoje, busca_anterior_dias=0, ler=linhas_uf):
+    """Última medição de cada açude. A API devolve a medição mais próxima da data pedida dentro de 30 dias (regra do
+    SAR) e "-" fora disso. Com busca_anterior_dias > 0, o açude sem medição é procurado de novo recuando 30 dias por
+    vez: como a janela anterior veio vazia, o que a API devolve é a última medição (conferido com Tremedal, 07/10/2026:
+    "-" pedindo 07/10 e 22/08/2026 pedindo 20/09)."""
+    from datetime import timedelta
+
     with requests.Session() as s:
         s.headers["User-Agent"] = "painel-marcos-regulatorios (github.com/dlpena/painel-marcos-regulatorios)"
-        por_uf = {uf: linhas_uf(uf, hoje, s) for uf in sorted({r["uf"] for r in reservatorios})}
-    return {rid: medicao(x) for rid, x in casar(reservatorios, por_uf).items()}
+        por_uf = {uf: ler(uf, hoje, s) for uf in sorted({r["uf"] for r in reservatorios})}
+        saida = {rid: medicao(x) for rid, x in casar(reservatorios, por_uf).items()}
+        recuo = 30
+        while recuo <= busca_anterior_dias:
+            faltam = [r for r in reservatorios if saida[int(r["res_id"])]["data"] is None]
+            if not faltam:
+                break
+            antes = {uf: ler(uf, hoje - timedelta(days=recuo), s) for uf in sorted({r["uf"] for r in faltam})}
+            for rid, x in casar(faltam, antes).items():
+                if data_br(x.get("data")):
+                    saida[rid] = medicao(x)
+            recuo += 30
+    return saida

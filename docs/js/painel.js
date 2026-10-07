@@ -5,12 +5,13 @@
 "use strict";
 
 const COR = {};
+// "sem_informacao" não vira etiqueta: o cartão mostra "Sem informação" no lugar do valor
 const ALERTAS = {
-  sem_medicao: () => "Sem medição publicada",
-  medicao_antiga: r => `Última medição há ${diasDesde(r.medicao.data)} dias`,
+  medicao_antiga: r => `Medição de ${diasDesde(r.medicao.data)} dias atrás`,
   data_futura: () => "Data de medição a confirmar",
   volume_fora_da_faixa: () => "Valor a confirmar"
 };
+const janela = pag => pag.P.criterio.janela_medicao_dias || 30;
 const SECOES = [
   ["mapa", "Mapa"],
   ["acudes", "Açudes"],
@@ -197,7 +198,7 @@ function mapa(pag) {
   const marcas = {};
   pag.P.reservatorios.filter(r => r.lat != null).forEach(r => {
     const m = L.marker([r.lat, r.lon], { icon: icone, alt: r.nome });
-    const med = r.medicao ? `${fmt(r.medicao.volume_pct)}% em ${dBR(r.medicao.data)}` : "sem medição publicada";
+    const med = r.medicao ? `${fmt(r.medicao.volume_pct)}% em ${dBR(r.medicao.data)}` : "sem informação";
     m.bindTooltip(`<div class="pop"><b>${esc(r.nome)} (${r.uf})</b>${esc(pag.sis[r.sistema].nome)}` +
       `<div class="l"><span>Volume</span><span>${med}</span></div></div>`, { direction: "top", offset: [0, -8], opacity: 1 });
     m.on("click", () => irPara(pag, r.res_id));
@@ -265,14 +266,16 @@ function desenharVista(pag) {
   }
   host.innerHTML = pag.vista === "tabela" ? tabelaHTML(pag) : sistemasHTML(pag);
 }
-function cartaoAcude(r) {
+function cartaoAcude(r, pag) {
   const m = r.medicao;
-  const valor = m && m.volume_pct != null ? `${fmt(m.volume_pct)}<small>%</small>` : "–";
-  const linhas = m
-    ? `<div class="n">${fmt(m.volume_hm3, 2)} de ${fmt(m.capacidade_hm3, 2)} hm³ · cota ${fmt(m.cota_m, 2)} m</div>` +
-      `<div class="n">Medição de ${dBR(m.data)}${diasDesde(m.data) > 1 ? ` (há ${diasDesde(m.data)} dias)` : ""}</div>`
-    : "";
-  const alertas = r.alertas.map(a => `<span class="alerta">${ALERTAS[a] ? ALERTAS[a](r) : ""}</span>`).join("");
+  if (!m) {
+    return `<div class="card fixo acude" id="acude-${r.res_id}"><div class="r">${esc(r.nome)}</div><div class="v sem">Sem informação</div>` +
+      `<div class="n">Nenhuma medição nos últimos ${janela(pag)} dias</div></div>`;
+  }
+  const valor = m.volume_pct != null ? `${fmt(m.volume_pct)}<small>%</small>` : "–";
+  const linhas = `<div class="n">${fmt(m.volume_hm3, 2)} de ${fmt(m.capacidade_hm3, 2)} hm³ · cota ${fmt(m.cota_m, 2)} m</div>` +
+    `<div class="n">Medição de ${dBR(m.data)}${diasDesde(m.data) > 1 ? ` (há ${diasDesde(m.data)} dias)` : ""}</div>`;
+  const alertas = r.alertas.filter(a => ALERTAS[a]).map(a => `<span class="alerta">${ALERTAS[a](r)}</span>`).join("");
   return `<div class="card fixo acude" id="acude-${r.res_id}"><div class="r">${esc(r.nome)}</div><div class="v num">${valor}</div>${linhas}${alertas}</div>`;
 }
 function sistemasHTML(pag) {
@@ -286,7 +289,7 @@ function sistemasHTML(pag) {
       return `<article class="sis"><h3>${esc(s.nome)} <span class="uf">${esc(s.ufs)}</span></h3>` +
         `<p class="links"><a class="acao sec" href="${esc(b.url)}">Boletim de ${esc(b.rotulo)} (PDF)</a>` +
         `<a href="${esc(s.pagina_comar)}">Página da alocação (termos e boletins anteriores)</a></p>` +
-        `<div class="cards">${porSis[s.id].map(cartaoAcude).join("")}</div>` + (s.nota ? `<p class="nota">${esc(s.nota)}</p>` : "") + `</article>`;
+        `<div class="cards">${porSis[s.id].map(r => cartaoAcude(r, pag)).join("")}</div>` + (s.nota ? `<p class="nota">${esc(s.nota)}</p>` : "") + `</article>`;
     })
     .join("");
 }
@@ -302,16 +305,18 @@ function tabelaHTML(pag) {
     `<tbody>${ordenadas(pag).map(({ r, s, m }, i, todas) =>
       `<tr${i && todas[i - 1].r.uf !== r.uf ? ' class="nova-uf"' : ""}><td><span class="nm">${esc(r.nome)}</span></td><td>${r.uf}</td><td>${esc(s.nome)}</td>` +
       `<td class="num">${fmt(m.volume_pct)}</td><td class="num">${fmt(m.volume_hm3, 2)}</td><td class="num">${fmt(m.cota_m, 2)}</td>` +
-      `<td class="num">${fmt(m.capacidade_hm3, 2)}</td><td class="num">${m.data ? dBR(m.data) : "–"}</td>` +
+      `<td class="num">${fmt(m.capacidade_hm3, 2)}</td><td class="num">${m.data ? dBR(m.data) : "sem informação"}</td>` +
       `<td><a href="${esc(s.boletim.url)}" aria-label="Boletim de ${esc(s.boletim.rotulo)} de ${esc(s.nome)}">${mesCurto(s.boletim.mes)}</a></td></tr>`).join("")}</tbody></table>`;
 }
 /* CSV como no protótipo (salvarCSV): BOM, ';', vírgula decimal, data dd/mm/aaaa; leva o que está filtrado */
 function baixarCSV(pag) {
   const n = (v, d) => (v == null ? "" : fmt(v, d).replace(/\./g, ""));
   const cab = ["codigo_sar", "acude", "uf", "sistema_hidrico", "volume_pct", "volume_hm3", "capacidade_hm3", "cota_m",
-    "data_medicao", "boletim", "pagina_alocacao"];
+    "data_medicao", "observacao", "boletim", "pagina_alocacao"];
+  const obs = r => (r.medicao ? r.alertas.filter(a => ALERTAS[a]).map(a => ALERTAS[a](r)).join("; ")
+    : `sem informação: nenhuma medição nos últimos ${janela(pag)} dias`);
   const linhas = ordenadas(pag).map(({ r, s, m }) => [r.res_id, r.nome, r.uf, s.nome, n(m.volume_pct, 2), n(m.volume_hm3, 2),
-    n(m.capacidade_hm3, 2), n(m.cota_m, 2), m.data ? dBR(m.data) : "", s.boletim.url, s.pagina_comar]);
+    n(m.capacidade_hm3, 2), n(m.cota_m, 2), m.data ? dBR(m.data) : "", obs(r), s.boletim.url, s.pagina_comar]);
   const q = v => (/[;"\n]/.test(String(v ?? "")) ? `"${String(v).replace(/"/g, '""')}"` : String(v ?? ""));
   const txt = [cab, ...linhas].map(l => l.map(q).join(";")).join("\r\n");
   baixarArquivo(new Blob(["﻿" + txt], { type: "text/csv;charset=utf-8" }), `acudes_alocacao_${pag.P.gerado_em.slice(0, 10)}.csv`);
@@ -346,7 +351,7 @@ async function baixarKMZ(pag) {
   const marcas = pag.vis.filter(r => r.lat != null).map(r => {
     const s = pag.sis[r.sistema];
     const m = r.medicao;
-    const desc = `${s.nome}<br>${m ? `Volume ${fmt(m.volume_pct)}% em ${dBR(m.data)}` : "Sem medição publicada"}<br>` +
+    const desc = `${s.nome}<br>${m ? `Volume ${fmt(m.volume_pct)}% em ${dBR(m.data)}` : "Sem informação"}<br>` +
       `<a href="${esc(s.boletim.url)}">Boletim de ${esc(s.boletim.rotulo)}</a>`;
     return `<Placemark><name>${esc(r.nome)}</name><description><![CDATA[${desc}]]></description><styleUrl>#acude</styleUrl>` +
       `<Point><coordinates>${r.lon},${r.lat},0</coordinates></Point></Placemark>`;
@@ -364,7 +369,8 @@ function sobre(pag) {
   document.getElementById("sobre-corpo").innerHTML = `<dl>` +
     `<dt>Medições</dt><dd><a href="${esc(f.medicao.url)}">Sistema de Acompanhamento de Reservatórios (SAR)</a>, da ANA. ` +
     `Cada valor é a última medição publicada do açude, e a data ao lado é a da medição. O volume em % é o volume ` +
-    `armazenado em relação à capacidade do açude.</dd>` +
+    `armazenado em relação à capacidade do açude. Como no SAR, o açude sem nenhuma medição nos últimos ` +
+    `${janela(pag)} dias aparece como sem informação.</dd>` +
     `<dt>Boletins</dt><dd>Boletins mensais de acompanhamento da alocação de água, publicados pela ANA na ` +
     `<a href="${esc(f.boletins.url)}">página de alocação de água e marcos regulatórios</a>.</dd>` +
     `<dt>Atualização</dt><dd>Medições lidas em ${hBR(f.medicao.lido_em)}; boletins conferidos em ${hBR(f.boletins.lido_em)}.</dd></dl>`;

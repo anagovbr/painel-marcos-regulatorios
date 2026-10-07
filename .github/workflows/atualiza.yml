@@ -1,7 +1,7 @@
 name: Atualiza medições
 
 # Lê a última medição de cada açude do painel na fonte (coletor/config.py, FONTE) e publica docs/dados/painel.json
-# quando o conteúdo muda. Disparo principal: cron-job.org a cada 3 horas, por POST em
+# quando o conteúdo muda. Disparo principal: cron-job.org de hora em hora, por POST em
 # /repos/dlpena/painel-marcos-regulatorios/actions/workflows/atualiza.yml/dispatches (o schedule do Actions pode atrasar
 # mais de 1 hora em repositório gratuito e fica só como rede de segurança).
 on:

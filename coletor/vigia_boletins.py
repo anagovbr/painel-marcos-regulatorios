@@ -6,7 +6,7 @@
 - lê todo PDF novo da pasta e reconhece os boletins pelo conteúdo (coletor/boletins.py), qualquer que seja o nome do
   arquivo; o último boletim de cada sistema do cadastro vai para o painel;
 - quais sistemas ficam no painel (regra em config.JANELA_BOLETIM_MESES) e quais entraram ou saíram;
-- links do cadastro que deixaram de abrir.
+- links do cadastro que deixaram de abrir (uma vez por dia; o vigia roda de hora em hora).
 
 Vira aviso (issue) só o que pede ação ou que o Diego pediu para saber: entrada e saída de sistema, boletim que não
 bate com nenhum sistema do cadastro, açudes diferentes dos do cadastro e link fora do ar. O que o vigia resolve
@@ -17,6 +17,7 @@ import csv
 import json
 import sys
 import time
+from datetime import datetime
 
 import requests
 
@@ -105,12 +106,18 @@ def main(argv=None):
                 avisos.append(f"Sai do painel: **{sistemas[sid]['nome']}** "
                               f"(último boletim: {saida.get(sid, {}).get('rotulo', 'nenhum')}).")
 
-        quebrados = anterior.get("links_quebrados", {}) if args.sem_links else links_quebrados(sistemas, anterior, avisos, s)
+        # o vigia roda de hora em hora; os links do cadastro só precisam ser conferidos uma vez por dia
+        ultima = anterior.get("links_conferidos_em")
+        conferir = not args.sem_links and (not ultima or (agora - datetime.fromisoformat(ultima)).total_seconds() > 20 * 3600)
+        if conferir:
+            quebrados, ultima = links_quebrados(sistemas, anterior, avisos, s), agora.isoformat(timespec="minutes")
+        else:
+            quebrados = anterior.get("links_quebrados", {})
 
     config.BOLETINS.parent.mkdir(parents=True, exist_ok=True)
     novo = {"lido_em": agora.isoformat(timespec="minutes"), "fonte": config.PASTA_COMAR, "mais_recente": mais_recente,
             "janela_meses": config.JANELA_BOLETIM_MESES, "sistemas": saida, "links_quebrados": quebrados,
-            "registro": registro}
+            "links_conferidos_em": ultima, "registro": registro}
     config.BOLETINS.write_text(json.dumps(novo, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"{len(saida)} sistemas com boletim; {len(dentro)} no painel; boletim mais recente: {mais_recente}; "
           f"{len(registro)} PDFs lidos guardados; {len(avisos)} avisos")

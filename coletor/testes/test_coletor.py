@@ -51,8 +51,8 @@ def M(dia, pct=50.0):
 
 
 @pytest.mark.parametrize("m,esperado", [
-    (None, ["sem_medicao"]),
-    ({**M(None)}, ["sem_medicao"]),
+    (None, ["sem_informacao"]),
+    ({**M(None)}, ["sem_informacao"]),
     (M(date(2026, 10, 8)), ["data_futura"]),
     (M(date(2026, 9, 1)), ["medicao_antiga"]),
     (M(date(2026, 10, 7), 130.0), ["volume_fora_da_faixa"]),
@@ -91,3 +91,32 @@ def test_cadastro_consistente():
         assert r["lat"] and r["lon"] and r["nome_sar"] and r["nome_boletim"], r
     for s in sis.values():
         assert s["pagina_comar"].startswith(config.PAGINA_COMAR + "/alocacao-de-agua/"), s["sistema"]
+
+
+def test_regra_dos_30_dias_do_sar(monkeypatch):
+    assert atualiza.na_janela(M(date(2026, 9, 7)), HOJE) is not None      # 30 dias: ainda vale
+    assert atualiza.na_janela(M(date(2026, 9, 6)), HOJE) is None          # 31 dias: sem informação
+    monkeypatch.setattr(config, "BUSCA_MEDICAO_ANTERIOR_DIAS", 365)
+    assert atualiza.na_janela(M(date(2026, 8, 22)), HOJE) is not None     # com a busca ligada, mostra com aviso
+    assert atualiza.alertas(M(date(2026, 8, 22)), HOJE) == ["medicao_antiga"]
+
+
+def test_busca_anterior_recua_30_dias_so_para_quem_falta():
+    linha = lambda nome, data: {"reservatorio": nome, "data": data, "volumeUtil": "50", "volume": "1", "capacidade": "2", "cota": "3"}
+    pedidos = []
+
+    def ler(uf, d, s):
+        pedidos.append(d)
+        if d == HOJE:
+            return [linha("TREMEDAL", "-"), linha("TRUVISCO", "06/10/2026")]
+        if d == date(2026, 9, 7):
+            return [linha("TREMEDAL", "-"), linha("TRUVISCO", "06/10/2026")]
+        return [linha("TREMEDAL", "22/08/2026"), linha("TRUVISCO", "06/09/2026")]
+
+    res = [{"res_id": 1, "nome_sar": "TREMEDAL", "uf": "BA"}, {"res_id": 2, "nome_sar": "TRUVISCO", "uf": "BA"}]
+    sem = sar_portal.ultimas_medicoes(res, HOJE, 0, ler)
+    assert sem[1]["data"] is None and pedidos == [HOJE]
+    pedidos.clear()
+    com = sar_portal.ultimas_medicoes(res, HOJE, 365, ler)
+    assert com[1]["data"] == date(2026, 8, 22) and com[2]["data"] == date(2026, 10, 6)
+    assert pedidos == [HOJE, date(2026, 9, 7), date(2026, 8, 8)]

@@ -28,7 +28,7 @@ coletor/vigia_boletins.py ─> dados/boletins.json + issue com os avisos
     (açudes com página no boletim, nome do sistema e UF do cabeçalho), qualquer que seja o nome do arquivo. Na dúvida
     não ligam: o sistema fica com o boletim anterior e sai um aviso. Testes com 242 boletins reais de 10/2025 a 08/2026
     (`coletor/testes/test_boletins.py` cobre os casos sintéticos, inclusive os falsos positivos a evitar).
-- **Robôs** (`.github/workflows/`): `atualiza.yml` a cada 3 horas e `vigia.yml` uma vez por dia, disparados pelo
+- **Robôs** (`.github/workflows/`): `atualiza.yml` e `vigia.yml` de hora em hora, disparados pelo
   cron-job.org (o `schedule` do Actions atrasa e fica só como rede de segurança). Falha ou aviso vira issue.
 
 ## Disparo pelo cron-job.org
@@ -41,8 +41,18 @@ Um job para cada workflow, com POST em
 
 | Job | Arquivo | Quando (America/Sao_Paulo) |
 |---|---|---|
-| Medições | `atualiza.yml` | minuto 20 de 0h, 3h, 6h, 9h, 12h, 15h, 18h e 21h |
-| Boletins | `vigia.yml` | 7h40, todo dia |
+| Medições | `atualiza.yml` | de hora em hora, no minuto 20 |
+| Boletins | `vigia.yml` | de hora em hora, no minuto 40 (os links do cadastro são conferidos uma vez por dia) |
+
+As duas rodadas usam a mesma fila (`concurrency: dados`) e só fazem commit quando o dado muda.
+
+## Medição sem informação
+
+Como no SAR, o açude sem medição nos últimos 30 dias aparece como "sem informação" (`JANELA_MEDICAO_DIAS` em
+`coletor/config.py`). A API atual já aplica a regra: pedindo uma data, devolve a medição mais próxima dentro de 30 dias.
+Se a COMAR quiser a última medição qualquer que seja a idade, basta pôr `BUSCA_MEDICAO_ANTERIOR_DIAS = 365` (por
+exemplo): o coletor pergunta de novo pelos açudes sem informação, recuando 30 dias por vez, e a página mostra o valor
+com o aviso da idade.
 
 ## Rodar localmente
 

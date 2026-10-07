@@ -22,13 +22,23 @@ CAMPOS_SISTEMA = ("nome", "ufs", "pagina_comar", "nota")
 CAMPOS_RESERVATORIO = ("res_id", "sistema", "nome", "uf", "lat", "lon")
 
 
+def na_janela(m, hoje):
+    """A medição que o painel mostra: a regra do SAR (JANELA_MEDICAO_DIAS) vale para qualquer fonte, salvo quando
+    BUSCA_MEDICAO_ANTERIOR_DIAS manda mostrar a última medição mais antiga (com o aviso da idade)."""
+    if m is None or m["data"] is None:
+        return None
+    idade = (hoje - m["data"]).days
+    limite = config.BUSCA_MEDICAO_ANTERIOR_DIAS or config.JANELA_MEDICAO_DIAS
+    return m if idade <= limite else None
+
+
 def alertas(m, hoje):
     if m is None or m["data"] is None:
-        return ["sem_medicao"]
+        return ["sem_informacao"]
     a = []
     if m["data"] > hoje:
         a.append("data_futura")
-    elif (hoje - m["data"]).days > config.DIAS_MEDICAO_ANTIGA:
+    elif (hoje - m["data"]).days > config.JANELA_MEDICAO_DIAS:
         a.append("medicao_antiga")
     if m["volume_pct"] is not None and not 0 <= m["volume_pct"] <= config.VOLUME_PCT_MAXIMO:
         a.append("volume_fora_da_faixa")
@@ -47,7 +57,7 @@ def montar(sistemas, reservatorios, bol, medicoes, fonte, agora):
     for r in reservatorios:
         if r["sistema"] not in no_painel:
             continue
-        m = medicoes.get(r["res_id"])
+        m = na_janela(medicoes.get(r["res_id"]), hoje)
         med = None
         if m and m["data"]:
             med = {**m, "data": m["data"].isoformat(), "dias": (hoje - m["data"]).days}
@@ -61,7 +71,7 @@ def montar(sistemas, reservatorios, bol, medicoes, fonte, agora):
                                  "e Alocação de Água (COMAR)", "url": config.PAGINA_COMAR, "lido_em": bol["lido_em"]},
         },
         "criterio": {"boletim_mais_recente": bol["mais_recente"], "rotulo": B.rotulo_mes(bol["mais_recente"]),
-                     "janela_meses": bol["janela_meses"]},
+                     "janela_meses": bol["janela_meses"], "janela_medicao_dias": config.JANELA_MEDICAO_DIAS},
         "sistemas": sis,
         "reservatorios": res,
     }
@@ -105,7 +115,8 @@ def main(argv=None):
     bol = json.loads(config.BOLETINS.read_text(encoding="utf-8"))
     entram = [r for r in reservatorios if bol["sistemas"].get(r["sistema"], {}).get("no_painel")]
     fonte = fontes.carregar(config.FONTE)
-    painel = montar(sistemas, reservatorios, bol, fonte.ultimas_medicoes(entram, agora.date()), fonte, agora)
+    medicoes = fonte.ultimas_medicoes(entram, agora.date(), busca_anterior_dias=config.BUSCA_MEDICAO_ANTERIOR_DIAS)
+    painel = montar(sistemas, reservatorios, bol, medicoes, fonte, agora)
 
     for r in painel["reservatorios"]:
         m = r["medicao"] or {}

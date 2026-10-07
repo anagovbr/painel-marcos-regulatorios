@@ -20,8 +20,14 @@ PAGINA_COMAR = "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/a
 # boletim mais recente publicado pela COMAR (Diego, 07/10/2026: só os açudes com boletim recente para linkar).
 JANELA_BOLETIM_MESES = 2
 
-# Conferências da medição: geram alerta ao lado do valor, nunca alteram o valor publicado pelo SAR.
-DIAS_MEDICAO_ANTIGA = 30
+# Regra do SAR (Nordeste e Semiárido): sem medição nos últimos 30 dias, o açude fica "sem informação". O painel aplica a
+# mesma regra, qualquer que seja a fonte (a API atual já aplica; a do novo SAR pode não aplicar).
+JANELA_MEDICAO_DIAS = 30
+# 0 = segue o SAR. Maior que 0 = para o açude sem informação, busca a última medição até este número de dias atrás e
+# mostra o valor com o aviso da idade (ex.: 365, se a COMAR quiser a última medição qualquer que seja a data).
+BUSCA_MEDICAO_ANTERIOR_DIAS = 0
+
+# Conferência da medição: gera alerta ao lado do valor, nunca altera o valor publicado pelo SAR.
 VOLUME_PCT_MAXIMO = 110.0
 
 FUSO = "America/Sao_Paulo"
