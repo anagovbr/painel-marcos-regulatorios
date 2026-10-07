@@ -32,3 +32,12 @@ BUSCA_MEDICAO_ANTERIOR_DIAS = 730
 VOLUME_PCT_MAXIMO = 110.0
 
 FUSO = "America/Sao_Paulo"
+
+# Quem recebe os avisos (issues): usuários do GitHub citados em cada issue. A citação notifica a pessoa por e-mail mesmo
+# sem acompanhar o repositório (que é público), o que vale também depois da transferência para a organização da ANA.
+AVISAR = ["dlpena"]
+
+
+def citacao():
+    """Linha 'cc @fulano @beltrano' para o fim das issues (vazia se ninguém estiver na lista)."""
+    return ("cc " + " ".join("@" + u for u in AVISAR)) if AVISAR else ""

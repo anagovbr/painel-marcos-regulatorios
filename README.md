@@ -54,6 +54,22 @@ uma data, devolve a medição mais próxima dentro de 30 dias. O painel mostra a
 (`BUSCA_MEDICAO_ANTERIOR_DIAS = 730` em `coletor/config.py`), e a página mostra o valor com o aviso "Sem medição nos
 últimos 30 dias". Sem nada em 2 anos, o açude fica "sem informação". Para voltar à regra do SAR, `0`.
 
+## Avisos
+
+Os avisos são issues deste repositório: o vigia abre uma quando algo pede atenção, e os robôs abrem uma quando falham.
+Cada issue cita os usuários de `AVISAR` em `coletor/config.py` (hoje `dlpena`); a citação notifica a pessoa por e-mail
+mesmo que ela não acompanhe o repositório, porque ele é público.
+
+## Transferência para a organização da ANA
+
+- O endereço do GitHub Pages muda (de `dlpena.github.io/...` para `<organização>.github.io/...`) e não há
+  redirecionamento: atualizar o link no SAR e onde mais tiver sido divulgado.
+- O token do cron-job.org precisa dar acesso ao repositório na organização (token fine-grained com a organização como
+  dona, que pode depender de aprovação de um administrador, ou um token criado pela própria ANA), e as URLs dos dois
+  jobs passam a ter o nome da organização.
+- Ligar o GitHub Pages no repositório transferido (branch `main`, pasta `/docs`) e conferir os workflows na aba Actions.
+- Rodar `vigia.yml` à mão uma vez e conferir que a issue de aviso, se houver, cita quem está em `AVISAR`.
+
 ## Rodar localmente
 
 ```

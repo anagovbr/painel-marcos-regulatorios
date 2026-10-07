@@ -129,6 +129,8 @@ def main(argv=None):
         with open(args.avisos, "w", encoding="utf-8") as f:
             f.write("Avisos do vigia dos boletins da COMAR em " + agora.strftime("%d/%m/%Y %H:%M") + ":\n\n")
             f.write("\n".join(f"- [ ] {a}" for a in avisos) + "\n")
+            if config.citacao():
+                f.write("\n" + config.citacao() + "\n")
     return 0
 
 

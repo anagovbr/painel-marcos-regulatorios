@@ -60,6 +60,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           T="Falha no vigia dos boletins"
+          CC=$(python -c "from coletor import config; print(config.citacao())" 2>/dev/null || true)
           if [ -z "$(gh issue list --state open --search "$T in:title" --json number --jq '.[0].number')" ]; then
-            gh issue create --title "$T" --body "A rodada ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} falhou. O painel continua com os últimos dados publicados."
+            gh issue create --title "$T" --body "A rodada ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} falhou. O painel continua com os últimos dados publicados. $CC"
           fi
