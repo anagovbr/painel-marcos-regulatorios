@@ -3,11 +3,11 @@ name: Vigia dos boletins da COMAR
 # De hora em hora: último boletim de cada sistema, quem entra e quem sai do painel, sistema novo, açudes trocados e links
 # quebrados. Os avisos viram uma issue; a mudança de entrada ou saída já sai publicada na mesma rodada.
 # Disparo principal: cron-job.org de hora em hora, por POST em .../actions/workflows/vigia.yml/dispatches; o schedule
-# fica como rede de segurança.
+# roda de hora em hora até o cron-job.org ser configurado (depois da transferência) e depois fica como rede de segurança.
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 13 * * *'
+    - cron: '40 * * * *'
 
 concurrency:
   group: dados

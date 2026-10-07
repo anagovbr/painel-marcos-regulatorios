@@ -44,7 +44,9 @@ Um job para cada workflow, com POST em
 | Medições | `atualiza.yml` | de hora em hora, no minuto 20 |
 | Boletins | `vigia.yml` | de hora em hora, no minuto 40 (os links do cadastro são conferidos uma vez por dia) |
 
-As duas rodadas usam a mesma fila (`concurrency: dados`) e só fazem commit quando o dado muda.
+As duas rodadas usam a mesma fila (`concurrency: dados`) e só fazem commit quando o dado muda. Enquanto o cron-job.org
+não estiver configurado (depende da chave criada pela TI depois da transferência), o `schedule` dos workflows roda os
+dois de hora em hora, com os atrasos eventuais do Actions; depois ele pode continuar como rede de segurança.
 
 ## Última medição disponível
 
