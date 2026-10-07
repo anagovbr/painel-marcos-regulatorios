@@ -1,11 +1,11 @@
 {
  "versao": 1,
- "gerado_em": "2026-10-07T18:32-03:00",
+ "gerado_em": "2026-10-07T18:44-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-10-07T18:32-03:00"
+   "lido_em": "2026-10-07T18:44-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
@@ -138,7 +138,7 @@
    "nome": "Sabugi",
    "ufs": "RN",
    "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/rn",
-   "nota": "O açude Santo Antônio aparece no SAR com o nome Sabugi.",
+   "nota": "No SAR, o açude Santo Antônio se chama Sabugi.",
    "boletim": {
     "mes": "2026-08",
     "rotulo": "agosto de 2026",
