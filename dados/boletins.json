@@ -1,5 +1,5 @@
 {
- "lido_em": "2026-10-07T16:49-03:00",
+ "lido_em": "2026-10-07T17:05-03:00",
  "fonte": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/",
  "mais_recente": "2026-08",
  "janela_meses": 2,
@@ -359,5 +359,26 @@
    "no_painel": true
   }
  },
- "links_quebrados": {}
+ "links_quebrados": {
+  "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/mr-brumado-e-riacho-do-paulo-resolucao-conjunta-ana-inema-no-589.pdf": "Brumado–Riacho do Paulo, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027": "Cocorobó, pagina_comar: ConnectionError",
+  "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/585-2017.pdf": "Ceraíma, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/marcos-regulatorios/Resoluo492020MRCHAMPRO.pdf": "Champrão, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaMirors20262027assinado.pdf": "Mirorós, termo_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/mr-miroros-resolucao-conjunta-ana-inema-no-587.pdf": "Mirorós, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/alocacao-de-agua/resolucao-70-2018-mr-tremedal.pdf": "Tremedal, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermoAlocaoguaTruvisco20262027assinado.pdf": "Truvisco, termo_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/mr-truvisco-resolucao-conjunta-ana-inema-no-590.pdf": "Truvisco, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaZabumbo20262027assinado.pdf": "Zabumbão, termo_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/termo-de-alocacao-de-agua-cocorobo-2026-2027-tarjado.pdf": "Cocorobó, termo_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/resolucao-cocorobo.pdf": "Cocorobó, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/rn/2026-2027": "Itans, pagina_comar: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaPooBranco20262027assinado.pdf": "Poço Branco, termo_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/resolucoes-e-normativos/regras-especiais-de-uso-da-agua/resolucao_60__itans.pdf": "Itans, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pe/2026-2027": "Poço da Cruz, pagina_comar: ConnectionError",
+  "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/resolucoes-e-normativos/regras-especiais-de-uso-da-agua/res-conjunta-ana-apac-n-56-de-02-09-2019-publicada-dou-em-16-10-2019-mr-serrinha-ii.pdf": "Serrinha II, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/marcos-regulatorios/Resoluo50_2020Jucazinho.pdf": "Jucazinho, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/alocacao-de-agua/res-54-2018-mr-poco-da-cruz.pdf": "Poço da Cruz, marco_link: ConnectionError",
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pi/2024-2025": "Bocaina, pagina_comar: ConnectionError"
+ }
 }
