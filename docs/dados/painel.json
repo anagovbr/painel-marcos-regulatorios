@@ -1,0 +1,1008 @@
+{
+ "versao": 1,
+ "gerado_em": "2026-10-07T16:54-03:00",
+ "fontes": {
+  "medicao": {
+   "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
+   "url": "https://www.ana.gov.br/sar/",
+   "lido_em": "2026-10-07T16:54-03:00"
+  },
+  "boletins": {
+   "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios",
+   "lido_em": "2026-10-07T16:49-03:00"
+  }
+ },
+ "criterio": {
+  "boletim_mais_recente": "2026-08",
+  "rotulo": "agosto de 2026",
+  "janela_meses": 2
+ },
+ "sistemas": [
+  {
+   "id": "pocoes-epitacio-pessoa",
+   "nome": "Poções–Epitácio Pessoa",
+   "ufs": "PB",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pb/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaEpitcioPessoa20262027assinado.pdf",
+   "vigencia": "julho de 2026 a junho de 2027",
+   "reuniao": "13 de julho de 2026",
+   "marco": "Resolução Conjunta ANA/AESA nº 126/2022",
+   "marco_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/marcos-regulatorios/Resoluo126ANAAESAMREPITACIOPESSOA.pdf",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pocoes-epitacio-pessoa_08-2026.pdf",
+    "publicado_em": "16/09/2026 16h00",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "sume",
+   "nome": "Sumé",
+   "ufs": "PB",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pb/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaSum20262027assinado.pdf",
+   "vigencia": "julho de 2026 a junho de 2027",
+   "reuniao": "14 de julho de 2026",
+   "marco": "Resolução ANA/AESA nº 118/2022",
+   "marco_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/marcos-regulatorios/RESOLUOCONJUNTAANA_AESAN118_2022.pdf",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sume_08-2026.pdf",
+    "publicado_em": "16/09/2026 16h00",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "curema-mae-dagua",
+   "nome": "Curema–Mãe d'Água",
+   "ufs": "PB e RN",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pb/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaCuremaeMeDgua20262027assinado.pdf",
+   "vigencia": "junho de 2026 a maio de 2027",
+   "reuniao": "17 de junho de 2026",
+   "marco": "Resolução ANA/AESA/IGARN nº 65/2019",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/resolucoes-e-normativos/regras-especiais-de-uso-da-agua/marcos-regulatorios/res-65-2019-curema-publicacao-retificada.pdf",
+   "nota": "O termo cita também a Resolução ANA nº 11/2019, alterada pela nº 56/2020.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/curema-mae-dagua_08-2026.pdf",
+    "publicado_em": "16/09/2026 16h00",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "lagoa-do-arroz",
+   "nome": "Lagoa do Arroz",
+   "ufs": "PB",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pb/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TERMODEALOCAODEGUALAGOADOARROZ20262027assinado.pdf",
+   "vigencia": "junho de 2026 a maio de 2027",
+   "reuniao": "15 de junho de 2026",
+   "marco": "Resolução ANA/AESA nº 75/2018",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/resolucoes-e-normativos/regras-especiais-de-uso-da-agua/marcos-regulatorios/resolucao-075-conjunta-ana__aesa.pdf",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/lagoa-do-arroz_08-2026.pdf",
+    "publicado_em": "16/09/2026 16h00",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "avidos-sao-goncalo",
+   "nome": "Engenheiro Ávidos–São Gonçalo",
+   "ufs": "PB",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pb/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TERMODEALOCAODEGUA20262027ENGAVIDOSESOGONALOassinado.pdf",
+   "vigencia": "junho de 2026 a maio de 2027",
+   "reuniao": "16 de junho de 2026",
+   "marco": "Resoluções ANA/AESA nº 76/2018 e nº 78/2021",
+   "marco_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/marcos-regulatorios/Resoluo78_2021assinaturaescaneada.pdf",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/avidos-sao-goncalo_08-2026.pdf",
+    "publicado_em": "16/09/2026 16h00",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "santa-ines",
+   "nome": "Santa Inês",
+   "ufs": "PB",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pb/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TERMODEALOCAODEGUA20262027SANTAINESassinado.pdf",
+   "vigencia": "junho de 2026 a maio de 2027",
+   "reuniao": "15 de julho de 2025",
+   "marco": "",
+   "marco_link": "",
+   "nota": "Sistema só com alocação de água, sem marco regulatório.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/santa-ines_08-2026.pdf",
+    "publicado_em": "16/09/2026 16h00",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "arg-mendubim",
+   "nome": "Armando Ribeiro Gonçalves–Mendubim",
+   "ufs": "RN",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/rn/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaARGMendubim20262027assinado.pdf",
+   "vigencia": "julho de 2026 a junho de 2027",
+   "reuniao": "18 de junho de 2026",
+   "marco": "Resolução Conjunta ANA/IGARN nº 73/2019",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/resolucoes-e-normativos/regras-especiais-de-uso-da-agua/resolucao-marco-regulatorio-arg.pdf",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/arg-mendubim_08-2026.pdf",
+    "publicado_em": "21/09/2026 10h54",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "cruzeta",
+   "nome": "Cruzeta",
+   "ufs": "RN",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/rn/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocacaodeAgua2026_2027_Cruzetaassinado.pdf",
+   "vigencia": "julho de 2026 a junho de 2027",
+   "reuniao": "10 de agosto de 2026",
+   "marco": "Resolução ANA nº 58/2019",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/resolucoes-e-normativos/regras-especiais-de-uso-da-agua/resolucao_58__cruzeta.pdf",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/cruzeta_08-2026.pdf",
+    "publicado_em": "21/09/2026 10h54",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "sabugi",
+   "nome": "Sabugi",
+   "ufs": "RN",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/rn/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaSabugi20262027tarjado.pdf",
+   "vigencia": "junho de 2026 a junho de 2027",
+   "reuniao": "4 de agosto de 2026",
+   "marco": "Resolução ANA nº 59/2019",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/resolucoes-e-normativos/regras-especiais-de-uso-da-agua/resolucao_59__sabugi.pdf",
+   "nota": "O açude Santo Antônio aparece no SAR com o nome Sabugi.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sabugi_08-2026.pdf",
+    "publicado_em": "21/09/2026 10h54",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "marechal-dutra",
+   "nome": "Marechal Dutra",
+   "ufs": "RN",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/rn/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocacaodeAguaMal_Dutra_20262027assinado.pdf",
+   "vigencia": "julho de 2026 a junho de 2027",
+   "reuniao": "12 de agosto de 2026",
+   "marco": "",
+   "marco_link": "",
+   "nota": "Sistema só com alocação de água. O sistema hídrico inclui também o açude Dourado, que não tem página no boletim.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/marechal-dutra_08-2026.pdf",
+    "publicado_em": "21/09/2026 10h54",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "anage",
+   "nome": "Anagé",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TERMODEALOCAODEGUA20262027ANAGassinado.pdf",
+   "vigencia": "maio de 2026 a abril de 2027",
+   "reuniao": "12 de maio de 2026",
+   "marco": "Resolução Conjunta ANA/INEMA nº 969/2017",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/alocacao-de-agua/novo-mr-anage-969-2017.pdf",
+   "nota": "A Resolução nº 102/2018 alterou este marco.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/anage_08-2026.pdf",
+    "publicado_em": "16/09/2026 09h23",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "brumado-riacho-do-paulo",
+   "nome": "Brumado–Riacho do Paulo",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaBrumadoRP20262027assinado.pdf",
+   "vigencia": "maio de 2026 a maio de 2027",
+   "reuniao": "27 de maio de 2026",
+   "marco": "Resolução Conjunta ANA/INEMA nº 589/2017",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/mr-brumado-e-riacho-do-paulo-resolucao-conjunta-ana-inema-no-589.pdf",
+   "nota": "A Resolução nº 102/2018 alterou este marco.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/brumado-riacho-do-paulo_08-2026.pdf",
+    "publicado_em": "16/09/2026 09h23",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "ceraima",
+   "nome": "Ceraíma",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027",
+   "campanha": "",
+   "termo_link": "",
+   "vigencia": "",
+   "reuniao": "",
+   "marco": "Resolução ANA nº 585/2017",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/585-2017.pdf",
+   "nota": "O termo de alocação 2026/2027 ainda não está publicado na página da COMAR.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ceraima_08-2026.pdf",
+    "publicado_em": "16/09/2026 09h23",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "champrao",
+   "nome": "Champrão",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027",
+   "campanha": "",
+   "termo_link": "",
+   "vigencia": "",
+   "reuniao": "",
+   "marco": "Resolução nº 49/2020",
+   "marco_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/marcos-regulatorios/Resoluo492020MRCHAMPRO.pdf",
+   "nota": "O termo de alocação 2026/2027 ainda não está publicado na página da COMAR.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/champrao_08-2026.pdf",
+    "publicado_em": "21/09/2026 10h54",
+    "campanha": null
+   }
+  },
+  {
+   "id": "miroros",
+   "nome": "Mirorós",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaMirors20262027assinado.pdf",
+   "vigencia": "abril de 2026 a março de 2027",
+   "reuniao": "10 de junho de 2026",
+   "marco": "Resolução Conjunta ANA/INEMA nº 587/2017",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/mr-miroros-resolucao-conjunta-ana-inema-no-587.pdf",
+   "nota": "A Resolução nº 102/2018 alterou este marco.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/miroros_08-2026.pdf",
+    "publicado_em": "16/09/2026 09h24",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "tremedal",
+   "nome": "Tremedal",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027",
+   "campanha": "",
+   "termo_link": "",
+   "vigencia": "",
+   "reuniao": "",
+   "marco": "Resolução nº 70/2018",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/alocacao-de-agua/resolucao-70-2018-mr-tremedal.pdf",
+   "nota": "O termo de alocação 2026/2027 ainda não está publicado na página da COMAR.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/tremedal_08-2026.pdf",
+    "publicado_em": "21/09/2026 10h54",
+    "campanha": null
+   }
+  },
+  {
+   "id": "truvisco",
+   "nome": "Truvisco",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermoAlocaoguaTruvisco20262027assinado.pdf",
+   "vigencia": "junho de 2026 a abril de 2027",
+   "reuniao": "27 de maio de 2026",
+   "marco": "Resolução ANA/INEMA nº 590/2017",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/mr-truvisco-resolucao-conjunta-ana-inema-no-590.pdf",
+   "nota": "A Resolução nº 102/2018 alterou este marco.",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/truvisco_08-2026.pdf",
+    "publicado_em": "16/09/2026 09h24",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "zabumbao",
+   "nome": "Zabumbão",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaZabumbo20262027assinado.pdf",
+   "vigencia": "junho de 2025 a abril de 2026",
+   "reuniao": "28 de maio de 2026",
+   "marco": "Resolução Conjunta ANA/INEMA nº 119/2022",
+   "marco_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/marcos-regulatorios/RESOLUOCONJUNTAANA_INEMAN119_2022.pdf",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/zabumbao_08-2026.pdf",
+    "publicado_em": "16/09/2026 09h24",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "estreito-cova-da-mandioca",
+   "nome": "Estreito–Cova da Mandioca",
+   "ufs": "BA e MG",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermoAlocaoguaEstreitoCovadaMandioca20262027assinado.pdf",
+   "vigencia": "maio de 2026 a abril de 2027",
+   "reuniao": "14 de maio de 2026",
+   "marco": "Resolução ANA nº 90/2021",
+   "marco_link": "",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/estreito-cova-da-mandioca_08-2026.pdf",
+    "publicado_em": "16/09/2026 09h24",
+    "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "bico-da-pedra",
+   "nome": "Bico da Pedra",
+   "ufs": "MG",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/mg/2026-2027",
+   "campanha": "2026-2027",
+   "termo_link": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaBicodaPedra20262027assinado.pdf",
+   "vigencia": "maio de 2026 a abril de 2027",
+   "reuniao": "13 de maio de 2026",
+   "marco": "Resolução ANA/IGAM nº 1.564/2017",
+   "marco_link": "https://www.gov.br/ana/pt-br/todos-os-documentos-do-portal/documentos-sre/marcos-regulatorios/resolucao-ana-igam-1564-2017.pdf",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-08",
+    "rotulo": "agosto de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/bico-da-pedra_08-2026.pdf",
+    "publicado_em": "16/09/2026 09h23",
+    "campanha": "2026-2027"
+   }
+  }
+ ],
+ "reservatorios": [
+  {
+   "res_id": 12349,
+   "sistema": "pocoes-epitacio-pessoa",
+   "nome": "Poções",
+   "uf": "PB",
+   "lat": -7.88891,
+   "lon": -36.99832,
+   "estado": "VERDE",
+   "estado_detalhe": "garantia de 12 meses",
+   "estado_data_ref": "30/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 103.11,
+    "volume_hm3": 30.79,
+    "capacidade_hm3": 29.86,
+    "cota_m": 45.62,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12091,
+   "sistema": "pocoes-epitacio-pessoa",
+   "nome": "Camalaú",
+   "uf": "PB",
+   "lat": -7.88539,
+   "lon": -36.83684,
+   "estado": "VERDE",
+   "estado_detalhe": "garantia de 12 meses",
+   "estado_data_ref": "30/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.5",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 96.86,
+    "volume_hm3": 46.6,
+    "capacidade_hm3": 48.11,
+    "cota_m": 327.02,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12172,
+   "sistema": "pocoes-epitacio-pessoa",
+   "nome": "Epitácio Pessoa",
+   "uf": "PB",
+   "lat": -7.48732,
+   "lon": -36.13956,
+   "estado": "VERDE",
+   "estado_detalhe": "garantia de 7 meses; considera o aporte do PISF",
+   "estado_data_ref": "30/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.7",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 45.1,
+    "volume_hm3": 210.41,
+    "capacidade_hm3": 466.53,
+    "cota_m": 370.68,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12447,
+   "sistema": "sume",
+   "nome": "Sumé",
+   "uf": "PB",
+   "lat": -7.672,
+   "lon": -36.89952,
+   "estado": "VERMELHO",
+   "estado_detalhe": "situação de escassez hídrica",
+   "estado_data_ref": "30/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 13.78,
+    "volume_hm3": 6.18,
+    "capacidade_hm3": 44.86,
+    "cota_m": 67.75,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12143,
+   "sistema": "curema-mae-dagua",
+   "nome": "Curema",
+   "uf": "PB",
+   "lat": -7.02355,
+   "lon": -37.94982,
+   "estado": "AMARELO",
+   "estado_detalhe": "",
+   "estado_data_ref": "29/05/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 41.32,
+    "volume_hm3": 307.47,
+    "capacidade_hm3": 744.14,
+    "cota_m": 236.94,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12261,
+   "sistema": "curema-mae-dagua",
+   "nome": "Mãe d'Água",
+   "uf": "PB",
+   "lat": -7.02418,
+   "lon": -37.98535,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "29/05/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.5",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 41.38,
+    "volume_hm3": 225.51,
+    "capacidade_hm3": 545.02,
+    "cota_m": 237.01,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12246,
+   "sistema": "lagoa-do-arroz",
+   "nome": "Lagoa do Arroz",
+   "uf": "PB",
+   "lat": -6.79821,
+   "lon": -38.57026,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "31/05/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 49.45,
+    "volume_hm3": 39.75,
+    "capacidade_hm3": 80.39,
+    "cota_m": 98.07,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12166,
+   "sistema": "avidos-sao-goncalo",
+   "nome": "Engenheiro Ávidos",
+   "uf": "PB",
+   "lat": -6.98635,
+   "lon": -38.45374,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "31/05/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 48.73,
+    "volume_hm3": 143.07,
+    "capacidade_hm3": 293.62,
+    "cota_m": 310.81,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12409,
+   "sistema": "avidos-sao-goncalo",
+   "nome": "São Gonçalo",
+   "uf": "PB",
+   "lat": -6.84537,
+   "lon": -38.3116,
+   "estado": "AMARELO",
+   "estado_detalhe": "",
+   "estado_data_ref": "31/05/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.5",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 50.2,
+    "volume_hm3": 20.37,
+    "capacidade_hm3": 40.58,
+    "cota_m": 243.13,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12395,
+   "sistema": "santa-ines",
+   "nome": "Santa Inês",
+   "uf": "PB",
+   "lat": -7.6296,
+   "lon": -38.59549,
+   "estado": "",
+   "estado_detalhe": "o termo não declara estado hidrológico",
+   "estado_data_ref": "",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.1",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 16.0,
+    "volume_hm3": 4.18,
+    "capacidade_hm3": 26.12,
+    "cota_m": 87.18,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12164,
+   "sistema": "arg-mendubim",
+   "nome": "Armando Ribeiro Gonçalves",
+   "uf": "RN",
+   "lat": -5.66943,
+   "lon": -36.88548,
+   "estado": "AMARELO",
+   "estado_detalhe": "o volume de 18/06/2026 correspondia ao EH Vermelho; o termo prevê a transferência de 280 hm³ de Oiticica (item 1.3)",
+   "estado_data_ref": "18/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.4",
+   "medicao": {
+    "data": "2026-10-06",
+    "volume_pct": 37.35,
+    "volume_hm3": 886.41,
+    "capacidade_hm3": 2373.07,
+    "cota_m": 44.24,
+    "dias": 1
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12277,
+   "sistema": "arg-mendubim",
+   "nome": "Mendubim",
+   "uf": "RN",
+   "lat": -5.64931,
+   "lon": -36.93003,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "18/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.6",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 66.92,
+    "volume_hm3": 51.93,
+    "capacidade_hm3": 77.6,
+    "cota_m": 43.44,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12140,
+   "sistema": "cruzeta",
+   "nome": "Cruzeta",
+   "uf": "RN",
+   "lat": -6.41004,
+   "lon": -36.79688,
+   "estado": "VERMELHO",
+   "estado_detalhe": "",
+   "estado_data_ref": "30/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 25.69,
+    "volume_hm3": 6.05,
+    "capacidade_hm3": 23.55,
+    "cota_m": 119.56,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12386,
+   "sistema": "sabugi",
+   "nome": "Santo Antônio",
+   "uf": "RN",
+   "lat": -6.64616,
+   "lon": -37.19835,
+   "estado": "VERMELHO",
+   "estado_detalhe": "situação de escassez hídrica",
+   "estado_data_ref": "30/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 7.19,
+    "volume_hm3": 4.45,
+    "capacidade_hm3": 61.85,
+    "cota_m": 87.72,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12108,
+   "sistema": "sabugi",
+   "nome": "Carnaúba",
+   "uf": "RN",
+   "lat": -6.62915,
+   "lon": -37.14871,
+   "estado": "AMARELO",
+   "estado_detalhe": "",
+   "estado_data_ref": "30/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.5",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 35.59,
+    "volume_hm3": 9.15,
+    "capacidade_hm3": 25.71,
+    "cota_m": 177.63,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12271,
+   "sistema": "marechal-dutra",
+   "nome": "Marechal Dutra",
+   "uf": "RN",
+   "lat": -6.42542,
+   "lon": -36.60239,
+   "estado": "AMARELO",
+   "estado_detalhe": "",
+   "estado_data_ref": "30/06/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.2",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 32.08,
+    "volume_hm3": 14.25,
+    "capacidade_hm3": 44.42,
+    "cota_m": 293.66,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12020,
+   "sistema": "anage",
+   "nome": "Anagé",
+   "uf": "BA",
+   "lat": -14.63182,
+   "lon": -41.18687,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "30/04/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 73.05,
+    "volume_hm3": 167.34,
+    "capacidade_hm3": 229.09,
+    "cota_m": 408.58,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12258,
+   "sistema": "brumado-riacho-do-paulo",
+   "nome": "Luiz Vieira (Brumado)",
+   "uf": "BA",
+   "lat": -13.56847,
+   "lon": -41.82409,
+   "estado": "AMARELO",
+   "estado_detalhe": "",
+   "estado_data_ref": "30/05/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-02",
+    "volume_pct": 52.94,
+    "volume_hm3": 52.6,
+    "capacidade_hm3": 99.35,
+    "cota_m": 1019.05,
+    "dias": 5
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12374,
+   "sistema": "brumado-riacho-do-paulo",
+   "nome": "Riacho do Paulo",
+   "uf": "BA",
+   "lat": -13.75864,
+   "lon": -41.8039,
+   "estado": "VERMELHO",
+   "estado_detalhe": "",
+   "estado_data_ref": "31/05/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.5",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 0.82,
+    "volume_hm3": 0.44,
+    "capacidade_hm3": 53.8,
+    "cota_m": 445.07,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12119,
+   "sistema": "ceraima",
+   "nome": "Ceraíma",
+   "uf": "BA",
+   "lat": -14.28383,
+   "lon": -42.6819,
+   "estado": "",
+   "estado_detalhe": "termo 2026/2027 não publicado",
+   "estado_data_ref": "",
+   "estado_fonte": "",
+   "medicao": {
+    "data": "2026-10-02",
+    "volume_pct": 30.91,
+    "volume_hm3": 15.79,
+    "capacidade_hm3": 51.09,
+    "cota_m": 505.09,
+    "dias": 5
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12121,
+   "sistema": "champrao",
+   "nome": "Champrão",
+   "uf": "BA",
+   "lat": -14.90887,
+   "lon": -41.96288,
+   "estado": "",
+   "estado_detalhe": "termo 2026/2027 não publicado",
+   "estado_data_ref": "",
+   "estado_fonte": "",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 38.21,
+    "volume_hm3": 1.75,
+    "capacidade_hm3": 4.58,
+    "cota_m": 697.15,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12279,
+   "sistema": "miroros",
+   "nome": "Mirorós",
+   "uf": "BA",
+   "lat": -11.46051,
+   "lon": -42.34422,
+   "estado": "VERMELHO",
+   "estado_detalhe": "situação de escassez hídrica",
+   "estado_data_ref": "31/03/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-06",
+    "volume_pct": 7.88,
+    "volume_hm3": 13.16,
+    "capacidade_hm3": 166.92,
+    "cota_m": 498.81,
+    "dias": 1
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12468,
+   "sistema": "tremedal",
+   "nome": "Tremedal",
+   "uf": "BA",
+   "lat": -14.98052,
+   "lon": -41.40402,
+   "estado": "",
+   "estado_detalhe": "termo 2026/2027 não publicado",
+   "estado_data_ref": "",
+   "estado_fonte": "",
+   "medicao": null,
+   "alertas": [
+    "sem_medicao"
+   ]
+  },
+  {
+   "res_id": 12472,
+   "sistema": "truvisco",
+   "nome": "Truvisco",
+   "uf": "BA",
+   "lat": -14.54689,
+   "lon": -42.32103,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "30/04/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-06",
+    "volume_pct": 29.85,
+    "volume_hm3": 13.51,
+    "capacidade_hm3": 45.26,
+    "cota_m": 617.08,
+    "dias": 1
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12491,
+   "sistema": "zabumbao",
+   "nome": "Zabumbão",
+   "uf": "BA",
+   "lat": -13.43833,
+   "lon": -42.215,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "29/04/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 69.29,
+    "volume_hm3": 42.5,
+    "capacidade_hm3": 61.34,
+    "cota_m": 665.28,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12176,
+   "sistema": "estreito-cova-da-mandioca",
+   "nome": "Estreito",
+   "uf": "BA",
+   "lat": -14.82818,
+   "lon": -42.80833,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "30/04/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-09-19",
+    "volume_pct": 62.05,
+    "volume_hm3": 40.77,
+    "capacidade_hm3": 65.71,
+    "cota_m": 493.68,
+    "dias": 18
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12136,
+   "sistema": "estreito-cova-da-mandioca",
+   "nome": "Cova da Mandioca",
+   "uf": "BA",
+   "lat": -14.76754,
+   "lon": -42.79525,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "30/04/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 3.3",
+   "medicao": {
+    "data": "2026-10-05",
+    "volume_pct": 65.13,
+    "volume_hm3": 85.61,
+    "capacidade_hm3": 131.44,
+    "cota_m": 493.3,
+    "dias": 2
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12054,
+   "sistema": "bico-da-pedra",
+   "nome": "Bico da Pedra",
+   "uf": "MG",
+   "lat": -15.82909,
+   "lon": -43.26239,
+   "estado": "VERDE",
+   "estado_detalhe": "",
+   "estado_data_ref": "30/04/2026",
+   "estado_fonte": "Termo de Alocação de Água 2026/2027, item 1.3",
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 56.04,
+    "volume_hm3": 296.78,
+    "capacidade_hm3": 529.59,
+    "cota_m": 546.78,
+    "dias": 0
+   },
+   "alertas": []
+  }
+ ]
+}

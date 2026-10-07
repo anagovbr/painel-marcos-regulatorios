@@ -1,0 +1,38 @@
+﻿res_id;sistema;nome;nome_boletim;nome_sar;uf;lat;lon;estado;estado_detalhe;estado_data_ref;estado_fonte;termo_data_ref;termo_cota_m;termo_volume_hm3
+12349;pocoes-epitacio-pessoa;Poções;POÇÕES;POÇÕES;PB;-7.88891;-36.99832;VERDE;garantia de 12 meses;30/06/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/06/2026;45,62;30,79
+12091;pocoes-epitacio-pessoa;Camalaú;CAMALAÚ;CAMALAÚ;PB;-7.88539;-36.83684;VERDE;garantia de 12 meses;30/06/2026;Termo de Alocação de Água 2026/2027, item 1.5;30/06/2026;327,37;49,53
+12172;pocoes-epitacio-pessoa;Epitácio Pessoa;EPITÁCIO PESSOA;EPITÁCIO PESSOA;PB;-7.48732;-36.13956;VERDE;"garantia de 7 meses; considera o aporte do PISF";30/06/2026;Termo de Alocação de Água 2026/2027, item 1.7;30/06/2026;371,47;231,43
+12447;sume;Sumé;SUMÉ;SUMÉ;PB;-7.672;-36.89952;VERMELHO;situação de escassez hídrica;30/06/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/06/2026;68,50;7,51
+12143;curema-mae-dagua;Curema;CUREMA;CUREMA;PB;-7.02355;-37.94982;AMARELO;;29/05/2026;Termo de Alocação de Água 2026/2027, item 1.3;29/05/2026;238,52;369,90
+12261;curema-mae-dagua;Mãe d'Água;MÃE D'ÁGUA;MÃE D'ÁGUA;PB;-7.02418;-37.98535;VERDE;;29/05/2026;Termo de Alocação de Água 2026/2027, item 1.5;29/05/2026;238,56;272,17
+12246;lagoa-do-arroz;Lagoa do Arroz;LAGOA DO ARROZ;LAGOA DO ARROZ;PB;-6.79821;-38.57026;VERDE;;31/05/2026;Termo de Alocação de Água 2026/2027, item 1.3;31/05/2026;99,49;52,07
+12166;avidos-sao-goncalo;Engenheiro Ávidos;ENG. AVIDOS;ENGENHEIRO ÁVIDOS;PB;-6.98635;-38.45374;VERDE;;31/05/2026;Termo de Alocação de Água 2026/2027, item 1.3;31/05/2026;312,36;173,7
+12409;avidos-sao-goncalo;São Gonçalo;SÃO GONÇALO;SÃO GONÇALO;PB;-6.84537;-38.3116;AMARELO;;31/05/2026;Termo de Alocação de Água 2026/2027, item 1.5;31/05/2026;243,68;22,6
+12395;santa-ines;Santa Inês;SANTA INÊS;SANTA INÊS;PB;-7.6296;-38.59549;;o termo não declara estado hidrológico;;Termo de Alocação de Água 2026/2027, item 1.1;31/05/2026;88,50;5,58
+12164;arg-mendubim;Armando Ribeiro Gonçalves;ARMANDO RIBEIRO GONÇALVES;ENG. ARMANDO RIBEIRO GONÇALVES;RN;-5.66943;-36.88548;AMARELO;"o volume de 18/06/2026 correspondia ao EH Vermelho; o termo prevê a transferência de 280 hm³ de Oiticica (item 1.3)";18/06/2026;Termo de Alocação de Água 2026/2027, item 1.4;18/06/2026;45,68;1.034
+12277;arg-mendubim;Mendubim;MENDUBIM;MENDUBIM;RN;-5.64931;-36.93003;VERDE;;18/06/2026;Termo de Alocação de Água 2026/2027, item 1.6;18/06/2026;44,36;60,3
+12140;cruzeta;Cruzeta;CRUZETA;CRUZETA;RN;-6.41004;-36.79688;VERMELHO;;30/06/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/06/2026;120,32;8,53
+12386;sabugi;Santo Antônio;SANTO ANTÔNIO;SABUGI;RN;-6.64616;-37.19835;VERMELHO;situação de escassez hídrica;30/06/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/06/2026;88,28;5,79
+12108;sabugi;Carnaúba;CARNAÚBA;CARNAÚBA;RN;-6.62915;-37.14871;AMARELO;;30/06/2026;Termo de Alocação de Água 2026/2027, item 1.5;30/06/2026;178,46;11,52
+12271;marechal-dutra;Marechal Dutra;MARECHAL DUTRA;MARECHAL DUTRA;RN;-6.42542;-36.60239;AMARELO;;30/06/2026;Termo de Alocação de Água 2026/2027, item 1.2;30/06/2026;294,37;17,13
+12020;anage;Anagé;ANAGÉ;ANAGÉ;BA;-14.63182;-41.18687;VERDE;;30/04/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/04/2026;410,41;198,34
+12258;brumado-riacho-do-paulo;Luiz Vieira (Brumado);LUIZ VIEIRA (BRUMADO);LUIZ VIEIRA (BRUMADO);BA;-13.56847;-41.82409;AMARELO;;30/05/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/05/2026;1020,89;63,4
+12374;brumado-riacho-do-paulo;Riacho do Paulo;RIACHO DO PAULO;RIACHO DO PAULO;BA;-13.75864;-41.8039;VERMELHO;;31/05/2026;Termo de Alocação de Água 2026/2027, item 1.5;31/05/2026;447,77;3,4
+12119;ceraima;Ceraíma;CERAÍMA;CERAIMA;BA;-14.28383;-42.6819;;termo 2026/2027 não publicado;;;;;
+12121;champrao;Champrão;CHAMPRÃO;CHAMPRÃO;BA;-14.90887;-41.96288;;termo 2026/2027 não publicado;;;;;
+12279;miroros;Mirorós;MIRORÓS;MIRORÓS (MANOEL NOVAIS);BA;-11.46051;-42.34422;VERMELHO;situação de escassez hídrica;31/03/2026;Termo de Alocação de Água 2026/2027, item 1.3;31/03/2026;501,77;19,6
+12468;tremedal;Tremedal;TREMEDAL;TREMEDAL;BA;-14.98052;-41.40402;;termo 2026/2027 não publicado;;;;;
+12472;truvisco;Truvisco;TRUVISCO;TRUVISCO;BA;-14.54689;-42.32103;VERDE;;30/04/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/04/2026;619,33;19,63
+12491;zabumbao;Zabumbão;ZABUMBÃO;ZABUMBÃO;BA;-13.43833;-42.215;VERDE;;29/04/2026;Termo de Alocação de Água 2026/2027, item 1.3;29/04/2026;666,53;55,12
+12176;estreito-cova-da-mandioca;Estreito;ESTREITO;ESTREITO;BA;-14.82818;-42.80833;VERDE;;30/04/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/04/2026;495,26;56,48
+12136;estreito-cova-da-mandioca;Cova da Mandioca;COVA DA MANDIOCA;COVA DA MANDIOCA;BA;-14.76754;-42.79525;VERDE;;30/04/2026;Termo de Alocação de Água 2026/2027, item 3.3;30/04/2026;495,09;116,4
+12054;bico-da-pedra;Bico da Pedra;BICO DA PEDRA;BICO DA PEDRA;MG;-15.82909;-43.26239;VERDE;;30/04/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/04/2026;548,84;362,80
+12022;andorinha-ii;Andorinha II;ANDORINHA II;ANDORINHA II;BA;-10.30119;-39.78479;VERDE;;30/06/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/06/2026;391,10;8,34
+12042;barra-do-jua;Barra do Juá;BARRA DO JUÁ;BARRA DO JUÁ;PE;-8.44839;-38.07395;VERMELHO;;31/05/2026;Termo de Alocação de Água 2026/2027, item 1.3;31/05/2026;394,38;8,5
+12129;cocorobo;Cocorobó;COCOROBÓ;COCOROBÓ;BA;-9.88227;-39.039;VERDE;;30/04/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/04/2026;354,74;165
+12340;poco-branco;Poço Branco;POÇO BRANCO;POÇO BRANCO (JOÃO BATISTA DO REGO);RN;-5.63328;-35.65479;VERDE;;30/06/2026;Termo de Alocação de Água 2026/2027, item 1.3;30/06/2026;72,19;81,55
+12216;itans;Itans;ITANS;ITANS;RN;-6.49007;-37.06659;;termo 2026/2027 não publicado;;;;;
+12431;serrinha-ii;Serrinha II;SERRINHA II;SERRINHA II;PE;-8.20771;-38.53242;;termo 2026/2027 não publicado;;;;;
+12243;jucazinho;Jucazinho;JUCAZINHO;JUCAZINHO;PE;-7.96677;-35.742;;termo 2026/2027 não publicado;;;;;
+12168;poco-da-cruz;Poço da Cruz;POÇO DA CRUZ;ENGENHEIRO FRANCISCO SABOIA;PE;-8.50876;-37.70523;;termo 2026/2027 não publicado;;;;;
+12058;bocaina;Bocaina;BOCAINA;BOCAINA;PI;-6.91366;-41.30701;;termo 2026/2027 não publicado;;;;;

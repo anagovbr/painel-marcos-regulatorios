@@ -1,0 +1,65 @@
+name: Vigia dos boletins da COMAR
+
+# Uma vez por dia: último boletim de cada sistema, quem entra e quem sai do painel, sistema novo, açudes trocados e links
+# quebrados. Os avisos viram uma issue; a mudança de entrada ou saída já sai publicada na mesma rodada.
+# Disparo principal: cron-job.org às 7h40 (Brasília), por POST em .../actions/workflows/vigia.yml/dispatches; o schedule
+# fica como rede de segurança.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 13 * * *'
+
+concurrency:
+  group: dados
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  vigia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Boletins da COMAR
+        run: python -m coletor.vigia_boletins --avisos avisos.md
+
+      - name: Medições do SAR
+        run: python -m coletor.atualiza
+
+      - name: Publicar se mudou
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dados/boletins.json docs/dados/painel.json
+          if git diff --cached --quiet; then echo "sem mudança"; exit 0; fi
+          git commit -m "dados: boletins da COMAR $(TZ=America/Sao_Paulo date '+%d/%m/%Y %H:%M') BRT"
+          git pull --rebase
+          git push
+
+      - name: Abrir issue com os avisos
+        if: hashFiles('avisos.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue create --title "Avisos do vigia dos boletins ($(TZ=America/Sao_Paulo date '+%d/%m/%Y'))" --body-file avisos.md
+
+      - name: Abrir issue se falhou
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          T="Falha no vigia dos boletins"
+          if [ -z "$(gh issue list --state open --search "$T in:title" --json number --jq '.[0].number')" ]; then
+            gh issue create --title "$T" --body "A rodada ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} falhou. O painel continua com os últimos dados publicados."
+          fi

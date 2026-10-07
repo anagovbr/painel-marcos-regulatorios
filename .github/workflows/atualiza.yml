@@ -1,0 +1,56 @@
+name: Atualiza medições
+
+# Lê a última medição de cada açude do painel na fonte (coletor/config.py, FONTE) e publica docs/dados/painel.json
+# quando o conteúdo muda. Disparo principal: cron-job.org a cada 3 horas, por POST em
+# /repos/dlpena/painel-marcos-regulatorios/actions/workflows/atualiza.yml/dispatches (o schedule do Actions pode atrasar
+# mais de 1 hora em repositório gratuito e fica só como rede de segurança).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 */6 * * *'
+
+concurrency:
+  group: dados
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  atualiza:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Medições do SAR
+        run: python -m coletor.atualiza
+
+      - name: Publicar se mudou
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/dados/painel.json
+          if git diff --cached --quiet; then echo "sem mudança"; exit 0; fi
+          git commit -m "dados: medições do SAR $(TZ=America/Sao_Paulo date '+%d/%m/%Y %H:%M') BRT"
+          git pull --rebase
+          git push
+
+      - name: Abrir issue se falhou
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          T="Falha na atualização das medições"
+          if [ -z "$(gh issue list --state open --search "$T in:title" --json number --jq '.[0].number')" ]; then
+            gh issue create --title "$T" --body "A rodada ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} falhou. O painel continua com os últimos dados publicados."
+          fi
