@@ -14,13 +14,48 @@
   }
 }
 
-/* filtro único da página (UF e busca), acima do mapa: vale para o mapa e para as duas visualizações dos açudes */
+/* filtro único da página (UF e busca), acima do mapa: vale para o mapa e para as duas visualizações dos açudes. Fica
+   preso no topo ao rolar, de borda a borda da área de conteúdo (as margens negativas compensam o recuo do .wrap) */
 .filtros {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 14px;
-  margin: 0 0 18px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  margin: 0 -24px 18px;
+  padding: 10px 24px;
+  background: rgba(244, 247, 250, 0.96);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.filtros.preso {
+  border-bottom-color: var(--linha);
+  box-shadow: 0 8px 16px -14px rgba(28, 55, 130, 0.35);
+}
+@media (max-width: 520px) {
+  .filtros {
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+}
+@media (min-width: 1024px) {
+  .filtros {
+    margin-inline: -40px;
+    padding-inline: 40px;
+  }
+}
+/* rolagem por âncora: a altura da barra presa entra no scroll-padding (painel.js); a seção só soma esta folga */
+.secao {
+  scroll-margin-top: 16px;
+}
+/* no celular, o índice em chips deixa de ficar preso: a barra presa é a dos filtros */
+@media (max-width: 1023px) {
+  .indice {
+    position: static;
+  }
 }
 .filtros .presets {
   display: flex;
@@ -229,6 +264,11 @@
     flex: 1;
     justify-content: center;
     padding-inline: 8px;
+  }
+}
+@media (max-width: 420px) {
+  .so-largo {
+    display: none;
   }
 }
 .vazio {

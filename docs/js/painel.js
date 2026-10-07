@@ -113,7 +113,7 @@ function esqueleto(pag) {
     `reuniões com órgãos gestores, operadores de reservatórios e usuários, são registradas no Termo de Alocação de Água ` +
     `e acompanhadas em boletins mensais. Esta página reúne os açudes desses sistemas, com a última medição de cada um e ` +
     `o boletim mais recente.</p></div>` +
-    `<div class="filtros" role="search" aria-label="Filtrar açudes"><div class="presets" id="presets-uf" role="group" aria-label="Filtrar por UF"></div>` +
+    `<div id="antes-filtros" aria-hidden="true"></div><div class="filtros" role="search" aria-label="Filtrar açudes"><div class="presets" id="presets-uf" role="group" aria-label="Filtrar por UF"></div>` +
     `<input type="search" id="busca" placeholder="Buscar açude ou sistema" aria-label="Buscar açude ou sistema">` +
     `<span class="contagem" id="contagem" aria-live="polite"></span></div>` +
     sec("mapa", 1, "Mapa", "Cada triângulo é um açude. <span class=\"dica\">Clique ou toque para ver os dados dele.</span>",
@@ -157,6 +157,18 @@ function filtros(pag) {
     pag.busca = semAcento(busca.value.trim());
     aplicar(pag);
   });
+  barraPresa();
+}
+/* barra de filtros presa no topo: marca quando está presa (linha embaixo) e desconta a altura dela da rolagem por
+   âncora, para o título da seção não ficar escondido sob a barra */
+function barraPresa() {
+  const barra = document.querySelector(".filtros");
+  new IntersectionObserver(([e]) => barra.classList.toggle("preso", !e.isIntersecting)).observe(
+    document.getElementById("antes-filtros")
+  );
+  const folga = () => (document.documentElement.style.scrollPaddingTop = barra.offsetHeight + "px");
+  new ResizeObserver(folga).observe(barra);
+  folga();
 }
 function visiveis(pag) {
   return pag.P.reservatorios.filter(r => {
@@ -252,7 +264,9 @@ function irPara(pag, id) {
 /* ---------- 2. açudes: por sistema hídrico (cartões) ou tabela ---------- */
 function vistas(pag) {
   const v = document.getElementById("vistas");
-  v.innerHTML = VISTAS.map(([id, t]) => `<button type="button" role="tab" data-vista="${id}">${ICONE[id]}${t}</button>`).join("");
+  // em tela estreita "Por sistema hídrico" quebraria em duas linhas: o "hídrico" some (o nome acessível fica inteiro)
+  const rotulo = t => t.replace(" hídrico", '<span class="so-largo"> hídrico</span>');
+  v.innerHTML = VISTAS.map(([id, t]) => `<button type="button" role="tab" data-vista="${id}" aria-label="${t}">${ICONE[id]}${rotulo(t)}</button>`).join("");
   v.addEventListener("click", ev => {
     const b = ev.target.closest("button");
     if (b) trocarVista(pag, b.dataset.vista);
