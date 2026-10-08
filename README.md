@@ -92,6 +92,19 @@ secrets, os robôs funcionam normalmente e o log diz que o e-mail não foi envia
   do robô for usado, um Admin cadastra de novo os secrets `AVISO_*` (não acompanham a transferência) e roda **Teste do
   aviso por e-mail**.
 
+### O que pedir à TI na transferência
+
+- **Acesso de quem mantém o painel ao repositório:** Write para o dia a dia (cadastro, código, página, rodar os robôs
+  à mão, ler logs, responder às issues); Admin se também for mexer em configurações (Pages, secrets, permissões).
+- **SSO da organização:** se exigido, a conta de quem mantém precisa autorizar o login do GitHub CLI para a
+  organização; se a organização restringir aplicativos de terceiros, liberar o GitHub CLI.
+- **Permissão dos workflows:** Settings > Actions > General > Workflow permissions = "Read and write permissions"; os
+  robôs gravam `dados/` e `docs/dados/` com o token do próprio Actions.
+- **Branch `main`:** sem regra que exija pull request para o robô (ou com o `github-actions` como exceção); senão os
+  commits automáticos de dados param.
+- **Ações permitidas:** os workflows usam só ações do GitHub (`actions/checkout`, `actions/setup-python`).
+- **Chave do cron-job.org:** token com permissão "Actions: Read and write" só neste repositório.
+
 ## Rodar localmente
 
 ```
