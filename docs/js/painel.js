@@ -202,6 +202,7 @@ function mapa(pag) {
     return;
   }
   const mp = L.map(host, { scrollWheelZoom: false, zoomSnap: 0.25 });
+  mp.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
   const claro = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "© OpenStreetMap", maxZoom: 18 }).addTo(mp);
   const satelite = L.layerGroup([
     L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
@@ -339,8 +340,8 @@ function sistemasHTML(pag) {
     .map(s => {
       const b = s.boletim;
       return `<article class="sis"><h3>${esc(s.nome)} <span class="uf">${esc(s.ufs)}</span></h3>` +
-        `<p class="links"><a class="acao sec" href="${esc(b.url)}">Boletim de ${esc(b.rotulo)} (PDF)</a>` +
-        `<a href="${esc(s.pagina_comar)}">Termos e boletins anteriores</a></p>` +
+        `<p class="links"><a class="acao sec" target="_blank" rel="noopener" href="${esc(b.url)}">Boletim de ${esc(b.rotulo)} (PDF)</a>` +
+        `<a target="_blank" rel="noopener" href="${esc(s.pagina_comar)}">Termos e boletins anteriores</a></p>` +
         `<div class="cards">${porSis[s.id].map(r => cartaoAcude(r, pag)).join("")}</div>` + (s.nota ? `<p class="nota">${esc(s.nota)}</p>` : "") + `</article>`;
     })
     .join("");
@@ -358,7 +359,7 @@ function tabelaHTML(pag) {
       `<tr${i && todas[i - 1].r.uf !== r.uf ? ' class="nova-uf"' : ""}><td><span class="nm">${esc(r.nome)}</span></td><td>${r.uf}</td><td>${esc(s.nome)}</td>` +
       `<td class="num">${fmt(m.volume_pct)}</td><td class="num">${fmt(m.volume_hm3, 2)}</td><td class="num">${fmt(m.cota_m, 2)}</td>` +
       `<td class="num">${fmt(m.capacidade_hm3, 2)}</td><td class="num">${m.data ? dBR(m.data) : "sem informação"}</td>` +
-      `<td><a href="${esc(s.boletim.url)}" aria-label="Boletim de ${esc(s.boletim.rotulo)} de ${esc(s.nome)}">${mesCurto(s.boletim.mes)}</a></td></tr>`).join("")}</tbody></table>`;
+      `<td><a target="_blank" rel="noopener" href="${esc(s.boletim.url)}" aria-label="Boletim de ${esc(s.boletim.rotulo)} de ${esc(s.nome)}">${mesCurto(s.boletim.mes)}</a></td></tr>`).join("")}</tbody></table>`;
 }
 /* CSV como no protótipo (salvarCSV): BOM, ';', vírgula decimal, data dd/mm/aaaa; leva o que está filtrado */
 function baixarCSV(pag) {
@@ -419,11 +420,11 @@ async function baixarKMZ(pag) {
 function sobre(pag) {
   const f = pag.P.fontes;
   document.getElementById("sobre-corpo").innerHTML = `<dl>` +
-    `<dt>Medições</dt><dd><a href="${esc(f.medicao.url)}">Sistema de Acompanhamento de Reservatórios (SAR)</a>, da ANA. ` +
+    `<dt>Medições</dt><dd><a target="_blank" rel="noopener" href="${esc(f.medicao.url)}">Sistema de Acompanhamento de Reservatórios (SAR)</a>, da ANA. ` +
     `O volume em % é o volume armazenado em relação à capacidade do açude, e a data é a da medição. Açude sem ` +
     `medição nos últimos ${janela(pag)} dias mostra a última disponível, com aviso; no SAR, ele aparece como sem ` +
     `informação.</dd>` +
-    `<dt>Boletins</dt><dd>Publicados pela ANA na <a href="${esc(f.boletins.url)}">página de alocação de água e marcos ` +
+    `<dt>Boletins</dt><dd>Publicados pela ANA na <a target="_blank" rel="noopener" href="${esc(f.boletins.url)}">página de alocação de água e marcos ` +
     `regulatórios</a>, com os termos de alocação e os boletins anteriores de cada sistema.</dd></dl>`;
 }
 
