@@ -5,7 +5,8 @@ da alocação de água publicado pela COMAR/ANA: a última medição de cada aç
 alocação da UF (termos, apresentações e boletins anteriores). Identidade visual do protótipo do novo SAR
 ([dlpena/prototipo-sar-design](https://github.com/dlpena/prototipo-sar-design), tema B2).
 
-Em teste. Versão enxuta, para quase não precisar de manutenção; o modelo com estado hidrológico, termo de alocação e
+Painel publicado em <https://anagovbr.github.io/painel-marcos-regulatorios/>. Versão enxuta, para quase não precisar
+de manutenção; o modelo com estado hidrológico, termo de alocação e
 resolução do marco está no branch `modelo-completo`, para quando a COMAR pedir.
 
 ## Como funciona
@@ -34,7 +35,7 @@ coletor/vigia_boletins.py ─> dados/boletins.json + issue com os avisos
 ## Disparo pelo cron-job.org
 
 Um job para cada workflow, com POST em
-`https://api.github.com/repos/dlpena/painel-marcos-regulatorios/actions/workflows/<arquivo>/dispatches`, corpo
+`https://api.github.com/repos/anagovbr/painel-marcos-regulatorios/actions/workflows/<arquivo>/dispatches`, corpo
 `{"ref":"main"}` e os cabeçalhos `Accept: application/vnd.github+json`, `X-GitHub-Api-Version: 2022-11-28` e
 `Authorization: Bearer <token>`. O token é fine-grained, com acesso só a este repositório e permissão
 "Actions: Read and write". Resposta esperada: 204.
@@ -45,7 +46,7 @@ Um job para cada workflow, com POST em
 | Boletins | `vigia.yml` | de hora em hora, no minuto 40 (os links do cadastro são conferidos uma vez por dia) |
 
 As duas rodadas usam a mesma fila (`concurrency: dados`) e só fazem commit quando o dado muda. Enquanto o cron-job.org
-não estiver configurado (depende da chave criada pela TI depois da transferência), o `schedule` dos workflows roda os
+não estiver configurado, o `schedule` dos workflows roda os
 dois de hora em hora, com os atrasos eventuais do Actions; depois ele pode continuar como rede de segurança.
 
 ## Última medição disponível
@@ -80,30 +81,26 @@ Actions > New repository secret:
 Depois, rode à mão **Actions > Teste do aviso por e-mail > Run workflow**: o e-mail de teste tem de chegar. Sem os
 secrets, os robôs funcionam normalmente e o log diz que o e-mail não foi enviado.
 
-## Transferência para a organização da ANA
+## Repositório na organização da ANA
 
-- O endereço do GitHub Pages muda (de `dlpena.github.io/...` para `<organização>.github.io/...`) e não há
-  redirecionamento: atualizar o link no SAR e onde mais tiver sido divulgado.
-- O token do cron-job.org precisa dar acesso ao repositório na organização (token fine-grained com a organização como
-  dona, que pode depender de aprovação de um administrador, ou um token criado pela própria ANA), e as URLs dos dois
-  jobs passam a ter o nome da organização.
-- Ligar o GitHub Pages no repositório transferido (branch `main`, pasta `/docs`) e conferir os workflows na aba Actions.
-- Quem precisa receber os avisos clica em **Watch > Custom > Issues** no repositório transferido. Se o e-mail direto
-  do robô for usado, um Admin cadastra de novo os secrets `AVISO_*` (não acompanham a transferência) e roda **Teste do
-  aviso por e-mail**.
+O painel começou em `dlpena/painel-marcos-regulatorios` e passou para `anagovbr/painel-marcos-regulatorios` em
+08/10/2026; o endereço antigo do GitHub Pages ficou só com um aviso apontando para o novo. O que este repositório
+precisa para funcionar:
 
-### O que pedir à TI na transferência
-
-- **Acesso de quem mantém o painel ao repositório:** Write para o dia a dia (cadastro, código, página, rodar os robôs
-  à mão, ler logs, responder às issues); Admin se também for mexer em configurações (Pages, secrets, permissões).
-- **SSO da organização:** se exigido, a conta de quem mantém precisa autorizar o login do GitHub CLI para a
-  organização; se a organização restringir aplicativos de terceiros, liberar o GitHub CLI.
-- **Permissão dos workflows:** Settings > Actions > General > Workflow permissions = "Read and write permissions"; os
-  robôs gravam `dados/` e `docs/dados/` com o token do próprio Actions.
+- **Público.** No plano da organização, o GitHub Pages só publica a partir de repositório público, e em repositório
+  público os minutos do Actions não contam na cota da organização.
+- **GitHub Pages:** branch `main`, pasta `/docs`.
+- **Permissão dos workflows:** Settings > Actions > General > Workflow permissions = "Read and write permissions" (os
+  workflows também declaram `contents: write` e `issues: write`); os robôs gravam `dados/` e `docs/dados/` com o
+  token do próprio Actions.
 - **Branch `main`:** sem regra que exija pull request para o robô (ou com o `github-actions` como exceção); senão os
   commits automáticos de dados param.
-- **Ações permitidas:** os workflows usam só ações do GitHub (`actions/checkout`, `actions/setup-python`).
-- **Chave do cron-job.org:** token com permissão "Actions: Read and write" só neste repositório.
+- **Ações usadas:** só as do GitHub (`actions/checkout`, `actions/setup-python`).
+- **Acesso de quem mantém:** Write para o dia a dia (cadastro, código, rodar os robôs à mão, responder às issues);
+  Admin para configurações (Pages, secrets, permissões).
+- **Token do cron-job.org:** fine-grained, com a organização como dona, acesso só a este repositório e "Actions: Read
+  and write". O GitHub só deixa criar token fine-grained da organização para quem é **membro** dela (colaborador
+  externo não consegue); se a organização exigir aprovação, um administrador aprova o pedido.
 
 ## Rodar localmente
 

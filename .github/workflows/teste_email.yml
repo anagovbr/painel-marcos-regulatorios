@@ -1,7 +1,7 @@
 name: Teste do aviso por e-mail
 
-# Rodar à mão (Actions > Teste do aviso por e-mail > Run workflow) depois de cadastrar os secrets AVISO_* e depois da
-# transferência para a organização da ANA: manda um e-mail de teste para AVISO_PARA.
+# Rodar à mão (Actions > Teste do aviso por e-mail > Run workflow) depois de cadastrar ou trocar os secrets AVISO_*:
+# manda um e-mail de teste para AVISO_PARA.
 on:
   workflow_dispatch:
 

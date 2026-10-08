@@ -82,7 +82,7 @@ def ultimas_medicoes(reservatorios, hoje, busca_anterior_dias=0, ler=linhas_uf):
     from datetime import timedelta
 
     with requests.Session() as s:
-        s.headers["User-Agent"] = "painel-marcos-regulatorios (github.com/dlpena/painel-marcos-regulatorios)"
+        s.headers["User-Agent"] = "painel-marcos-regulatorios (github.com/anagovbr/painel-marcos-regulatorios)"
         por_uf = {uf: ler(uf, hoje, s) for uf in sorted({r["uf"] for r in reservatorios})}
         saida = {rid: medicao(x) for rid, x in casar(reservatorios, por_uf).items()}
         recuo = 30
