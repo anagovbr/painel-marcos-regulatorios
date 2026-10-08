@@ -140,8 +140,10 @@ function indices() {
 }
 
 /* ---------- filtro único: UF e busca valem para o mapa e para as duas visualizações ---------- */
+// UFs de um sistema na COMAR ("BA e MG"); o SAR cadastra cada açude numa UF só (Estreito e Cova da Mandioca em BA)
+const ufsDoSistema = s => s.ufs.split(/\s*(?:,|\be\b)\s*/).filter(Boolean);
 function filtros(pag) {
-  const ufs = [...new Set(pag.P.reservatorios.map(r => r.uf))].sort();
+  const ufs = [...new Set(pag.P.reservatorios.flatMap(r => [r.uf, ...ufsDoSistema(pag.sis[r.sistema])]))].sort();
   const pres = document.getElementById("presets-uf");
   pres.innerHTML = [["", "Todas as UFs"], ...ufs.map(u => [u, u])]
     .map(([v, t]) => `<button type="button" class="preset${v === "" ? " ativo" : ""}" data-uf="${v}" aria-pressed="${v === ""}">${t}</button>`)
@@ -173,7 +175,8 @@ function barraPresa() {
 function visiveis(pag) {
   return pag.P.reservatorios.filter(r => {
     const s = pag.sis[r.sistema];
-    return (!pag.uf || r.uf === pag.uf) && (!pag.busca || semAcento(r.nome + " " + s.nome).includes(pag.busca));
+    // o filtro de UF vale para a UF do açude no SAR e para as UFs do sistema na COMAR
+    return (!pag.uf || r.uf === pag.uf || ufsDoSistema(s).includes(pag.uf)) && (!pag.busca || semAcento(r.nome + " " + s.nome).includes(pag.busca));
   });
 }
 function limpar(pag) {
@@ -425,7 +428,9 @@ function sobre(pag) {
     `medição nos últimos ${janela(pag)} dias mostra a última disponível, com aviso; no SAR, ele aparece como sem ` +
     `informação.</dd>` +
     `<dt>Boletins</dt><dd>Publicados pela ANA na <a target="_blank" rel="noopener" href="${esc(f.boletins.url)}">página de alocação de água e marcos ` +
-    `regulatórios</a>, com os termos de alocação e os boletins anteriores de cada sistema.</dd></dl>`;
+    `regulatórios</a>, com os termos de alocação e os boletins anteriores de cada sistema.</dd>` +
+    `<dt>UF</dt><dd>Um sistema hídrico que a ANA acompanha em mais de uma UF aparece no filtro de cada uma delas. Na ` +
+    `tabela, a UF é a do açude no SAR.</dd></dl>`;
 }
 
 document.addEventListener("DOMContentLoaded", iniciar);
