@@ -1,5 +1,5 @@
 {
- "lido_em": "2026-10-08T10:50-03:00",
+ "lido_em": "2026-10-08T12:36-03:00",
  "fonte": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/",
  "mais_recente": "2026-08",
  "janela_meses": 2,
@@ -15,6 +15,7 @@
     "ANAGÉ"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "andorinha-ii": {
@@ -26,7 +27,8 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "maio de 2026",
-   "no_painel": false
+   "termo": "2026-2027",
+   "no_painel": true
   },
   "arg-mendubim": {
    "mes": "2026-08",
@@ -40,6 +42,7 @@
     "MENDUBIM"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "avidos-sao-goncalo": {
@@ -54,6 +57,7 @@
     "SÃO GONÇALO"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "barra-do-jua": {
@@ -65,7 +69,8 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "maio de 2026",
-   "no_painel": false
+   "termo": "2026-2027",
+   "no_painel": true
   },
   "bico-da-pedra": {
    "mes": "2026-08",
@@ -78,6 +83,7 @@
     "BICO DA PEDRA"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "bocaina": {
@@ -89,6 +95,7 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "março de 2026",
+   "termo": null,
    "no_painel": false
   },
   "brumado-riacho-do-paulo": {
@@ -103,6 +110,7 @@
     "RIACHO DO PAULO"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "ceraima": {
@@ -116,6 +124,7 @@
     "CERAÍMA"
    ],
    "rotulo": "agosto de 2026",
+   "termo": null,
    "no_painel": true
   },
   "champrao": {
@@ -129,6 +138,7 @@
     "CHAMPRÃO"
    ],
    "rotulo": "agosto de 2026",
+   "termo": null,
    "no_painel": true
   },
   "cocorobo": {
@@ -140,7 +150,8 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "maio de 2026",
-   "no_painel": false
+   "termo": "2026-2027",
+   "no_painel": true
   },
   "cruzeta": {
    "mes": "2026-08",
@@ -153,6 +164,7 @@
     "CRUZETA"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "curema-mae-dagua": {
@@ -167,6 +179,7 @@
     "MÃE D'ÁGUA"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "estreito-cova-da-mandioca": {
@@ -181,6 +194,7 @@
     "ESTREITO"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "itans": {
@@ -192,6 +206,7 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "maio de 2026",
+   "termo": null,
    "no_painel": false
   },
   "jucazinho": {
@@ -203,6 +218,7 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "maio de 2026",
+   "termo": null,
    "no_painel": false
   },
   "lagoa-do-arroz": {
@@ -216,6 +232,7 @@
     "LAGOA DO ARROZ"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "marechal-dutra": {
@@ -227,6 +244,7 @@
    "campanha": "2026-2027",
    "acudes": [],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "miroros": {
@@ -240,6 +258,7 @@
     "MIRORÓS"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "poco-branco": {
@@ -251,7 +270,8 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "maio de 2026",
-   "no_painel": false
+   "termo": "2026-2027",
+   "no_painel": true
   },
   "poco-da-cruz": {
    "mes": "2026-03",
@@ -262,6 +282,7 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "março de 2026",
+   "termo": null,
    "no_painel": false
   },
   "pocoes-epitacio-pessoa": {
@@ -277,6 +298,7 @@
     "POÇÕES"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "sabugi": {
@@ -291,6 +313,7 @@
     "SANTO ANTÔNIO"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "santa-ines": {
@@ -304,6 +327,7 @@
     "SANTA INÊS"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "serrinha-ii": {
@@ -315,6 +339,7 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "maio de 2026",
+   "termo": null,
    "no_painel": false
   },
   "sume": {
@@ -328,6 +353,7 @@
     "SUMÉ"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "tremedal": {
@@ -341,6 +367,7 @@
     "TREMEDAL"
    ],
    "rotulo": "agosto de 2026",
+   "termo": null,
    "no_painel": true
   },
   "truvisco": {
@@ -354,6 +381,7 @@
     "TRUVISCO"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   },
   "zabumbao": {
@@ -367,9 +395,118 @@
     "ZABUMBÃO"
    ],
    "rotulo": "agosto de 2026",
+   "termo": "2026-2027",
    "no_painel": true
   }
  },
+ "termos": {
+  "miroros": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaMirors20262027assinado.pdf",
+   "uf": "ba"
+  },
+  "zabumbao": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaZabumbo20262027assinado.pdf",
+   "uf": "ba"
+  },
+  "anage": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TERMODEALOCAODEGUA20262027ANAGassinado.pdf",
+   "uf": "ba"
+  },
+  "brumado-riacho-do-paulo": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaBrumadoRP20262027assinado.pdf",
+   "uf": "ba"
+  },
+  "truvisco": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermoAlocaoguaTruvisco20262027assinado.pdf",
+   "uf": "ba"
+  },
+  "andorinha-ii": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/termo-aloc-agua-andorinha-ii-2026-2027-assinado.pdf",
+   "uf": "ba"
+  },
+  "estreito-cova-da-mandioca": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermoAlocaoguaEstreitoCovadaMandioca20262027assinado.pdf",
+   "uf": "ba"
+  },
+  "cocorobo": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/termo-de-alocacao-de-agua-cocorobo-2026-2027-tarjado.pdf",
+   "uf": "ba"
+  },
+  "bico-da-pedra": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaBicodaPedra20262027assinado.pdf",
+   "uf": "mg"
+  },
+  "pocoes-epitacio-pessoa": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaEpitcioPessoa20262027assinado.pdf",
+   "uf": "pb"
+  },
+  "sume": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaSum20262027assinado.pdf",
+   "uf": "pb"
+  },
+  "curema-mae-dagua": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaCuremaeMeDgua20262027assinado.pdf",
+   "uf": "pb"
+  },
+  "lagoa-do-arroz": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TERMODEALOCAODEGUALAGOADOARROZ20262027assinado.pdf",
+   "uf": "pb"
+  },
+  "avidos-sao-goncalo": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TERMODEALOCAODEGUA20262027ENGAVIDOSESOGONALOassinado.pdf",
+   "uf": "pb"
+  },
+  "santa-ines": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TERMODEALOCAODEGUA20262027SANTAINESassinado.pdf",
+   "uf": "pb"
+  },
+  "barra-do-jua": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/Termo_de_Alocacao_de_Agua_BarradoJu_20262027assinado.pdf",
+   "uf": "pe"
+  },
+  "poco-branco": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaPooBranco20262027assinado.pdf",
+   "uf": "rn"
+  },
+  "arg-mendubim": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaARGMendubim20262027assinado.pdf",
+   "uf": "rn"
+  },
+  "cruzeta": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocacaodeAgua2026_2027_Cruzetaassinado.pdf",
+   "uf": "rn"
+  },
+  "sabugi": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaSabugi20262027tarjado.pdf",
+   "uf": "rn"
+  },
+  "marechal-dutra": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocacaodeAguaMal_Dutra_20262027assinado.pdf",
+   "uf": "rn"
+  }
+ },
+ "termos_sem_cadastro": [],
  "links_quebrados": {},
  "links_conferidos_em": "2026-10-07T18:29-03:00",
  "registro": {

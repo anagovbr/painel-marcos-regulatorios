@@ -1,16 +1,16 @@
 {
  "versao": 1,
- "gerado_em": "2026-10-08T10:51-03:00",
+ "gerado_em": "2026-10-08T12:36-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-10-08T10:51-03:00"
+   "lido_em": "2026-10-08T12:36-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios",
-   "lido_em": "2026-10-08T10:50-03:00"
+   "lido_em": "2026-10-08T12:36-03:00"
   }
  },
  "criterio": {
@@ -299,6 +299,62 @@
     "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/bico-da-pedra_08-2026.pdf",
     "publicado_em": "16/09/2026 09h23",
     "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "andorinha-ii",
+   "nome": "Andorinha II",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-05",
+    "rotulo": "maio de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/andorinha-ii_05-2026.pdf",
+    "publicado_em": "25/06/2026 14h32",
+    "campanha": null
+   }
+  },
+  {
+   "id": "barra-do-jua",
+   "nome": "Barra do Juá",
+   "ufs": "PE",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pe",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-05",
+    "rotulo": "maio de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/barra-do-jua_05-2026.pdf",
+    "publicado_em": "25/06/2026 14h32",
+    "campanha": null
+   }
+  },
+  {
+   "id": "cocorobo",
+   "nome": "Cocorobó",
+   "ufs": "BA",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ba",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-05",
+    "rotulo": "maio de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/cocorobo_05-2026.pdf",
+    "publicado_em": "25/06/2026 14h33",
+    "campanha": null
+   }
+  },
+  {
+   "id": "poco-branco",
+   "nome": "Poço Branco",
+   "ufs": "RN",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/rn",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-05",
+    "rotulo": "maio de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/poco-branco_05-2026.pdf",
+    "publicado_em": "25/06/2026 14h33",
+    "campanha": null
    }
   }
  ],
@@ -778,6 +834,74 @@
     "capacidade_hm3": 529.59,
     "cota_m": 546.76,
     "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12022,
+   "sistema": "andorinha-ii",
+   "nome": "Andorinha II",
+   "uf": "BA",
+   "lat": -10.30119,
+   "lon": -39.78479,
+   "medicao": {
+    "data": "2026-10-08",
+    "volume_pct": 62.06,
+    "volume_hm3": 8.49,
+    "capacidade_hm3": 13.68,
+    "cota_m": 390.55,
+    "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12042,
+   "sistema": "barra-do-jua",
+   "nome": "Barra do Juá",
+   "uf": "PE",
+   "lat": -8.44839,
+   "lon": -38.07395,
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 6.73,
+    "volume_hm3": 4.81,
+    "capacidade_hm3": 71.47,
+    "cota_m": 393.53,
+    "dias": 1
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12129,
+   "sistema": "cocorobo",
+   "nome": "Cocorobó",
+   "uf": "BA",
+   "lat": -9.88227,
+   "lon": -39.039,
+   "medicao": {
+    "data": "2026-10-01",
+    "volume_pct": 53.29,
+    "volume_hm3": 131.31,
+    "capacidade_hm3": 246.4,
+    "cota_m": 353.05,
+    "dias": 7
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12340,
+   "sistema": "poco-branco",
+   "nome": "Poço Branco",
+   "uf": "RN",
+   "lat": -5.63328,
+   "lon": -35.65479,
+   "medicao": {
+    "data": "2026-10-07",
+    "volume_pct": 57.44,
+    "volume_hm3": 78.12,
+    "capacidade_hm3": 136.0,
+    "cota_m": 71.54,
+    "dias": 1
    },
    "alertas": []
   }
