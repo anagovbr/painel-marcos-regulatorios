@@ -430,6 +430,8 @@ function sobre(pag) {
     `informação.</dd>` +
     `<dt>Boletins</dt><dd>Publicados pela ANA na <a target="_blank" rel="noopener" href="${esc(f.boletins.url)}">página de alocação de água e marcos ` +
     `regulatórios</a>, com os termos de alocação e os boletins anteriores de cada sistema.</dd>` +
+    `<dt>Sistemas</dt><dd>Aparecem os sistemas hídricos com termo de alocação de água da campanha atual publicado pela ` +
+    `ANA ou com boletim recente, cada um com o último boletim publicado.</dd>` +
     `<dt>UF</dt><dd>Um sistema hídrico que a ANA acompanha em mais de uma UF aparece no filtro de cada uma delas, e a ` +
     `tabela mostra as UFs do sistema.</dd></dl>`;
 }

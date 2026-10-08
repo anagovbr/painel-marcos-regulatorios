@@ -16,6 +16,7 @@ cadastro/*.csv ─────────────┐
 dados/boletins.json ────────┼─> coletor/atualiza.py ─> docs/dados/painel.json ─> docs/index.html (GitHub Pages)
 coletor/fontes/sar_portal.py┘
 coletor/vigia_boletins.py ─> dados/boletins.json + issue com os avisos
+coletor/termos.py ──────────┘ (termos da campanha atual na página da COMAR)
 ```
 
 - **Página** (`docs/`): HTML, CSS e JavaScript estáticos que leem só `docs/dados/painel.json`.
@@ -29,6 +30,14 @@ coletor/vigia_boletins.py ─> dados/boletins.json + issue com os avisos
     (açudes com página no boletim, nome do sistema e UF do cabeçalho), qualquer que seja o nome do arquivo. Na dúvida
     não ligam: o sistema fica com o boletim anterior e sai um aviso. Testes com 242 boletins reais de 10/2025 a 08/2026
     (`coletor/testes/test_boletins.py` cobre os casos sintéticos, inclusive os falsos positivos a evitar).
+  - `termos.py`: quais sistemas têm o termo de alocação da campanha atual publicado (PDF linkado na aba da campanha da
+    página de cada UF; o item sem link é só o modelo da página e não conta). O nome do sistema na página liga-se ao
+    cadastro só por igualdade, depois de normalizado; o que não bate vira aviso.
+- **Quem aparece no painel:** o sistema do cadastro com boletim recente (até `JANELA_BOLETIM_MESES` atrás do mais
+  recente da pasta) **ou** com termo da campanha atual publicado, sempre com o último boletim que houver (COMAR,
+  08/10/2026: todos os termos atuais, mesmo com o boletim atrasado). A campanha atual é a que começa no ano corrente ou,
+  antes de julho (`VIRADA_CAMPANHA_MES`), também a do ano anterior. Sistema sem açude no SAR fica fora
+  (`cadastro/sistemas_ignorados.csv`).
 - **Robôs** (`.github/workflows/`): `atualiza.yml` (medições, a cada 15 minutos) e `vigia.yml` (boletins, de hora
   em hora), pelo `schedule` do Actions. Falha ou aviso vira issue.
 

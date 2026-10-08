@@ -20,6 +20,11 @@ PAGINA_COMAR = "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/a
 # boletim mais recente publicado pela COMAR (Diego, 07/10/2026: só os açudes com boletim recente para linkar).
 JANELA_BOLETIM_MESES = 2
 
+# Também aparece no painel o sistema com termo de alocação da campanha atual publicado na página da COMAR, mesmo com o
+# boletim atrasado, e com o último boletim que houver (COMAR, 08/10/2026; regra em coletor/termos.py). As campanhas
+# começam entre abril e outubro e terminam no ano seguinte; a partir deste mês só vale a que começa no próprio ano.
+VIRADA_CAMPANHA_MES = 7
+
 # Regra do SAR (Nordeste e Semiárido): sem medição nos últimos 30 dias, o açude fica "sem informação". O painel aplica a
 # mesma regra, qualquer que seja a fonte (a API atual já aplica; a do novo SAR pode não aplicar).
 JANELA_MEDICAO_DIAS = 30
