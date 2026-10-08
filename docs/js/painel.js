@@ -226,7 +226,7 @@ function mapa(pag) {
   pag.P.reservatorios.filter(r => r.lat != null).forEach(r => {
     const m = L.marker([r.lat, r.lon], { icon: icone, alt: r.nome });
     const med = r.medicao ? `${fmt(r.medicao.volume_pct)}% em ${dBR(r.medicao.data)}` : "sem informação";
-    m.bindTooltip(`<div class="pop"><b>${esc(r.nome)} (${r.uf})</b>${esc(pag.sis[r.sistema].nome)}` +
+    m.bindTooltip(`<div class="pop"><b>${esc(r.nome)}</b>${esc(pag.sis[r.sistema].nome)} (${esc(pag.sis[r.sistema].ufs)})` +
       `<div class="l"><span>Volume</span><span>${med}</span></div></div>`, { direction: "top", offset: [0, -8], opacity: 1 });
     m.on("tooltipopen", e => dentroDoMapa(mp, m, e.tooltip));
     m.on("click", () => irPara(pag, r.res_id));
@@ -351,15 +351,16 @@ function sistemasHTML(pag) {
 }
 function ordenadas(pag) {
   return [...pag.vis]
-    .sort((a, b) => a.uf.localeCompare(b.uf) || a.nome.localeCompare(b.nome, "pt-BR"))
-    .map(r => ({ r, s: pag.sis[r.sistema], m: r.medicao || {} }));
+    .map(r => ({ r, s: pag.sis[r.sistema], m: r.medicao || {} }))
+    // pelas UFs do sistema, como nos cartões: com o filtro MG, Estreito (BA no SAR) aparece como "BA e MG", não como BA
+    .sort((a, b) => a.s.ufs.localeCompare(b.s.ufs) || a.r.nome.localeCompare(b.r.nome, "pt-BR"));
 }
 function tabelaHTML(pag) {
   return `<table id="tab-acudes"><thead><tr><th>Açude</th><th>UF</th><th>Sistema hídrico</th><th class="num">Volume</th>` +
     `<th class="num">Volume</th><th class="num">Cota</th><th class="num">Capacidade</th><th>Medição</th><th>Boletim</th></tr>` +
     `<tr class="unid"><th></th><th></th><th></th><th class="num">%</th><th class="num">hm³</th><th class="num">m</th><th class="num">hm³</th><th></th><th></th></tr></thead>` +
     `<tbody>${ordenadas(pag).map(({ r, s, m }, i, todas) =>
-      `<tr${i && todas[i - 1].r.uf !== r.uf ? ' class="nova-uf"' : ""}><td><span class="nm">${esc(r.nome)}</span></td><td>${r.uf}</td><td>${esc(s.nome)}</td>` +
+      `<tr${i && todas[i - 1].s.ufs !== s.ufs ? ' class="nova-uf"' : ""}><td><span class="nm">${esc(r.nome)}</span></td><td>${esc(s.ufs)}</td><td>${esc(s.nome)}</td>` +
       `<td class="num">${fmt(m.volume_pct)}</td><td class="num">${fmt(m.volume_hm3, 2)}</td><td class="num">${fmt(m.cota_m, 2)}</td>` +
       `<td class="num">${fmt(m.capacidade_hm3, 2)}</td><td class="num">${m.data ? dBR(m.data) : "sem informação"}</td>` +
       `<td><a target="_blank" rel="noopener" href="${esc(s.boletim.url)}" aria-label="Boletim de ${esc(s.boletim.rotulo)} de ${esc(s.nome)}">${mesCurto(s.boletim.mes)}</a></td></tr>`).join("")}</tbody></table>`;
@@ -367,11 +368,11 @@ function tabelaHTML(pag) {
 /* CSV como no protótipo (salvarCSV): BOM, ';', vírgula decimal, data dd/mm/aaaa; leva o que está filtrado */
 function baixarCSV(pag) {
   const n = (v, d) => (v == null ? "" : fmt(v, d).replace(/\./g, ""));
-  const cab = ["codigo_sar", "acude", "uf", "sistema_hidrico", "volume_pct", "volume_hm3", "capacidade_hm3", "cota_m",
+  const cab = ["codigo_sar", "acude", "uf_sar", "ufs_sistema", "sistema_hidrico", "volume_pct", "volume_hm3", "capacidade_hm3", "cota_m",
     "data_medicao", "observacao", "boletim", "pagina_alocacao"];
   const obs = r => (r.medicao ? r.alertas.filter(a => ALERTAS[a]).map(a => ALERTAS[a](r, pag)).join("; ")
     : `sem informação: nenhuma medição nos últimos ${prazoBusca(pag)}`);
-  const linhas = ordenadas(pag).map(({ r, s, m }) => [r.res_id, r.nome, r.uf, s.nome, n(m.volume_pct, 2), n(m.volume_hm3, 2),
+  const linhas = ordenadas(pag).map(({ r, s, m }) => [r.res_id, r.nome, r.uf, s.ufs, s.nome, n(m.volume_pct, 2), n(m.volume_hm3, 2),
     n(m.capacidade_hm3, 2), n(m.cota_m, 2), m.data ? dBR(m.data) : "", obs(r), s.boletim.url, s.pagina_comar]);
   const q = v => (/[;"\n]/.test(String(v ?? "")) ? `"${String(v).replace(/"/g, '""')}"` : String(v ?? ""));
   const txt = [cab, ...linhas].map(l => l.map(q).join(";")).join("\r\n");
@@ -429,8 +430,8 @@ function sobre(pag) {
     `informação.</dd>` +
     `<dt>Boletins</dt><dd>Publicados pela ANA na <a target="_blank" rel="noopener" href="${esc(f.boletins.url)}">página de alocação de água e marcos ` +
     `regulatórios</a>, com os termos de alocação e os boletins anteriores de cada sistema.</dd>` +
-    `<dt>UF</dt><dd>Um sistema hídrico que a ANA acompanha em mais de uma UF aparece no filtro de cada uma delas. Na ` +
-    `tabela, a UF é a do açude no SAR.</dd></dl>`;
+    `<dt>UF</dt><dd>Um sistema hídrico que a ANA acompanha em mais de uma UF aparece no filtro de cada uma delas, e a ` +
+    `tabela mostra as UFs do sistema.</dd></dl>`;
 }
 
 document.addEventListener("DOMContentLoaded", iniciar);
