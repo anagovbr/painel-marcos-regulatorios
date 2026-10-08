@@ -224,6 +224,7 @@ function mapa(pag) {
     const med = r.medicao ? `${fmt(r.medicao.volume_pct)}% em ${dBR(r.medicao.data)}` : "sem informação";
     m.bindTooltip(`<div class="pop"><b>${esc(r.nome)} (${r.uf})</b>${esc(pag.sis[r.sistema].nome)}` +
       `<div class="l"><span>Volume</span><span>${med}</span></div></div>`, { direction: "top", offset: [0, -8], opacity: 1 });
+    m.on("tooltipopen", e => dentroDoMapa(mp, m, e.tooltip));
     m.on("click", () => irPara(pag, r.res_id));
     marcas[r.res_id] = m;
   });
@@ -237,6 +238,22 @@ function mapa(pag) {
     if (!pag.mapa.mexeu) enquadrar(pag);
   }).observe(host);
   document.getElementById("baixar-kmz").addEventListener("click", () => baixarKMZ(pag));
+}
+// o tooltip do Leaflet não se reposiciona sozinho: perto da borda do mapa ele abre para baixo em vez de para cima e
+// desliza na horizontal até caber, com a seta ainda apontando para o açude (no celular o mapa é estreito demais para
+// abrir de lado)
+function dentroDoMapa(mp, m, t) {
+  const p = mp.latLngToContainerPoint(m.getLatLng());
+  const tam = mp.getSize();
+  const el = t.getElement();
+  const w = el.offsetWidth, h = el.offsetHeight, borda = 4, vao = 12;
+  const cimaCabe = p.y - h - vao >= borda, baixoCabe = p.y + h + vao <= tam.y - borda;
+  const dir = cimaCabe || (!baixoCabe && p.y > tam.y / 2) ? "top" : "bottom";
+  const dx = Math.max(borda - (p.x - w / 2), Math.min(0, tam.x - borda - (p.x + w / 2)));
+  t.options.direction = dir;
+  t.options.offset = [dx, dir === "top" ? -8 : 8];
+  el.style.setProperty("--seta", Math.max(-w / 2 + 12, Math.min(w / 2 - 12, -dx)) + "px");
+  t.update();
 }
 function marcadores(pag) {
   if (!pag.mapa) return;
