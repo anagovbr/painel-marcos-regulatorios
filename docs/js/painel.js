@@ -28,7 +28,7 @@ const ICONE = {
 };
 const VISTAS = [
   ["sistemas", "Por sistema hídrico", "Cada sistema traz o boletim mais recente e o acesso aos termos e boletins anteriores."],
-  ["tabela", "Tabela", "Todos os açudes numa lista, ordenada por UF. Para usar em planilha, baixe o CSV."]
+  ["tabela", "Tabela", "Todos os açudes numa lista, ordenada pela UF do sistema. Para usar em planilha, baixe o CSV."]
 ];
 
 /* ---------- utilitários (os do protótipo: fmt, dBR) ---------- */
@@ -113,7 +113,7 @@ function esqueleto(pag) {
     `reuniões com órgãos gestores, operadores de reservatórios e usuários, são registradas no Termo de Alocação de Água ` +
     `e acompanhadas em boletins mensais. Esta página reúne os açudes desses sistemas, com a última medição de cada um e ` +
     `o boletim mais recente.</p></div>` +
-    `<div id="antes-filtros" aria-hidden="true"></div><div class="filtros" role="search" aria-label="Filtrar açudes"><div class="presets" id="presets-uf" role="group" aria-label="Filtrar por UF"></div>` +
+    `<div id="antes-filtros" aria-hidden="true"></div><div class="filtros" role="search" aria-label="Filtrar açudes"><span class="rot-filtro" id="rot-uf">UF do sistema</span><div class="presets" id="presets-uf" role="group" aria-labelledby="rot-uf"></div>` +
     `<input type="search" id="busca" placeholder="Buscar açude ou sistema" aria-label="Buscar açude ou sistema">` +
     `<span class="contagem" id="contagem" aria-live="polite"></span></div>` +
     sec("mapa", 1, "Mapa", "Cada triângulo é um açude. <span class=\"dica\">Clique ou toque para ver os dados dele.</span>",
@@ -145,7 +145,7 @@ const ufsDoSistema = s => s.ufs.split(/\s*(?:,|\be\b)\s*/).filter(Boolean);
 function filtros(pag) {
   const ufs = [...new Set(pag.P.reservatorios.flatMap(r => [r.uf, ...ufsDoSistema(pag.sis[r.sistema])]))].sort();
   const pres = document.getElementById("presets-uf");
-  pres.innerHTML = [["", "Todas as UFs"], ...ufs.map(u => [u, u])]
+  pres.innerHTML = [["", "Todas"], ...ufs.map(u => [u, u])]
     .map(([v, t]) => `<button type="button" class="preset${v === "" ? " ativo" : ""}" data-uf="${v}" aria-pressed="${v === ""}">${t}</button>`)
     .join("");
   pres.addEventListener("click", ev => {
@@ -356,7 +356,7 @@ function ordenadas(pag) {
     .sort((a, b) => a.s.ufs.localeCompare(b.s.ufs) || a.r.nome.localeCompare(b.r.nome, "pt-BR"));
 }
 function tabelaHTML(pag) {
-  return `<table id="tab-acudes"><thead><tr><th>Açude</th><th>UF</th><th>Sistema hídrico</th><th class="num">Volume</th>` +
+  return `<table id="tab-acudes"><thead><tr><th>Açude</th><th>UF do sistema</th><th>Sistema hídrico</th><th class="num">Volume</th>` +
     `<th class="num">Volume</th><th class="num">Cota</th><th class="num">Capacidade</th><th>Medição</th><th>Boletim</th></tr>` +
     `<tr class="unid"><th></th><th></th><th></th><th class="num">%</th><th class="num">hm³</th><th class="num">m</th><th class="num">hm³</th><th></th><th></th></tr></thead>` +
     `<tbody>${ordenadas(pag).map(({ r, s, m }, i, todas) =>

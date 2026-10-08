@@ -57,6 +57,13 @@
     position: static;
   }
 }
+/* rótulo do filtro de UF: a UF é a do sistema hídrico na COMAR, que pode ser mais de uma (Estreito–Cova da Mandioca,
+   BA e MG), e não a do açude no SAR */
+.filtros .rot-filtro {
+  font-size: 13px;
+  color: var(--apagado);
+  margin-right: -6px;
+}
 .filtros .presets {
   display: flex;
   flex-wrap: wrap;
