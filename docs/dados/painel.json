@@ -1,11 +1,11 @@
 {
  "versao": 1,
- "gerado_em": "2026-10-07T23:14-03:00",
+ "gerado_em": "2026-10-08T06:05-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-10-07T23:14-03:00"
+   "lido_em": "2026-10-08T06:05-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
@@ -316,7 +316,7 @@
     "volume_hm3": 30.79,
     "capacidade_hm3": 29.86,
     "cota_m": 45.62,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -333,7 +333,7 @@
     "volume_hm3": 46.6,
     "capacidade_hm3": 48.11,
     "cota_m": 327.02,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -350,7 +350,7 @@
     "volume_hm3": 210.41,
     "capacidade_hm3": 466.53,
     "cota_m": 370.68,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -367,7 +367,7 @@
     "volume_hm3": 6.18,
     "capacidade_hm3": 44.86,
     "cota_m": 67.75,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -384,7 +384,7 @@
     "volume_hm3": 307.47,
     "capacidade_hm3": 744.14,
     "cota_m": 236.94,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -401,7 +401,7 @@
     "volume_hm3": 225.51,
     "capacidade_hm3": 545.02,
     "cota_m": 237.01,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -418,7 +418,7 @@
     "volume_hm3": 39.75,
     "capacidade_hm3": 80.39,
     "cota_m": 98.07,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -435,7 +435,7 @@
     "volume_hm3": 143.07,
     "capacidade_hm3": 293.62,
     "cota_m": 310.81,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -452,7 +452,7 @@
     "volume_hm3": 20.37,
     "capacidade_hm3": 40.58,
     "cota_m": 243.13,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -469,7 +469,7 @@
     "volume_hm3": 4.18,
     "capacidade_hm3": 26.12,
     "cota_m": 87.18,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -486,7 +486,7 @@
     "volume_hm3": 886.41,
     "capacidade_hm3": 2373.07,
     "cota_m": 44.24,
-    "dias": 1
+    "dias": 2
    },
    "alertas": []
   },
@@ -503,7 +503,7 @@
     "volume_hm3": 51.93,
     "capacidade_hm3": 77.6,
     "cota_m": 43.44,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -520,7 +520,7 @@
     "volume_hm3": 6.05,
     "capacidade_hm3": 23.55,
     "cota_m": 119.56,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -537,7 +537,7 @@
     "volume_hm3": 4.45,
     "capacidade_hm3": 61.85,
     "cota_m": 87.72,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -554,7 +554,7 @@
     "volume_hm3": 9.15,
     "capacidade_hm3": 25.71,
     "cota_m": 177.63,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -571,7 +571,7 @@
     "volume_hm3": 14.25,
     "capacidade_hm3": 44.42,
     "cota_m": 293.66,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -588,7 +588,7 @@
     "volume_hm3": 167.34,
     "capacidade_hm3": 229.09,
     "cota_m": 408.58,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -605,7 +605,7 @@
     "volume_hm3": 52.6,
     "capacidade_hm3": 99.35,
     "cota_m": 1019.05,
-    "dias": 5
+    "dias": 6
    },
    "alertas": []
   },
@@ -622,7 +622,7 @@
     "volume_hm3": 0.44,
     "capacidade_hm3": 53.8,
     "cota_m": 445.07,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -639,7 +639,7 @@
     "volume_hm3": 15.79,
     "capacidade_hm3": 51.09,
     "cota_m": 505.09,
-    "dias": 5
+    "dias": 6
    },
    "alertas": []
   },
@@ -651,11 +651,11 @@
    "lat": -14.90887,
    "lon": -41.96288,
    "medicao": {
-    "data": "2026-10-07",
-    "volume_pct": 38.21,
-    "volume_hm3": 1.75,
+    "data": "2026-10-08",
+    "volume_pct": 37.99,
+    "volume_hm3": 1.74,
     "capacidade_hm3": 4.58,
-    "cota_m": 697.15,
+    "cota_m": 697.13,
     "dias": 0
    },
    "alertas": []
@@ -673,7 +673,7 @@
     "volume_hm3": 13.16,
     "capacidade_hm3": 166.92,
     "cota_m": 498.81,
-    "dias": 1
+    "dias": 2
    },
    "alertas": []
   },
@@ -690,7 +690,7 @@
     "volume_hm3": 15.91,
     "capacidade_hm3": 23.75,
     "cota_m": 389.01,
-    "dias": 46
+    "dias": 47
    },
    "alertas": [
     "medicao_antiga"
@@ -709,7 +709,7 @@
     "volume_hm3": 13.51,
     "capacidade_hm3": 45.26,
     "cota_m": 617.08,
-    "dias": 1
+    "dias": 2
    },
    "alertas": []
   },
@@ -721,11 +721,11 @@
    "lat": -13.43833,
    "lon": -42.215,
    "medicao": {
-    "data": "2026-10-07",
-    "volume_pct": 69.29,
-    "volume_hm3": 42.5,
+    "data": "2026-10-08",
+    "volume_pct": 69.11,
+    "volume_hm3": 42.39,
     "capacidade_hm3": 61.34,
-    "cota_m": 665.28,
+    "cota_m": 665.25,
     "dias": 0
    },
    "alertas": []
@@ -743,7 +743,7 @@
     "volume_hm3": 40.77,
     "capacidade_hm3": 65.71,
     "cota_m": 493.68,
-    "dias": 18
+    "dias": 19
    },
    "alertas": []
   },
@@ -760,7 +760,7 @@
     "volume_hm3": 85.35,
     "capacidade_hm3": 131.44,
     "cota_m": 493.28,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -777,7 +777,7 @@
     "volume_hm3": 296.78,
     "capacidade_hm3": 529.59,
     "cota_m": 546.78,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   }
