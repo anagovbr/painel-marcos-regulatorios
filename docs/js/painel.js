@@ -49,21 +49,6 @@ function diasDesde(iso) {
   const d = new Date(iso + "T12:00:00");
   return Math.round((Date.UTC(h.getFullYear(), h.getMonth(), h.getDate()) - Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5);
 }
-const lembrar = (k, v) => {
-  try {
-    localStorage.setItem("alocacao." + k, v);
-  } catch (e) {
-    /* sem armazenamento: só não lembra */
-  }
-};
-const lembrado = k => {
-  try {
-    return localStorage.getItem("alocacao." + k);
-  } catch (e) {
-    return null;
-  }
-};
-
 /* ---------- partida ---------- */
 async function iniciar() {
   COR.ana = getComputedStyle(document.documentElement).getPropertyValue("--ana").trim();
@@ -75,13 +60,12 @@ async function iniciar() {
     document.getElementById("carimbo").innerHTML = "<span>Não foi possível carregar os dados. Tente recarregar a página.</span>";
     return;
   }
-  const vista = lembrado("vista");
   const pag = {
     P,
     sis: Object.fromEntries(P.sistemas.map(s => [s.id, s])),
     uf: "",
     busca: "",
-    vista: VISTAS.some(([v]) => v === vista) ? vista : "sistemas"
+    vista: "sistemas" // sempre abre por sistema hídrico, qualquer que tenha sido a última aba (Diego, 09/10/2026)
   };
   carimbo(pag);
   esqueleto(pag);
@@ -304,7 +288,6 @@ function vistas(pag) {
 }
 function trocarVista(pag, vista) {
   pag.vista = vista;
-  lembrar("vista", vista);
   desenharVista(pag);
 }
 function desenharVista(pag) {
