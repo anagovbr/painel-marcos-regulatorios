@@ -2,12 +2,12 @@ name: Vigia dos boletins da COMAR
 
 # De hora em hora: último boletim de cada sistema, quem entra e quem sai do painel, sistema novo, açudes trocados e links
 # quebrados. Os avisos viram uma issue; a mudança de entrada ou saída já sai publicada na mesma rodada.
-# Disparo pelo schedule do Actions, de hora em hora no minuto 45, entre dois horários do atualiza.yml (os dois usam a
-# mesma fila); o boletim é mensal, então rodada perdida não pesa. Também roda as medições.
+# Disparo principal: cron-job.org de hora em hora, no minuto 40, por POST em .../actions/workflows/vigia.yml/dispatches
+# (README, "Disparo"); o schedule abaixo é só reserva, em minuto diferente. Também roda as medições.
 on:
   workflow_dispatch:
   schedule:
-    - cron: '45 * * * *'
+    - cron: '10 * * * *'
 
 concurrency:
   group: dados

@@ -38,30 +38,37 @@ coletor/termos.py ──────────┘ (termos da campanha atual na
   08/10/2026: todos os termos atuais, mesmo com o boletim atrasado). A campanha atual é a que começa no ano corrente ou,
   antes de julho (`VIRADA_CAMPANHA_MES`), também a do ano anterior. Sistema sem açude no SAR fica fora
   (`cadastro/sistemas_ignorados.csv`).
-- **Robôs** (`.github/workflows/`): `atualiza.yml` (medições, a cada 15 minutos) e `vigia.yml` (boletins, de hora
-  em hora), pelo `schedule` do Actions. Falha ou aviso vira issue.
+- **Robôs** (`.github/workflows/`): `atualiza.yml` (medições) e `vigia.yml` (boletins), de hora em hora, disparados
+  pelo cron-job.org (o `schedule` do Actions fica de reserva). Falha ou aviso vira issue.
 
 ## Disparo
 
-Os dois robôs rodam pelo `schedule` do próprio Actions:
+O disparo principal é o **cron-job.org** (desde 09/10/2026), com um job por workflow:
 
-| Robô | Arquivo | Quando (UTC; o minuto é o mesmo em Brasília) |
+| Job | Arquivo | Quando (America/Sao_Paulo) |
 |---|---|---|
-| Medições | `atualiza.yml` | a cada 15 minutos, nos minutos 8, 23, 38 e 53 |
-| Boletins | `vigia.yml` | de hora em hora, no minuto 45 (também roda as medições; os links do cadastro são conferidos uma vez por dia) |
+| Medições | `atualiza.yml` | de hora em hora, no minuto 20 |
+| Boletins | `vigia.yml` | de hora em hora, no minuto 40 (também roda as medições; os links do cadastro são conferidos uma vez por dia) |
 
-O GitHub não garante o horário: atrasa e descarta rodadas quando o Actions está carregado, sobretudo na virada da hora.
-Com um horário por hora, rodaram só 2 de 16 horários em 07-08/10/2026, com até 7 horas sem rodar; por isso as medições
-têm quatro horários por hora, longe da virada. Os dados mudam devagar (o SAR costuma ter uma medição por dia por açude
-e o boletim é mensal) e cada valor aparece com a data da medição, então o atraso deixa o painel só mais tarde, nunca
-errado. As duas rodadas usam a mesma fila (`concurrency: dados`) e só fazem commit quando o dado muda.
+Cada job faz POST em
+`https://api.github.com/repos/anagovbr/painel-marcos-regulatorios/actions/workflows/<arquivo>/dispatches`, com o corpo
+`{"ref":"main"}` e os cabeçalhos `Accept: application/vnd.github+json`, `X-GitHub-Api-Version: 2022-11-28`,
+`Content-Type: application/json` e `Authorization: Bearer <token>`. Resposta esperada: 204 (401: token errado; 403:
+sem permissão ou token não aprovado; 404: sem acesso ao repositório; 422: corpo errado). O cron-job.org avisa por
+e-mail quando um job falha.
 
-**Se o atraso incomodar:** um serviço externo, como o cron-job.org, pode disparar os robôs na hora certa, com um job por
-workflow e POST em
-`https://api.github.com/repos/anagovbr/painel-marcos-regulatorios/actions/workflows/<arquivo>/dispatches`, corpo
-`{"ref":"main"}` e os cabeçalhos `Accept: application/vnd.github+json`, `X-GitHub-Api-Version: 2022-11-28` e
-`Authorization: Bearer <token>`. Resposta esperada: 204. O token é fine-grained, com a organização como dona, acesso só
-a este repositório e "Actions: Read and write" (ver abaixo quem pode criá-lo).
+**Token:** fine-grained, criado por um administrador da organização (as rodadas aparecem em nome dele na aba Actions),
+com a organização como dona, acesso só a este repositório e só "Actions: Read and write". Ele só dispara os workflows:
+não lê nem altera código. Tem validade: antes de vencer, cria-se outro com as mesmas características e troca-se no
+cabeçalho dos dois jobs. Se o token vencer ou o dono perder o acesso, o disparo para e os robôs ficam só com a reserva
+abaixo; nada quebra, o painel só atualiza mais devagar.
+
+**Reserva:** o `schedule` do próprio Actions (`atualiza.yml` no minuto 50, `vigia.yml` no minuto 10, em UTC), em
+minutos diferentes dos do cron-job.org. Sozinho ele não serve: o GitHub atrasa e descarta rodadas agendadas, e no
+repositório da ANA rodou 3 de 94 horários em 08-09/10/2026, a cada 4 a 7 horas, mesmo com quatro horários por hora.
+
+As rodadas usam a mesma fila (`concurrency: dados`): disparo que chega com outro rodando espera a vez. Só fazem commit
+quando o dado muda; cada valor aparece com a data da medição.
 
 ## Última medição disponível
 
@@ -112,7 +119,7 @@ precisa para funcionar:
 - **Ações usadas:** só as do GitHub (`actions/checkout`, `actions/setup-python`).
 - **Acesso de quem mantém:** Write para o dia a dia (cadastro, código, rodar os robôs à mão, responder às issues);
   Admin para configurações (Pages, secrets, permissões).
-- **Token do cron-job.org, se for usado:** fine-grained, com a organização como dona, acesso só a este repositório e "Actions: Read
+- **Token do cron-job.org:** fine-grained, com a organização como dona, acesso só a este repositório e "Actions: Read
   and write". O GitHub só deixa criar token fine-grained da organização para quem é **membro** dela (colaborador
   externo não consegue); se a organização exigir aprovação, um administrador aprova o pedido.
 

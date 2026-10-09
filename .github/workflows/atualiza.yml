@@ -1,15 +1,14 @@
 name: Atualiza medições
 
 # Lê a última medição de cada açude do painel na fonte (coletor/config.py, FONTE) e publica docs/dados/painel.json
-# quando o conteúdo muda. Disparo pelo schedule do Actions, a cada 15 minutos e longe da virada da hora: o GitHub
-# descarta horários agendados quando o Actions está carregado (o início de cada hora é o pior momento), e com um horário
-# por hora só 2 de 16 rodaram em 07-08/10/2026; mais horários, mais chances. Rodada a mais não custa nada em repositório
-# público e não grava nada se o dado não mudou. Se um dia houver token, o cron-job.org pode disparar por POST em
-# /repos/anagovbr/painel-marcos-regulatorios/actions/workflows/atualiza.yml/dispatches (README).
+# quando o conteúdo muda. Disparo principal: cron-job.org de hora em hora, no minuto 20, por POST em
+# /repos/anagovbr/painel-marcos-regulatorios/actions/workflows/atualiza.yml/dispatches (README, "Disparo"). O schedule
+# abaixo é só reserva: no repositório da ANA ele rodou 3 de 94 horários em 08-09/10/2026 (a cada 4 a 7 horas). Fica em
+# minuto diferente do cron-job.org para não rodar em dobro; rodada a mais não grava nada se o dado não mudou.
 on:
   workflow_dispatch:
   schedule:
-    - cron: '8,23,38,53 * * * *'
+    - cron: '50 * * * *'
 
 concurrency:
   group: dados
