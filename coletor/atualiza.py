@@ -82,7 +82,8 @@ def sem_hora(p):
     """O conteúdo que importa para decidir se grava: tudo menos as horas de leitura."""
     q = json.loads(json.dumps(p))
     q.pop("gerado_em", None)
-    q["fontes"]["medicao"].pop("lido_em", None)
+    for f in q["fontes"].values():
+        f.pop("lido_em", None)
     return q
 
 

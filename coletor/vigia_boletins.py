@@ -134,12 +134,18 @@ def main(argv=None):
         else:
             quebrados = anterior.get("links_quebrados", {})
 
-    config.BOLETINS.parent.mkdir(parents=True, exist_ok=True)
     novo = {"lido_em": agora.isoformat(timespec="minutes"), "fonte": config.PASTA_COMAR, "mais_recente": mais_recente,
             "janela_meses": config.JANELA_BOLETIM_MESES, "sistemas": saida, "termos": termos,
             "termos_sem_cadastro": sem_cadastro, "links_quebrados": quebrados,
             "links_conferidos_em": ultima, "registro": registro}
-    config.BOLETINS.write_text(json.dumps(novo, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    # só grava quando muda o conteúdo: a hora da leitura sozinha faria um commit por rodada (TI, 09/10/2026: o Git guarda
+    # cada versão do arquivo); "lido_em" passa a ser a hora da última leitura que mudou alguma coisa
+    sem_hora = lambda d: {k: v for k, v in json.loads(json.dumps(d)).items() if k != "lido_em"}
+    if sem_hora(novo) != sem_hora(anterior):
+        config.BOLETINS.parent.mkdir(parents=True, exist_ok=True)
+        config.BOLETINS.write_text(json.dumps(novo, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    else:
+        print("boletins: nada mudou desde a última leitura; dados/boletins.json não é regravado")
     print(f"{len(saida)} sistemas com boletim; {len(termos)} com termo atual; {len(dentro)} no painel; "
           f"boletim mais recente: {mais_recente}; "
           f"{len(registro)} PDFs lidos guardados; {len(avisos)} avisos")
