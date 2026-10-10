@@ -40,6 +40,7 @@ coletor/termos.py ──────────┘ (termos da campanha atual na
   (`cadastro/sistemas_ignorados.csv`).
 - **Robôs** (`.github/workflows/`): `atualiza.yml` (medições) e `vigia.yml` (boletins), de hora em hora, disparados
   pelo cron-job.org (o `schedule` do Actions fica de reserva). Falha ou aviso vira issue.
+  Cada rodada publica a página; commit só quando o dado muda.
 
 ## Disparo
 
@@ -110,7 +111,11 @@ precisa para funcionar:
 
 - **Público.** No plano da organização, o GitHub Pages só publica a partir de repositório público, e em repositório
   público os minutos do Actions não contam na cota da organização.
-- **GitHub Pages:** branch `main`, pasta `/docs`.
+- **GitHub Pages:** origem "GitHub Actions" (Settings > Pages > Source). Cada rodada dos dois robôs publica a pasta
+  `docs/` com o `painel.json` da hora (o "Atualizado em" da página é a hora da última conferência), e o commit no `main`,
+  que guarda o histórico, só acontece quando o conteúdo muda (cada versão fica no Git; desde 10/10/2026). Push de
+  código em `docs/`, `coletor/` ou `cadastro/` roda o `atualiza.yml` e publica na hora. O ambiente `github-pages` tem de
+  aceitar o branch `main`.
 - **Permissão dos workflows:** Settings > Actions > General > Workflow permissions = "Read and write permissions" (os
   workflows também declaram `contents: write` e `issues: write`); os robôs gravam `dados/` e `docs/dados/` com o
   token do próprio Actions.
