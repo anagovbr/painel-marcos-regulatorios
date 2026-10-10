@@ -11,6 +11,7 @@ não casar com a fonte, a rodada falha e o painel.json anterior fica como está.
 """
 import argparse
 import json
+import os
 import sys
 
 from . import boletins as B
@@ -127,12 +128,16 @@ def main(argv=None):
     print(f"{len(painel['sistemas'])} sistemas, {len(painel['reservatorios'])} reservatórios no painel")
     if args.seco:
         return 0
-    if config.PAINEL.exists() and sem_hora(json.loads(config.PAINEL.read_text(encoding="utf-8"))) == sem_hora(painel):
-        print("painel.json sem mudança de conteúdo; não gravado")
-        return 0
+    # Grava sempre, com a hora desta leitura: a página publicada pelo Actions mostra quando os dados foram conferidos.
+    # O commit, que guarda o histórico no Git, só acontece se o conteúdo mudou (saída "mudou" para o workflow; TI,
+    # 09/10/2026: cada versão fica no Git).
+    mudou = not config.PAINEL.exists() or sem_hora(json.loads(config.PAINEL.read_text(encoding="utf-8"))) != sem_hora(painel)
     config.PAINEL.parent.mkdir(parents=True, exist_ok=True)
     config.PAINEL.write_text(json.dumps(painel, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print("gravado", config.PAINEL.relative_to(config.RAIZ))
+    print("gravado", config.PAINEL.relative_to(config.RAIZ), "(conteúdo mudou)" if mudou else "(só a hora da leitura)")
+    if os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+            f.write(f"mudou={'true' if mudou else 'false'}\n")
     return 0
 
 

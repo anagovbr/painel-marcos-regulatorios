@@ -5,10 +5,17 @@ name: Atualiza medições
 # /repos/anagovbr/painel-marcos-regulatorios/actions/workflows/atualiza.yml/dispatches (README, "Disparo"). O schedule
 # abaixo é só reserva: no repositório da ANA ele rodou 3 de 94 horários em 08-09/10/2026 (a cada 4 a 7 horas). Fica em
 # minuto diferente do cron-job.org para não rodar em dobro; rodada a mais não grava nada se o dado não mudou.
+#
+# Publica a página direto pelo Actions (Pages com origem "GitHub Actions") a cada rodada, com a hora desta leitura no
+# painel.json; o commit no main, que guarda o histórico, só acontece quando o conteúdo muda. O push de código na página,
+# no coletor ou no cadastro também roda este workflow, para publicar a mudança na hora.
 on:
   workflow_dispatch:
   schedule:
     - cron: '50 * * * *'
+  push:
+    branches: [main]
+    paths: ['docs/**', 'coletor/**', 'cadastro/**', 'requirements.txt', '.github/workflows/atualiza.yml']
 
 concurrency:
   group: dados
@@ -17,10 +24,15 @@ concurrency:
 permissions:
   contents: write
   issues: write
+  pages: write
+  id-token: write
 
 jobs:
   atualiza:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publica.outputs.page_url }}
     timeout-minutes: 20
     env:
       # e-mail dos avisos (coletor/email_aviso.py); sem os secrets, o envio é pulado
@@ -41,17 +53,26 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Medições do SAR
+        id: medicoes
         run: python -m coletor.atualiza
 
-      - name: Publicar se mudou
+      - name: Guardar no Git se o conteúdo mudou
+        if: steps.medicoes.outputs.mudou == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/dados/painel.json
-          if git diff --cached --quiet; then echo "sem mudança"; exit 0; fi
           git commit -m "dados: medições do SAR $(TZ=America/Sao_Paulo date '+%d/%m/%Y %H:%M') BRT"
-          git pull --rebase
+          git pull --rebase --autostash
           git push
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Publicar a página
+        id: publica
+        uses: actions/deploy-pages@v4
 
       - name: Abrir issue se falhou
         if: failure()

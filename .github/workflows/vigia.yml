@@ -16,10 +16,15 @@ concurrency:
 permissions:
   contents: write
   issues: write
+  pages: write
+  id-token: write
 
 jobs:
   vigia:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publica.outputs.page_url }}
     timeout-minutes: 30
     env:
       # e-mail dos avisos (coletor/email_aviso.py); sem os secrets, o envio é pulado
@@ -43,17 +48,29 @@ jobs:
         run: python -m coletor.vigia_boletins --avisos avisos.md
 
       - name: Medições do SAR
+        id: medicoes
         run: python -m coletor.atualiza
 
-      - name: Publicar se mudou
+      # o painel.json é regravado sempre (hora da leitura) e só entra no commit se o conteúdo mudou; o boletins.json
+      # só é regravado quando muda
+      - name: Guardar no Git se o conteúdo mudou
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dados/boletins.json docs/dados/painel.json
-          if git diff --cached --quiet; then echo "sem mudança"; exit 0; fi
+          git add dados/boletins.json
+          if [ "${{ steps.medicoes.outputs.mudou }}" = "true" ]; then git add docs/dados/painel.json; fi
+          if git diff --cached --quiet; then echo "sem mudança de conteúdo"; exit 0; fi
           git commit -m "dados: boletins da COMAR $(TZ=America/Sao_Paulo date '+%d/%m/%Y %H:%M') BRT"
-          git pull --rebase
+          git pull --rebase --autostash
           git push
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Publicar a página
+        id: publica
+        uses: actions/deploy-pages@v4
 
       - name: Abrir issue com os avisos e mandar por e-mail
         if: hashFiles('avisos.md') != ''
