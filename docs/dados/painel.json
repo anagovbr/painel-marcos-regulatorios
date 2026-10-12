@@ -1,16 +1,16 @@
 {
  "versao": 1,
- "gerado_em": "2026-10-12T00:20-03:00",
+ "gerado_em": "2026-10-12T06:20-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-10-12T00:20-03:00"
+   "lido_em": "2026-10-12T06:20-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios",
-   "lido_em": "2026-10-11T05:40-03:00"
+   "lido_em": "2026-10-12T01:40-03:00"
   }
  },
  "criterio": {
@@ -503,12 +503,12 @@
    "lat": -6.84537,
    "lon": -38.3116,
    "medicao": {
-    "data": "2026-10-11",
-    "volume_pct": 50.59,
-    "volume_hm3": 20.53,
+    "data": "2026-10-12",
+    "volume_pct": 50.89,
+    "volume_hm3": 20.65,
     "capacidade_hm3": 40.58,
-    "cota_m": 243.17,
-    "dias": 1
+    "cota_m": 243.2,
+    "dias": 0
    },
    "alertas": []
   },
@@ -777,12 +777,12 @@
    "lat": -13.43833,
    "lon": -42.215,
    "medicao": {
-    "data": "2026-10-11",
-    "volume_pct": 68.68,
-    "volume_hm3": 42.13,
+    "data": "2026-10-12",
+    "volume_pct": 68.52,
+    "volume_hm3": 42.03,
     "capacidade_hm3": 61.34,
-    "cota_m": 665.18,
-    "dias": 1
+    "cota_m": 665.15,
+    "dias": 0
    },
    "alertas": []
   },
