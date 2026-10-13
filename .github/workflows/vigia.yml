@@ -81,6 +81,17 @@ jobs:
           URL=$(gh issue create --title "$T" --body-file avisos.md)
           python3 -m coletor.email_aviso --assunto "[Painel alocação] $T" --arquivo avisos.md --link "$URL"
 
+      - name: Fechar a issue de falha, se o robô voltou a funcionar
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          T="Falha no vigia dos boletins"
+          RODADA="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          for n in $(gh issue list --state open --search "$T in:title" --json number,title --jq ".[] | select(.title == \"$T\") | .number"); do
+            gh issue close "$n" --comment "Voltou a funcionar na rodada $RODADA."
+          done
+
       - name: Abrir issue se falhou
         if: failure()
         env:

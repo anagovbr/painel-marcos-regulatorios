@@ -136,3 +136,37 @@ def test_email_monta_destinatarios():
            "AVISO_PARA": "a@exemplo, b@exemplo"}
     m = email_aviso.mensagem("Assunto", "Corpo", env)
     assert m["To"] == "a@exemplo, b@exemplo" and m["From"] == "robo@exemplo" and m["Subject"] == "Assunto"
+
+
+def test_api_do_sar_tenta_de_novo_quando_o_servidor_falha(monkeypatch):
+    import requests
+    monkeypatch.setattr("time.sleep", lambda s: None)
+
+    class R:
+        def __init__(self, st):
+            self.status_code = st
+
+        def raise_for_status(self):
+            if self.status_code >= 400:
+                raise requests.HTTPError(str(self.status_code))
+
+        def json(self):
+            return [{"reservatorio": "TREMEDAL"}, {"reservatorio": None}]
+
+    class S:
+        def __init__(self, respostas):
+            self.respostas, self.chamadas = list(respostas), 0
+
+        def get(self, *a, **k):
+            self.chamadas += 1
+            x = self.respostas.pop(0)
+            if isinstance(x, Exception):
+                raise x
+            return R(x)
+
+    s = S([504, requests.ConnectionError("caiu"), 200])
+    assert sar_portal.linhas_uf("BA", HOJE, s) == [{"reservatorio": "TREMEDAL"}] and s.chamadas == 3
+    with pytest.raises(requests.HTTPError):
+        sar_portal.linhas_uf("BA", HOJE, S([504] * 4))
+    with pytest.raises(requests.HTTPError):                     # erro do pedido (4xx) não adianta repetir
+        sar_portal.linhas_uf("BA", HOJE, S([400, 200]))

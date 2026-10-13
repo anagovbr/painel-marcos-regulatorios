@@ -48,11 +48,25 @@ def data_br(v):
         return None
 
 
-def linhas_uf(uf, hoje, sessao=None):
+def linhas_uf(uf, hoje, sessao=None, tentativas=4, espera=15):
+    """Linhas da API para uma UF. Erro do servidor (5xx) ou de conexão tenta de novo, esperando 15, 30 e 45 s: a API
+    devolve 504 de vez em quando e a rodada seguinte funciona (10 e 13/10/2026, BA)."""
+    import time
+
     s = sessao or requests
-    r = s.get(API + "retornaMedicoes", params={"tipoSistema": 1, "siglaUf": uf, "data": data_api(hoje)}, timeout=120)
-    r.raise_for_status()
-    return [x for x in r.json() if x.get("reservatorio")]
+    for i in range(tentativas):
+        try:
+            r = s.get(API + "retornaMedicoes", params={"tipoSistema": 1, "siglaUf": uf, "data": data_api(hoje)}, timeout=120)
+            if r.status_code < 500:
+                r.raise_for_status()
+                return [x for x in r.json() if x.get("reservatorio")]
+            erro = requests.HTTPError(f"{r.status_code} para {uf}", response=r)
+        except (requests.ConnectionError, requests.Timeout) as e:
+            erro = e
+        if i < tentativas - 1:
+            print(f"   API do SAR ({uf}): {erro}; nova tentativa em {espera * (i + 1)} s")
+            time.sleep(espera * (i + 1))
+    raise erro
 
 
 def medicao(x):
