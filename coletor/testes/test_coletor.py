@@ -170,3 +170,31 @@ def test_api_do_sar_tenta_de_novo_quando_o_servidor_falha(monkeypatch):
         sar_portal.linhas_uf("BA", HOJE, S([504] * 4))
     with pytest.raises(requests.HTTPError):                     # erro do pedido (4xx) não adianta repetir
         sar_portal.linhas_uf("BA", HOJE, S([400, 200]))
+
+
+def test_uf_sem_resposta_da_api_fica_fora_e_nenhuma_resposta_derruba(monkeypatch):
+    import requests
+    linha = {"reservatorio": "TREMEDAL", "data": "06/10/2026", "volumeUtil": "50", "volume": "1", "capacidade": "2",
+             "cota": "3"}
+
+    def ler(uf, d, s):
+        if uf == "MG":
+            raise requests.HTTPError("504 para MG")
+        return [linha]
+
+    res = [{"res_id": 1, "nome_sar": "TREMEDAL", "uf": "BA"}, {"res_id": 2, "nome_sar": "BICO DA PEDRA", "uf": "MG"}]
+    assert set(sar_portal.ultimas_medicoes(res, HOJE, 0, ler)) == {1}
+    with pytest.raises(requests.HTTPError):
+        sar_portal.ultimas_medicoes(res[1:], HOJE, 0, ler)
+
+
+def test_acude_sem_resposta_fica_com_a_medicao_publicada(tmp_path, monkeypatch):
+    import json
+    p = tmp_path / "painel.json"
+    p.write_text(json.dumps({"reservatorios": [
+        {"res_id": 2, "medicao": {"data": "2026-10-06", "volume_pct": 40.0, "volume_hm3": 1.0, "capacidade_hm3": 2.0,
+                                  "cota_m": 3.0, "dias": 1}},
+        {"res_id": 3, "medicao": None}]}), encoding="utf-8")
+    monkeypatch.setattr(config, "PAINEL", p)
+    assert atualiza.anteriores() == {2: {"data": date(2026, 10, 6), "volume_pct": 40.0, "volume_hm3": 1.0,
+                                         "capacidade_hm3": 2.0, "cota_m": 3.0}}

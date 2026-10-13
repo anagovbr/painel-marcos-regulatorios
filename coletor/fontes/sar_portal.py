@@ -92,21 +92,47 @@ def ultimas_medicoes(reservatorios, hoje, busca_anterior_dias=0, ler=linhas_uf):
     """Última medição de cada açude. A API devolve a medição mais próxima da data pedida dentro de 30 dias (regra do
     SAR) e "-" fora disso. Com busca_anterior_dias > 0, o açude sem medição é procurado de novo recuando 30 dias por
     vez: como a janela anterior veio vazia, o que a API devolve é a última medição (conferido com Tremedal, 07/10/2026:
-    "-" pedindo 07/10 e 22/08/2026 pedindo 20/09)."""
+    "-" pedindo 07/10 e 22/08/2026 pedindo 20/09).
+
+    UF que a API não respondeu, mesmo depois das novas tentativas de linhas_uf, fica fora do resultado, e quem chama
+    mantém a medição anterior dos açudes dela (a API cai por alguns minutos de vez em quando: 13/10/2026, MG, 504 por
+    mais de 1,5 min). Só se nenhuma UF responder a falha sobe e a rodada falha."""
     from datetime import timedelta
 
+    def tentar(uf, dia, s):
+        try:
+            return ler(uf, dia, s)
+        except requests.RequestException as e:
+            erros.append(e)
+            print(f"   API do SAR sem resposta para {uf} ({e}); os açudes de {uf} ficam com a medição anterior")
+            return None
+
+    erros = []
     with requests.Session() as s:
         s.headers["User-Agent"] = "painel-marcos-regulatorios (github.com/anagovbr/painel-marcos-regulatorios)"
-        por_uf = {uf: ler(uf, hoje, s) for uf in sorted({r["uf"] for r in reservatorios})}
-        saida = {rid: medicao(x) for rid, x in casar(reservatorios, por_uf).items()}
+        por_uf = {}
+        for uf in sorted({r["uf"] for r in reservatorios}):
+            linhas = tentar(uf, hoje, s)
+            if linhas is not None:
+                por_uf[uf] = linhas
+        if not por_uf:
+            raise erros[-1]
+        lidos = [r for r in reservatorios if r["uf"] in por_uf]
+        saida = {rid: medicao(x) for rid, x in casar(lidos, por_uf).items()}
         recuo = 30
         while recuo <= busca_anterior_dias:
-            faltam = [r for r in reservatorios if saida[int(r["res_id"])]["data"] is None]
+            faltam = [r for r in lidos if int(r["res_id"]) in saida and saida[int(r["res_id"])]["data"] is None]
             if not faltam:
                 break
-            antes = {uf: ler(uf, hoje - timedelta(days=recuo), s) for uf in sorted({r["uf"] for r in faltam})}
-            for rid, x in casar(faltam, antes).items():
-                if data_br(x.get("data")):
-                    saida[rid] = medicao(x)
+            for uf in sorted({r["uf"] for r in faltam}):
+                da_uf = [r for r in faltam if r["uf"] == uf]
+                linhas = tentar(uf, hoje - timedelta(days=recuo), s)
+                if linhas is None:                       # sem resposta na busca: fica a medição anterior
+                    for r in da_uf:
+                        saida.pop(int(r["res_id"]), None)
+                    continue
+                for rid, x in casar(da_uf, {uf: linhas}).items():
+                    if data_br(x.get("data")):
+                        saida[rid] = medicao(x)
             recuo += 30
     return saida

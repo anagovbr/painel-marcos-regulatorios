@@ -103,6 +103,17 @@ def comparar(nome_a, nome_b, reservatorios, hoje):
     return 1 if difs else 0
 
 
+def anteriores():
+    """res_id -> medição do painel.json publicado (para o açude que a fonte não devolveu nesta rodada)."""
+    from datetime import date
+
+    if not config.PAINEL.exists():
+        return {}
+    p = json.loads(config.PAINEL.read_text(encoding="utf-8"))
+    return {r["res_id"]: {k: r["medicao"][k] for k in fontes.MEDICAO} | {"data": date.fromisoformat(r["medicao"]["data"])}
+            for r in p["reservatorios"] if r.get("medicao") and r["medicao"].get("data")}
+
+
 def main(argv=None):
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
@@ -119,6 +130,9 @@ def main(argv=None):
     entram = [r for r in reservatorios if bol["sistemas"].get(r["sistema"], {}).get("no_painel")]
     fonte = fontes.carregar(config.FONTE)
     medicoes = fonte.ultimas_medicoes(entram, agora.date(), busca_anterior_dias=config.BUSCA_MEDICAO_ANTERIOR_DIAS)
+    # açude que a fonte não devolveu (UF sem resposta da API) fica com a medição já publicada
+    for rid, m in anteriores().items():
+        medicoes.setdefault(rid, m)
     painel = montar(sistemas, reservatorios, bol, medicoes, fonte, agora)
 
     for r in painel["reservatorios"]:
