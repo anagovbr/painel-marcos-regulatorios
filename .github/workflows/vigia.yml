@@ -22,6 +22,10 @@ permissions:
 jobs:
   vigia:
     runs-on: ubuntu-latest
+    # O GitHub manda e-mail de "rodada falhou" para quem disparou a rodada, que é o dono do token do cron-job.org (da TI).
+    # Com isto a rodada com erro não conta como falha para o GitHub; o aviso para quem mantém o painel continua sendo a
+    # issue aberta pelo passo "Abrir issue se falhou", que cita AVISAR (coletor/config.py).
+    continue-on-error: true
     environment:
       name: github-pages
       url: ${{ steps.publica1.outputs.page_url || steps.publica2.outputs.page_url }}
