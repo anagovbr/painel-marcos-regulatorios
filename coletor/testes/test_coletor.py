@@ -198,3 +198,10 @@ def test_acude_sem_resposta_fica_com_a_medicao_publicada(tmp_path, monkeypatch):
     monkeypatch.setattr(config, "PAINEL", p)
     assert atualiza.anteriores() == {2: {"data": date(2026, 10, 6), "volume_pct": 40.0, "volume_hm3": 1.0,
                                          "capacidade_hm3": 2.0, "cota_m": 3.0}}
+
+
+def test_idade_da_pagina_no_ar():
+    from coletor import confere_pagina
+    from zoneinfo import ZoneInfo
+    p = {"fontes": {"medicao": {"lido_em": "2026-10-23T10:20-03:00"}}}
+    assert confere_pagina.idade_horas(p, datetime(2026, 10, 23, 13, 50, tzinfo=ZoneInfo("America/Sao_Paulo"))) == 3.5

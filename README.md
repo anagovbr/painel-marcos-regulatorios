@@ -82,7 +82,12 @@ uma data, devolve a medição mais próxima dentro de 30 dias. O painel mostra a
 ## Avisos
 
 Quando algo pede atenção (boletim que não bate com o cadastro, sistema que entra ou sai, link fora do ar) ou um robô
-falha, abre-se uma issue neste repositório. Em falha que se repete, só a primeira gera issue.
+falha, abre-se uma issue neste repositório. Em falha que se repete, só a primeira gera issue. A rodada que volta a
+funcionar fecha a issue de falha. Quedas passageiras não viram falha: as consultas ao gov.br e à API do SAR tentam de
+novo, a UF que a API não responde fica com a medição anterior e a publicação do Pages tenta duas vezes e, se falhar,
+fica para a rodada seguinte. Em compensação, toda rodada do vigia confere a página no ar e falha se a última leitura
+publicada tiver mais de 3 horas (`coletor/confere_pagina.py`): isso pega Pages fora do ar, cron-job.org parado e token
+vencido.
 
 **Para receber por e-mail, sem permissão nenhuma no repositório:** como ele é público, qualquer conta do GitHub pode
 acompanhá-lo. Na página do repositório, **Watch > Custom > Issues** (ou **All Activity**): cada issue nova chega no

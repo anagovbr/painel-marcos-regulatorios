@@ -74,15 +74,22 @@ jobs:
         with:
           path: docs
 
-      # a publicação do Pages falha de vez em quando do lado do GitHub (15/10/2026); tenta mais uma vez
+      # a publicação do Pages falha de vez em quando do lado do GitHub (15 e 23/10/2026, erro 500); tenta de novo depois
+      # de 1 minuto e, se falhar outra vez, não derruba a rodada: a seguinte publica. Página parada por mais de 3 horas é
+      # o que vira issue (coletor/confere_pagina.py, no vigia).
       - name: Publicar a página
         id: publica1
         continue-on-error: true
         uses: actions/deploy-pages@v4
 
+      - name: Esperar antes de tentar de novo
+        if: steps.publica1.outcome == 'failure'
+        run: sleep 60
+
       - name: Publicar a página (segunda tentativa)
         id: publica2
         if: steps.publica1.outcome == 'failure'
+        continue-on-error: true
         uses: actions/deploy-pages@v4
 
       - name: Fechar a issue de falha, se o robô voltou a funcionar

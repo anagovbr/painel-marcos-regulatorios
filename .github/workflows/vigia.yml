@@ -72,15 +72,22 @@ jobs:
         with:
           path: docs
 
-      # a publicação do Pages falha de vez em quando do lado do GitHub (15/10/2026); tenta mais uma vez
+      # a publicação do Pages falha de vez em quando do lado do GitHub (15 e 23/10/2026, erro 500); tenta de novo depois
+      # de 1 minuto e, se falhar outra vez, não derruba a rodada: a seguinte publica. Página parada por mais de 3 horas é
+      # o que vira issue (coletor/confere_pagina.py, no vigia).
       - name: Publicar a página
         id: publica1
         continue-on-error: true
         uses: actions/deploy-pages@v4
 
+      - name: Esperar antes de tentar de novo
+        if: steps.publica1.outcome == 'failure'
+        run: sleep 60
+
       - name: Publicar a página (segunda tentativa)
         id: publica2
         if: steps.publica1.outcome == 'failure'
+        continue-on-error: true
         uses: actions/deploy-pages@v4
 
       - name: Abrir issue com os avisos e mandar por e-mail
@@ -91,6 +98,9 @@ jobs:
           T="Avisos do vigia dos boletins ($(TZ=America/Sao_Paulo date '+%d/%m/%Y'))"
           URL=$(gh issue create --title "$T" --body-file avisos.md)
           python3 -m coletor.email_aviso --assunto "[Painel alocação] $T" --arquivo avisos.md --link "$URL"
+
+      - name: Conferir se a página no ar está em dia
+        run: python -m coletor.confere_pagina
 
       - name: Fechar a issue de falha, se o robô voltou a funcionar
         if: success()
