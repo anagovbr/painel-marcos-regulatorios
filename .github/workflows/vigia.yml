@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.publica.outputs.page_url }}
+      url: ${{ steps.publica1.outputs.page_url || steps.publica2.outputs.page_url }}
     timeout-minutes: 30
     env:
       # e-mail dos avisos (coletor/email_aviso.py); sem os secrets, o envio é pulado
@@ -34,7 +34,11 @@ jobs:
       AVISO_SMTP_SENHA: ${{ secrets.AVISO_SMTP_SENHA }}
       AVISO_PARA: ${{ secrets.AVISO_PARA }}
     steps:
+      # o main de agora, e não o do momento em que a rodada entrou na fila (sem isso, a rodada que esperou a outra
+      # terminar partia de uma versão velha e o commit dava conflito: 23/10/2026)
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
@@ -68,8 +72,15 @@ jobs:
         with:
           path: docs
 
+      # a publicação do Pages falha de vez em quando do lado do GitHub (15/10/2026); tenta mais uma vez
       - name: Publicar a página
-        id: publica
+        id: publica1
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Publicar a página (segunda tentativa)
+        id: publica2
+        if: steps.publica1.outcome == 'failure'
         uses: actions/deploy-pages@v4
 
       - name: Abrir issue com os avisos e mandar por e-mail

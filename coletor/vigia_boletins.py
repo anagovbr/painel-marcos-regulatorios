@@ -34,6 +34,21 @@ from . import termos as TM
 QUEBRADO = (404, 410)
 
 
+def sessao_com_novas_tentativas():
+    """Sessão que tenta de novo erro de conexão e 502/503/504, esperando 10, 20, 40 e 80 s: a máquina do GitHub perde a
+    rede por instantes ("Network is unreachable" para www.gov.br em 18, 20 e 23/10/2026) e o servidor do gov.br às vezes
+    não responde. 404 e 410 voltam na hora (link quebrado de verdade)."""
+    from requests.adapters import HTTPAdapter
+    from urllib3.util.retry import Retry
+
+    s = requests.Session()
+    r = Retry(total=5, connect=5, read=2, status=4, backoff_factor=5, status_forcelist=(502, 503, 504),
+              allowed_methods=("GET", "HEAD"), raise_on_status=False)
+    s.mount("https://", HTTPAdapter(max_retries=r))
+    s.mount("http://", HTTPAdapter(max_retries=r))
+    return s
+
+
 def checar_link(url, sessao, tentativas=3):
     erro = None
     for i in range(tentativas):
@@ -89,7 +104,7 @@ def main(argv=None):
         acudes.setdefault(r["sistema"], set()).add(r["nome_boletim"])
     anterior = json.loads(config.BOLETINS.read_text(encoding="utf-8")) if config.BOLETINS.exists() else {}
 
-    with requests.Session() as s:
+    with sessao_com_novas_tentativas() as s:
         bols, registro, notas, avisos = B.classificar(B.listar_pasta(s), sistemas, acudes, ignorados(),
                                                       anterior.get("registro", {}), agora.date(), lambda u: B.ler_pdf(u, s))
         mais_recente = max(b["mes"] for b in bols)
