@@ -1,11 +1,11 @@
 {
  "versao": 1,
- "gerado_em": "2026-10-23T07:20-03:00",
+ "gerado_em": "2026-10-23T07:40-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-10-23T07:20-03:00"
+   "lido_em": "2026-10-23T07:40-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
@@ -500,12 +500,12 @@
    "lat": -6.98635,
    "lon": -38.45374,
    "medicao": {
-    "data": "2026-10-22",
-    "volume_pct": 46.2,
-    "volume_hm3": 135.66,
+    "data": "2026-10-23",
+    "volume_pct": 46.02,
+    "volume_hm3": 135.13,
     "capacidade_hm3": 293.62,
-    "cota_m": 310.4,
-    "dias": 1
+    "cota_m": 310.37,
+    "dias": 0
    },
    "alertas": []
   },
@@ -619,12 +619,12 @@
    "lat": -6.62915,
    "lon": -37.14871,
    "medicao": {
-    "data": "2026-10-22",
-    "volume_pct": 33.88,
-    "volume_hm3": 8.71,
+    "data": "2026-10-23",
+    "volume_pct": 33.76,
+    "volume_hm3": 8.68,
     "capacidade_hm3": 25.71,
-    "cota_m": 177.46,
-    "dias": 1
+    "cota_m": 177.45,
+    "dias": 0
    },
    "alertas": []
   },
