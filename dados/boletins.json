@@ -1,5 +1,5 @@
 {
- "lido_em": "2026-11-05T07:40-03:00",
+ "lido_em": "2026-11-05T10:40-03:00",
  "fonte": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/",
  "mais_recente": "2026-09",
  "janela_meses": 2,
@@ -128,7 +128,7 @@
     "CERAÍMA"
    ],
    "rotulo": "agosto de 2026",
-   "termo": null,
+   "termo": "2026-2027",
    "no_painel": true
   },
   "champrao": {
@@ -349,8 +349,8 @@
    "campanha": null,
    "acudes": null,
    "rotulo": "maio de 2026",
-   "termo": null,
-   "no_painel": false
+   "termo": "2026-2027",
+   "no_painel": true
   },
   "sume": {
    "mes": "2026-09",
@@ -410,6 +410,11 @@
   }
  },
  "termos": {
+  "ceraima": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermoAlocaoguaCerama20262027assinado.pdf",
+   "uf": "ba"
+  },
   "miroros": {
    "campanha": "2026-2027",
    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermodeAlocaodeguaMirors20262027assinado.pdf",
@@ -488,6 +493,11 @@
   "barra-do-jua": {
    "campanha": "2026-2027",
    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/Termo_de_Alocacao_de_Agua_BarradoJu_20262027assinado.pdf",
+   "uf": "pe"
+  },
+  "serrinha-ii": {
+   "campanha": "2026-2027",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/copy_of_Termo_de_Alocacao_de_Agua_SerrinhaII_20262027assinado.pdf",
    "uf": "pe"
   },
   "poco-branco": {

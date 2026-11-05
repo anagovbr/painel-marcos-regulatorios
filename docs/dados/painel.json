@@ -1,16 +1,16 @@
 {
  "versao": 1,
- "gerado_em": "2026-11-05T10:20-03:00",
+ "gerado_em": "2026-11-05T10:41-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-11-05T10:20-03:00"
+   "lido_em": "2026-11-05T10:41-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios",
-   "lido_em": "2026-11-05T07:40-03:00"
+   "lido_em": "2026-11-05T10:40-03:00"
   }
  },
  "criterio": {
@@ -355,6 +355,20 @@
     "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/poco-branco_09-2026.pdf",
     "publicado_em": "15/10/2026 11h30",
     "campanha": "2026-2027"
+   }
+  },
+  {
+   "id": "serrinha-ii",
+   "nome": "Serrinha II",
+   "ufs": "PE",
+   "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pe",
+   "nota": "",
+   "boletim": {
+    "mes": "2026-05",
+    "rotulo": "maio de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/serrinha-ii_05-2026.pdf",
+    "publicado_em": "25/06/2026 14h33",
+    "campanha": null
    }
   },
   {
@@ -916,6 +930,23 @@
     "capacidade_hm3": 136.0,
     "cota_m": 71.2,
     "dias": 0
+   },
+   "alertas": []
+  },
+  {
+   "res_id": 12431,
+   "sistema": "serrinha-ii",
+   "nome": "Serrinha II",
+   "uf": "PE",
+   "lat": -8.20771,
+   "lon": -38.53242,
+   "medicao": {
+    "data": "2026-10-30",
+    "volume_pct": 23.16,
+    "volume_hm3": 72.05,
+    "capacidade_hm3": 311.08,
+    "cota_m": 385.96,
+    "dias": 6
    },
    "alertas": []
   },
