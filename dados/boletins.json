@@ -1,5 +1,5 @@
 {
- "lido_em": "2026-11-05T10:40-03:00",
+ "lido_em": "2026-11-05T11:40-03:00",
  "fonte": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/",
  "mais_recente": "2026-09",
  "janela_meses": 2,
@@ -1215,6 +1215,27 @@
    "ufs": [
     "BA"
    ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/Termo_de_Alocacao_de_Agua_SerrinhaII_20262027assinado.pdf": {
+   "boletim": false
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ApresentaoAA20262027SerrinhaII.pdf": {
+   "boletim": false
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ConviteSerrinhaII_vdeo_01out2026.pdf": {
+   "boletim": false
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/copy_of_Termo_de_Alocacao_de_Agua_SerrinhaII_20262027assinado.pdf": {
+   "boletim": false
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/TermoAlocaoguaCerama20262027assinado.pdf": {
+   "boletim": false
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ApresentaoCeramaAA20262027.pdf": {
+   "boletim": false
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ConviteCerama_27out2026.pdf": {
+   "boletim": false
   }
  }
 }
