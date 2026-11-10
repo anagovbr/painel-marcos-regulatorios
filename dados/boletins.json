@@ -1,56 +1,56 @@
 {
- "lido_em": "2026-11-10T07:40-03:00",
+ "lido_em": "2026-11-10T11:40-03:00",
  "fonte": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/",
- "mais_recente": "2026-09",
+ "mais_recente": "2026-10",
  "janela_meses": 2,
  "sistemas": {
   "anage": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/anage_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h32",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/anage_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "anage",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "ANAGÉ"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "andorinha-ii": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/andorinha-ii_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h32",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/andorinha-ii_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "andorinha-ii",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "ANDORINHA II"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "arg-mendubim": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/arg-mendubim_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
-   "slug": "arg-mendubim",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/armando-ribeiro-mendubim_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
+   "slug": "armando-ribeiro-mendubim",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "ARMANDO RIBEIRO GONÇALVES",
     "MENDUBIM"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "avidos-sao-goncalo": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/avidos-sao-goncalo_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/avidos-sao-goncalo_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "avidos-sao-goncalo",
    "via": "exato",
    "campanha": "2026-2027",
@@ -58,7 +58,7 @@
     "ENG. AVIDOS",
     "SÃO GONÇALO"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
@@ -77,16 +77,16 @@
    "no_painel": true
   },
   "bico-da-pedra": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/bico-da-pedra_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/bico-da-pedra_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "bico-da-pedra",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "BICO DA PEDRA"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
@@ -118,65 +118,65 @@
    "no_painel": true
   },
   "ceraima": {
-   "mes": "2026-08",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ceraima_08-2026.pdf",
-   "publicado_em": "16/09/2026 09h23",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ceraima_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "ceraima",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "CERAÍMA"
    ],
-   "rotulo": "agosto de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "champrao": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/champrao_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h32",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/champrao_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "champrao",
    "via": "exato",
    "campanha": null,
    "acudes": [
     "CHAMPRÃO"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": null,
    "no_painel": true
   },
   "cocorobo": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/cocorobo_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h32",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/cocorobo_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "cocorobo",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "COCOROBÓ"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "cruzeta": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/cruzeta_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/cruzeta_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "cruzeta",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "CRUZETA"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "curema-mae-dagua": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/curema-mae-dagua_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/curema-mae-dagua_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "curema-mae-dagua",
    "via": "exato",
    "campanha": "2026-2027",
@@ -184,14 +184,14 @@
     "CUREMA",
     "MÃE D'ÁGUA"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "estreito-cova-da-mandioca": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/estreito-cova-da-mandioca_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h32",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/estreito-cova-da-mandioca_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "estreito-cova-da-mandioca",
    "via": "exato",
    "campanha": "2026-2027",
@@ -199,7 +199,7 @@
     "COVA DA MANDIOCA",
     "ESTREITO"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
@@ -230,56 +230,56 @@
    "no_painel": true
   },
   "lagoa-do-arroz": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/lagoa-do-arroz_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/lagoa-do-arroz_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "lagoa-do-arroz",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "LAGOA DO ARROZ"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "marechal-dutra": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/marechal-dutra_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/marechal-dutra_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "marechal-dutra",
    "via": "cabecalho",
    "campanha": "2026-2027",
    "acudes": [],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "miroros": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/miroros_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h32",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/miroros_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "miroros",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "MIRORÓS"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "poco-branco": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/poco-branco_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/poco-branco_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "poco-branco",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "POÇO BRANCO"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
@@ -296,9 +296,9 @@
    "no_painel": false
   },
   "pocoes-epitacio-pessoa": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pocoes-epitacio-pessoa_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pocoes-epitacio-pessoa_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "pocoes-epitacio-pessoa",
    "via": "exato",
    "campanha": "2026-2027",
@@ -307,7 +307,7 @@
     "EPITÁCIO PESSOA",
     "POÇÕES"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
@@ -327,84 +327,86 @@
    "no_painel": true
   },
   "santa-ines": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/santa-ines_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h29",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/santa-ines_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "santa-ines",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "SANTA INÊS"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "serrinha-ii": {
-   "mes": "2026-05",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/serrinha-ii_05-2026.pdf",
-   "publicado_em": "25/06/2026 14h33",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/serrinha-ii_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h37",
    "slug": "serrinha-ii",
-   "via": "nome",
-   "campanha": null,
-   "acudes": null,
-   "rotulo": "maio de 2026",
+   "via": "exato",
+   "campanha": "2026-2027",
+   "acudes": [
+    "SERRINHA II"
+   ],
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "sume": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sume_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h29",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sume_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h37",
    "slug": "sume",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "SUMÉ"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "tremedal": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/tremedal_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h32",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/tremedal_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h37",
    "slug": "tremedal",
    "via": "exato",
    "campanha": null,
    "acudes": [
     "TREMEDAL"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": null,
    "no_painel": true
   },
   "truvisco": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/truvisco_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h32",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/truvisco_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h37",
    "slug": "truvisco",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "TRUVISCO"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
   "zabumbao": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/zabumbao_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h32",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/zabumbao_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h37",
    "slug": "zabumbao",
    "via": "exato",
    "campanha": "2026-2027",
    "acudes": [
     "ZABUMBÃO"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   }
@@ -1236,6 +1238,333 @@
   },
   "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ConviteCerama_27out2026.pdf": {
    "boletim": false
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/anage_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "anage",
+   "via": "exato",
+   "acudes": [
+    "ANAGÉ"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "ANAGÉ",
+   "ufs": [
+    "BA"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/andorinha-ii_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "andorinha-ii",
+   "via": "exato",
+   "acudes": [
+    "ANDORINHA II"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "ANDORINHA II",
+   "ufs": [
+    "BA"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/armando-ribeiro-mendubim_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "arg-mendubim",
+   "via": "exato",
+   "acudes": [
+    "ARMANDO RIBEIRO GONÇALVES",
+    "MENDUBIM"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "ARG-MENDUBIM",
+   "ufs": [
+    "RN"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/avidos-sao-goncalo_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "avidos-sao-goncalo",
+   "via": "exato",
+   "acudes": [
+    "ENG. AVIDOS",
+    "SÃO GONÇALO"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "AVIDOS-SÃO GONÇALO",
+   "ufs": [
+    "PB"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/bico-da-pedra_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "bico-da-pedra",
+   "via": "exato",
+   "acudes": [
+    "BICO DA PEDRA"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "BICO DA PEDRA-GORUTUBA",
+   "ufs": [
+    "MG"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/ceraima_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "ceraima",
+   "via": "exato",
+   "acudes": [
+    "CERAÍMA"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "CERAÍMA",
+   "ufs": [
+    "BA"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/champrao_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "champrao",
+   "via": "exato",
+   "acudes": [
+    "CHAMPRÃO"
+   ],
+   "campanha": null,
+   "sistema_cab": "CHAMPRÃO",
+   "ufs": [
+    "BA"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/cocorobo_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "cocorobo",
+   "via": "exato",
+   "acudes": [
+    "COCOROBÓ"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "COCOROBÓ",
+   "ufs": [
+    "BA"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/cruzeta_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "cruzeta",
+   "via": "exato",
+   "acudes": [
+    "CRUZETA"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "CRUZETA",
+   "ufs": [
+    "RN"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/curema-mae-dagua_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "curema-mae-dagua",
+   "via": "exato",
+   "acudes": [
+    "CUREMA",
+    "MÃE D'ÁGUA"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "CUREMA-MÃE D'ÁGUA",
+   "ufs": [
+    "PB"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/estreito-cova-da-mandioca_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "estreito-cova-da-mandioca",
+   "via": "exato",
+   "acudes": [
+    "COVA DA MANDIOCA",
+    "ESTREITO"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "ESTREITO-COVA DA MAND…",
+   "ufs": [
+    "BA",
+    "MG"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/lagoa-do-arroz_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "lagoa-do-arroz",
+   "via": "exato",
+   "acudes": [
+    "LAGOA DO ARROZ"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "LAGOA DO ARROZ",
+   "ufs": [
+    "PB"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/marechal-dutra_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "marechal-dutra",
+   "via": "cabecalho",
+   "acudes": [],
+   "campanha": "2026-2027",
+   "sistema_cab": "MARECHAL DUTRA",
+   "ufs": [
+    "RN"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/miroros_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "miroros",
+   "via": "exato",
+   "acudes": [
+    "MIRORÓS"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "MIRORÓS",
+   "ufs": [
+    "BA"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/poco-branco_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "poco-branco",
+   "via": "exato",
+   "acudes": [
+    "POÇO BRANCO"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "POÇO BRANCO",
+   "ufs": [
+    "RN"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/pocoes-epitacio-pessoa_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "pocoes-epitacio-pessoa",
+   "via": "exato",
+   "acudes": [
+    "CAMALAÚ",
+    "EPITÁCIO PESSOA",
+    "POÇÕES"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "POÇÕES-EPITÁCIO PESSOA",
+   "ufs": [
+    "PB"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sabugi_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": null,
+   "via": null,
+   "acudes": [
+    "SANTO ANTÔNIO"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "SABUGI",
+   "ufs": [
+    "RN"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/santa-ines_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "santa-ines",
+   "via": "exato",
+   "acudes": [
+    "SANTA INÊS"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "SANTA INÊS",
+   "ufs": [
+    "PB"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/serrinha-ii_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "serrinha-ii",
+   "via": "exato",
+   "acudes": [
+    "SERRINHA II"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "SERRINHA II",
+   "ufs": [
+    "PE"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sume_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "sume",
+   "via": "exato",
+   "acudes": [
+    "SUMÉ"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "SUMÉ",
+   "ufs": [
+    "PB"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/tremedal_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "tremedal",
+   "via": "exato",
+   "acudes": [
+    "TREMEDAL"
+   ],
+   "campanha": null,
+   "sistema_cab": "TREMEDAL",
+   "ufs": [
+    "BA"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/truvisco_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "truvisco",
+   "via": "exato",
+   "acudes": [
+    "TRUVISCO"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "TRUVISCO",
+   "ufs": [
+    "BA"
+   ]
+  },
+  "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/zabumbao_10-2026.pdf": {
+   "boletim": true,
+   "mes": "2026-10",
+   "sistema": "zabumbao",
+   "via": "exato",
+   "acudes": [
+    "ZABUMBÃO"
+   ],
+   "campanha": "2026-2027",
+   "sistema_cab": "ZABUMBÃO",
+   "ufs": [
+    "BA"
+   ]
   }
  }
 }
