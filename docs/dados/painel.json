@@ -1,16 +1,16 @@
 {
  "versao": 1,
- "gerado_em": "2026-11-12T18:20-03:00",
+ "gerado_em": "2026-11-13T00:20-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-11-12T18:20-03:00"
+   "lido_em": "2026-11-13T00:20-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios",
-   "lido_em": "2026-11-11T23:40-03:00"
+   "lido_em": "2026-11-12T19:40-03:00"
   }
  },
  "criterio": {
@@ -400,7 +400,7 @@
     "volume_hm3": 30.79,
     "capacidade_hm3": 29.86,
     "cota_m": 45.62,
-    "dias": 1
+    "dias": 2
    },
    "alertas": []
   },
@@ -417,7 +417,7 @@
     "volume_hm3": 48.44,
     "capacidade_hm3": 48.11,
     "cota_m": 327.24,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -434,7 +434,7 @@
     "volume_hm3": 197.87,
     "capacidade_hm3": 466.53,
     "cota_m": 370.18,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -451,7 +451,7 @@
     "volume_hm3": 5.24,
     "capacidade_hm3": 44.86,
     "cota_m": 67.35,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -468,7 +468,7 @@
     "volume_hm3": 283.53,
     "capacidade_hm3": 744.14,
     "cota_m": 236.26,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -485,7 +485,7 @@
     "volume_hm3": 210.68,
     "capacidade_hm3": 545.02,
     "cota_m": 236.47,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -502,7 +502,7 @@
     "volume_hm3": 35.77,
     "capacidade_hm3": 80.39,
     "cota_m": 97.54,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -519,7 +519,7 @@
     "volume_hm3": 128.87,
     "capacidade_hm3": 293.62,
     "cota_m": 310.01,
-    "dias": 7
+    "dias": 8
    },
    "alertas": []
   },
@@ -536,7 +536,7 @@
     "volume_hm3": 22.79,
     "capacidade_hm3": 40.58,
     "cota_m": 243.72,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -553,7 +553,7 @@
     "volume_hm3": 3.45,
     "capacidade_hm3": 26.12,
     "cota_m": 86.39,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -570,7 +570,7 @@
     "volume_hm3": 834.6,
     "capacidade_hm3": 2373.07,
     "cota_m": 43.7,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -587,7 +587,7 @@
     "volume_hm3": 48.89,
     "capacidade_hm3": 77.6,
     "cota_m": 43.08,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -604,7 +604,7 @@
     "volume_hm3": 5.11,
     "capacidade_hm3": 23.55,
     "cota_m": 119.2,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -621,7 +621,7 @@
     "volume_hm3": 4.1,
     "capacidade_hm3": 61.85,
     "cota_m": 87.56,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -638,7 +638,7 @@
     "volume_hm3": 7.91,
     "capacidade_hm3": 25.71,
     "cota_m": 177.15,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -655,7 +655,7 @@
     "volume_hm3": 12.55,
     "capacidade_hm3": 44.42,
     "cota_m": 293.2,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -672,7 +672,7 @@
     "volume_hm3": 161.84,
     "capacidade_hm3": 229.09,
     "cota_m": 408.22,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -689,7 +689,7 @@
     "volume_hm3": 49.77,
     "capacidade_hm3": 99.35,
     "cota_m": 1018.53,
-    "dias": 6
+    "dias": 7
    },
    "alertas": []
   },
@@ -706,7 +706,7 @@
     "volume_hm3": 0.16,
     "capacidade_hm3": 53.8,
     "cota_m": 444.31,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -723,7 +723,7 @@
     "volume_hm3": 14.14,
     "capacidade_hm3": 51.09,
     "cota_m": 504.45,
-    "dias": 1
+    "dias": 2
    },
    "alertas": []
   },
@@ -740,7 +740,7 @@
     "volume_hm3": 1.53,
     "capacidade_hm3": 4.58,
     "cota_m": 696.77,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -757,7 +757,7 @@
     "volume_hm3": 12.23,
     "capacidade_hm3": 166.92,
     "cota_m": 498.28,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -774,7 +774,7 @@
     "volume_hm3": 15.91,
     "capacidade_hm3": 23.75,
     "cota_m": 389.01,
-    "dias": 82
+    "dias": 83
    },
    "alertas": [
     "medicao_antiga"
@@ -793,7 +793,7 @@
     "volume_hm3": 12.83,
     "capacidade_hm3": 45.26,
     "cota_m": 616.79,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -810,7 +810,7 @@
     "volume_hm3": 38.79,
     "capacidade_hm3": 61.34,
     "cota_m": 664.24,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -827,7 +827,7 @@
     "volume_hm3": 36.54,
     "capacidade_hm3": 65.71,
     "cota_m": 493.21,
-    "dias": 8
+    "dias": 9
    },
    "alertas": []
   },
@@ -844,7 +844,7 @@
     "volume_hm3": 94.96,
     "capacidade_hm3": 131.44,
     "cota_m": 493.99,
-    "dias": 2
+    "dias": 3
    },
    "alertas": []
   },
@@ -861,7 +861,7 @@
     "volume_hm3": 289.21,
     "capacidade_hm3": 529.59,
     "cota_m": 546.53,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -878,7 +878,7 @@
     "volume_hm3": 8.07,
     "capacidade_hm3": 13.68,
     "cota_m": 390.3,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -895,7 +895,7 @@
     "volume_hm3": 3.52,
     "capacidade_hm3": 71.47,
     "cota_m": 392.95,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -912,7 +912,7 @@
     "volume_hm3": 120.79,
     "capacidade_hm3": 246.4,
     "cota_m": 352.45,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -929,7 +929,7 @@
     "volume_hm3": 74.81,
     "capacidade_hm3": 136.0,
     "cota_m": 71.12,
-    "dias": 0
+    "dias": 1
    },
    "alertas": []
   },
@@ -946,7 +946,7 @@
     "volume_hm3": 69.47,
     "capacidade_hm3": 311.08,
     "cota_m": 385.78,
-    "dias": 1
+    "dias": 2
    },
    "alertas": []
   },
@@ -963,7 +963,7 @@
     "volume_hm3": 5.82,
     "capacidade_hm3": 204.82,
     "cota_m": 250.59,
-    "dias": 1
+    "dias": 2
    },
    "alertas": []
   }
