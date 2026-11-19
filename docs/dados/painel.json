@@ -1,11 +1,11 @@
 {
  "versao": 1,
- "gerado_em": "2026-11-19T12:40-03:00",
+ "gerado_em": "2026-11-19T15:20-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-11-19T12:40-03:00"
+   "lido_em": "2026-11-19T15:20-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
@@ -463,12 +463,12 @@
    "lat": -7.02355,
    "lon": -37.94982,
    "medicao": {
-    "data": "2026-11-18",
-    "volume_pct": 37.65,
-    "volume_hm3": 280.14,
+    "data": "2026-11-19",
+    "volume_pct": 37.56,
+    "volume_hm3": 279.47,
     "capacidade_hm3": 744.14,
-    "cota_m": 236.16,
-    "dias": 1
+    "cota_m": 236.14,
+    "dias": 0
    },
    "alertas": []
   },
@@ -480,12 +480,12 @@
    "lat": -7.02418,
    "lon": -37.98535,
    "medicao": {
-    "data": "2026-11-18",
-    "volume_pct": 38.46,
-    "volume_hm3": 209.6,
+    "data": "2026-11-19",
+    "volume_pct": 38.41,
+    "volume_hm3": 209.34,
     "capacidade_hm3": 545.02,
-    "cota_m": 236.43,
-    "dias": 1
+    "cota_m": 236.42,
+    "dias": 0
    },
    "alertas": []
   },
@@ -718,12 +718,12 @@
    "lat": -14.28383,
    "lon": -42.6819,
    "medicao": {
-    "data": "2026-11-17",
-    "volume_pct": 28.97,
-    "volume_hm3": 14.8,
+    "data": "2026-11-19",
+    "volume_pct": 29.42,
+    "volume_hm3": 15.03,
     "capacidade_hm3": 51.09,
-    "cota_m": 504.71,
-    "dias": 2
+    "cota_m": 504.8,
+    "dias": 0
    },
    "alertas": []
   },
