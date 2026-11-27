@@ -156,6 +156,13 @@ def ufs_do_cadastro(sistema):
     return set(re.findall(r"[A-Z]{2}", sistema["ufs"])) & UFS
 
 
+def _prova(sid, sistemas, slug, pdf):
+    """Segunda prova do sistema: nome do arquivo parecido com um slug dele ou nome dele no cabeçalho do boletim."""
+    s = sistemas[sid]
+    return bool((slug and max(SequenceMatcher(None, slug, x).ratio() for x in s["slugs"]) >= SEMELHANCA_SLUG) or
+                _nome_sistema_confere(pdf["sistema_cab"], s))
+
+
 def identificar(pdf, sistemas, acudes_por_sistema, slug):
     """(sistema, via, motivo) do boletim. sistema None = não ligar (motivo diz por quê; `via` traz o candidato).
 
@@ -164,6 +171,9 @@ def identificar(pdf, sistemas, acudes_por_sistema, slug):
     - "parecido" (grafia um pouco diferente) e "a_mais" (todos os do cadastro estão no PDF, mais algum): ligam só com
       UF do cabeçalho igual à do sistema E mais uma prova: nome do arquivo parecido com um slug do sistema ou nome do
       sistema no cabeçalho. Sem as duas, não liga.
+    - "a_menos": os açudes do PDF são parte dos de um sistema só (falta página de algum açude do cadastro: Sabugi de
+      10/2026 só com Santo Antônio). Liga com a mesma exigência de "parecido": UF do cabeçalho igual E nome do arquivo
+      ou do sistema no cabeçalho confirmando.
     - "cabecalho": boletim sem página por açude; liga pelo nome do sistema no cabeçalho, se for um só e a UF não
       contradiz.
     """
@@ -179,6 +189,14 @@ def identificar(pdf, sistemas, acudes_por_sistema, slug):
     if len(exatos) == 1:
         sid = exatos[0]
         return (sid, "exato", None) if uf_ok(sid) else (None, sid, "UF do cabeçalho diferente da do sistema")
+    contem = [sid for sid, cad in acudes_por_sistema.items() if pdf_chaves < {_chave(a) for a in cad}]
+    if len(contem) == 1:
+        sid = contem[0]
+        if not ufs or not uf_ok(sid):
+            return None, sid, "faltam açudes do cadastro e a UF do cabeçalho não confirma"
+        if not _prova(sid, sistemas, slug, pdf):
+            return None, sid, "faltam açudes do cadastro e nem o nome do arquivo nem o cabeçalho confirmam o sistema"
+        return sid, "a_menos", None
     cands = []
     for sid, cad in acudes_por_sistema.items():
         par = {c: max(pdf_ac, key=lambda p: _parecido(c, p)) for c in cad}  # açude do PDF mais próximo de cada um
@@ -193,9 +211,7 @@ def identificar(pdf, sistemas, acudes_por_sistema, slug):
         return None, cands[0][1], "os açudes lembram mais de um sistema"
     _, sid, sobra = cands[0]
     via = "a_mais" if sobra else "parecido"
-    s = sistemas[sid]
-    prova = (slug and max(SequenceMatcher(None, slug, x).ratio() for x in s["slugs"]) >= SEMELHANCA_SLUG) or \
-        _nome_sistema_confere(pdf["sistema_cab"], s)
+    prova = _prova(sid, sistemas, slug, pdf)
     if not ufs or not uf_ok(sid):
         return None, sid, "açudes só parecidos e a UF do cabeçalho não confirma"
     if not prova:
@@ -240,6 +256,14 @@ def classificar(arquivos, sistemas, acudes_por_sistema, ignorados, registro, hoj
             continue
         mod = _data(a["modificado"])
         r = registro.get(url)
+        if r and r.get("boletim") and r.get("sistema") is None and r.get("acudes") is not None:
+            # boletim que ficou sem sistema: reavalia com o que foi guardado da leitura (sem baixar de novo), para que a
+            # mudança no cadastro ou na regra valha também para ele; se continuar sem sistema, não repete o aviso
+            guardado = {"acudes": r["acudes"], "ufs": r.get("ufs") or [], "sistema_cab": r.get("sistema_cab")}
+            sid, via, _ = identificar(guardado, sistemas, acudes_por_sistema, slug)
+            if sid:
+                r = {**r, "sistema": sid, "via": via}
+                notas.append(f"Boletim que estava sem sistema agora ligado a {sistemas[sid]['nome']} ({via}): {url}")
         if r is None and mod and (hoje - mod).days <= dias_recentes:
             pdf = ler(url)
             r = {"boletim": pdf["boletim"]}
@@ -253,6 +277,8 @@ def classificar(arquivos, sistemas, acudes_por_sistema, ignorados, registro, hoj
                 elif via == "a_mais":
                     pendencias.append(f"Boletim de {nome} com açude que não está no cadastro ({', '.join(pdf['acudes'])}); "
                                       f"o boletim foi ligado ao sistema, falta cadastrar o açude: {url}")
+                elif via == "a_menos":
+                    notas.append(f"Boletim de {nome} sem página de algum açude do cadastro ({', '.join(pdf['acudes'])}): {url}")
                 elif via == "parecido":
                     notas.append(f"Boletim de {nome} com nome de açude grafado diferente ({', '.join(pdf['acudes'])}): {url}")
                 if sid and slug_sis.get(slug) != sid:

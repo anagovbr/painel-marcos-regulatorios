@@ -1,5 +1,5 @@
 {
- "lido_em": "2026-11-27T04:40-03:00",
+ "lido_em": "2026-11-27T16:03-03:00",
  "fonte": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/",
  "mais_recente": "2026-10",
  "janela_meses": 2,
@@ -312,17 +312,16 @@
    "no_painel": true
   },
   "sabugi": {
-   "mes": "2026-09",
-   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sabugi_09-2026.pdf",
-   "publicado_em": "15/10/2026 11h30",
+   "mes": "2026-10",
+   "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sabugi_10-2026.pdf",
+   "publicado_em": "10/11/2026 11h36",
    "slug": "sabugi",
-   "via": "exato",
+   "via": "a_menos",
    "campanha": "2026-2027",
    "acudes": [
-    "CARNAÚBA",
     "SANTO ANTÔNIO"
    ],
-   "rotulo": "setembro de 2026",
+   "rotulo": "outubro de 2026",
    "termo": "2026-2027",
    "no_painel": true
   },
@@ -1471,8 +1470,8 @@
   "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sabugi_10-2026.pdf": {
    "boletim": true,
    "mes": "2026-10",
-   "sistema": null,
-   "via": null,
+   "sistema": "sabugi",
+   "via": "a_menos",
    "acudes": [
     "SANTO ANTÔNIO"
    ],

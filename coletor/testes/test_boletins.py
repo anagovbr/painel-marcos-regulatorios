@@ -105,6 +105,11 @@ TEXTOS = {  # arquivo -> texto do PDF
     "ceraima-x_08-2026.pdf": cab("Agosto de 2026", "CERAÍMA", "CE", ["CERAÍMA"]),
     "novo-sistema_08-2026.pdf": cab("Agosto de 2026", "XIQUE-XIQUE", "BA", ["XIQUE-XIQUE"]),
     "TermoQualquer.pdf": "TERMO DE ALOCAÇÃO DE ÁGUA 2026/2027",
+    # boletim sem a página de um açude do cadastro (Sabugi 10/2026 só com Santo Antônio)
+    "pocoes-epitacio-pessoa_10-2026.pdf": cab("Outubro de 2026", "POÇÕES-EPITÁCIO PESSOA", "PB",
+                                              ["POÇÕES", "EPITÁCIO PESSOA"]),
+    "documento-9_10-2026.pdf": cab("Outubro de 2026", "OUTRO", "PB", ["POÇÕES", "EPITÁCIO PESSOA"]),
+    "pocoes-epitacio-pessoa_09-2026.pdf": cab("Setembro de 2026", "POÇÕES-EPITÁCIO PESSOA", "RN", ["POÇÕES"]),
 }
 
 
@@ -204,3 +209,22 @@ def test_janela_do_painel():
 
 def test_rotulo_do_mes():
     assert boletins.rotulo_mes("2026-03") == "março de 2026"
+
+
+def test_acude_a_menos_liga_com_uf_e_segunda_prova():
+    b, notas, pend = um("pocoes-epitacio-pessoa_10-2026.pdf")
+    assert (b["sistema"], b["via"]) == ("epitacio", "a_menos") and not pend and any("sem página" in n for n in notas)
+    b, _, pend = um("documento-9_10-2026.pdf")           # sem prova no nome nem no cabeçalho
+    assert b["sistema"] is None and "nem o nome do arquivo" in pend[0]
+    b, _, pend = um("pocoes-epitacio-pessoa_09-2026.pdf")  # UF do cabeçalho diferente
+    assert b["sistema"] is None and "UF" in pend[0]
+
+
+def test_boletim_sem_sistema_e_reavaliado_sem_novo_aviso():
+    url = "https://x/alocacao-de-agua/pocoes-epitacio-pessoa_10-2026.pdf"
+    guardado = {url: {"boletim": True, "mes": "2026-10", "sistema": None, "via": None, "campanha": "2026-2027",
+                      "acudes": ["POÇÕES", "EPITÁCIO PESSOA"], "sistema_cab": "POÇÕES-EPITÁCIO PESSOA", "ufs": ["PB"]}}
+    (bols, registro, notas, pend), lidos = classificar(arquivos(["pocoes-epitacio-pessoa_10-2026.pdf"]), guardado)
+    assert not lidos and not pend                          # não baixa de novo nem repete o aviso
+    assert bols[0]["sistema"] == "epitacio" and registro[url]["via"] == "a_menos"
+    assert any("agora ligado" in n for n in notas)
