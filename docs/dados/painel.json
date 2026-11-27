@@ -1,11 +1,11 @@
 {
  "versao": 1,
- "gerado_em": "2026-11-27T08:20-03:00",
+ "gerado_em": "2026-11-27T09:20-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-11-27T08:20-03:00"
+   "lido_em": "2026-11-27T09:20-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
@@ -412,12 +412,12 @@
    "lat": -7.88539,
    "lon": -36.83684,
    "medicao": {
-    "data": "2026-11-26",
-    "volume_pct": 100.52,
-    "volume_hm3": 48.36,
+    "data": "2026-11-27",
+    "volume_pct": 100.69,
+    "volume_hm3": 48.44,
     "capacidade_hm3": 48.11,
-    "cota_m": 327.23,
-    "dias": 1
+    "cota_m": 327.24,
+    "dias": 0
    },
    "alertas": []
   },
@@ -463,12 +463,12 @@
    "lat": -7.02355,
    "lon": -37.94982,
    "medicao": {
-    "data": "2026-11-26",
-    "volume_pct": 36.97,
-    "volume_hm3": 275.13,
+    "data": "2026-11-27",
+    "volume_pct": 36.88,
+    "volume_hm3": 274.47,
     "capacidade_hm3": 744.14,
-    "cota_m": 236.01,
-    "dias": 1
+    "cota_m": 235.99,
+    "dias": 0
    },
    "alertas": []
   },
@@ -480,12 +480,12 @@
    "lat": -7.02418,
    "lon": -37.98535,
    "medicao": {
-    "data": "2026-11-26",
-    "volume_pct": 37.82,
-    "volume_hm3": 206.15,
+    "data": "2026-11-27",
+    "volume_pct": 37.73,
+    "volume_hm3": 205.62,
     "capacidade_hm3": 545.02,
-    "cota_m": 236.3,
-    "dias": 1
+    "cota_m": 236.28,
+    "dias": 0
    },
    "alertas": []
   },
@@ -599,12 +599,12 @@
    "lat": -6.41004,
    "lon": -36.79688,
    "medicao": {
-    "data": "2026-11-26",
-    "volume_pct": 20.34,
-    "volume_hm3": 4.79,
+    "data": "2026-11-27",
+    "volume_pct": 20.21,
+    "volume_hm3": 4.76,
     "capacidade_hm3": 23.55,
-    "cota_m": 119.07,
-    "dias": 1
+    "cota_m": 119.06,
+    "dias": 0
    },
    "alertas": []
   },
@@ -958,12 +958,12 @@
    "lat": -7.96677,
    "lon": -35.742,
    "medicao": {
-    "data": "2026-11-24",
-    "volume_pct": 2.61,
-    "volume_hm3": 5.35,
+    "data": "2026-11-26",
+    "volume_pct": 2.58,
+    "volume_hm3": 5.28,
     "capacidade_hm3": 204.82,
-    "cota_m": 250.08,
-    "dias": 3
+    "cota_m": 250.0,
+    "dias": 1
    },
    "alertas": []
   }
