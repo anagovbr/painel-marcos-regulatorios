@@ -7,6 +7,7 @@ CADASTRO_SISTEMAS = RAIZ / "cadastro" / "sistemas.csv"
 CADASTRO_RESERVATORIOS = RAIZ / "cadastro" / "reservatorios.csv"
 BOLETINS = RAIZ / "dados" / "boletins.json"  # mantido pelo vigia_boletins.py
 PAINEL = RAIZ / "docs" / "dados" / "painel.json"  # o contrato que a página lê
+ESTADO = RAIZ / "docs" / "dados" / "estado.json"   # hora da última leitura boa da COMAR; só na página publicada
 
 # Módulo em coletor/fontes/ que entrega a última medição de cada reservatório.
 FONTE = "sar_portal"

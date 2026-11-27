@@ -87,7 +87,10 @@ funcionar fecha a issue de falha. Quedas passageiras não viram falha: as consul
 novo, a UF que a API não responde fica com a medição anterior e a publicação do Pages tenta duas vezes e, se falhar,
 fica para a rodada seguinte. Em compensação, toda rodada do vigia confere a página no ar e falha se a última leitura
 publicada tiver mais de 3 horas (`coletor/confere_pagina.py`): isso pega Pages fora do ar, cron-job.org parado e token
-vencido.
+vencido. A página da COMAR no gov.br recusa os robôs com frequência (20 a 27/11/2026: 24 issues seguidas, todas na
+leitura da pasta da COMAR): sem resposta, o vigia pula a COMAR, fica com os boletins que já tem e segue com as medições.
+A hora da última leitura boa vai em `docs/dados/estado.json`, que só existe na página publicada (fora do Git), e o
+aviso sai se ela passar de 48 horas.
 
 **Para receber por e-mail, sem permissão nenhuma no repositório:** como ele é público, qualquer conta do GitHub pode
 acompanhá-lo. Na página do repositório, **Watch > Custom > Issues** (ou **All Activity**): cada issue nova chega no

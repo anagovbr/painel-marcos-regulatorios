@@ -16,11 +16,36 @@ import requests
 from . import boletins as B
 
 URL = "https://anagovbr.github.io/painel-marcos-regulatorios/dados/painel.json"
+URL_ESTADO = "https://anagovbr.github.io/painel-marcos-regulatorios/dados/estado.json"
 LIMITE_HORAS = 3
+# a COMAR publica boletim uma vez por mês e o gov.br recusa os robôs com frequência: só avisa depois de 2 dias sem ler
+LIMITE_COMAR_HORAS = 48
 
 
 def idade_horas(painel, agora):
     return (agora - datetime.fromisoformat(painel["fontes"]["medicao"]["lido_em"])).total_seconds() / 3600
+
+
+def horas_desde(iso, agora):
+    return (agora - datetime.fromisoformat(iso)).total_seconds() / 3600
+
+
+def comar_em_dia(agora):
+    """Falso se a última leitura boa da COMAR (estado.json publicado) passou de LIMITE_COMAR_HORAS. Sem estado.json no
+    ar (antes da primeira leitura boa), não acusa nada."""
+    r = requests.get(URL_ESTADO, params={"conferido": agora.strftime("%Y%m%d%H%M")}, timeout=60)
+    if r.status_code == 404:
+        print("estado.json ainda não publicado: leitura da COMAR não conferida")
+        return True
+    r.raise_for_status()
+    quando = r.json()["comar_lida_em"]
+    h = horas_desde(quando, agora)
+    print(f"COMAR: última leitura boa em {quando} ({h:.1f} h atrás)")
+    if h > LIMITE_COMAR_HORAS:
+        print(f"::error::A página da COMAR não responde aos robôs há {h:.0f} horas (limite: {LIMITE_COMAR_HORAS} h): "
+              f"boletins e termos novos não estão sendo lidos. Veja o log das rodadas do vigia.")
+        return False
+    return True
 
 
 def main():
@@ -35,7 +60,7 @@ def main():
         print(f"::error::A página no ar está há {h:.0f} horas sem atualizar (limite: {LIMITE_HORAS} h). Veja se as "
               f"publicações do Pages estão falhando e se os disparos do cron-job.org estão chegando.")
         return 1
-    return 0
+    return 0 if comar_em_dia(agora) else 1
 
 
 if __name__ == "__main__":

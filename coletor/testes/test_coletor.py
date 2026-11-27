@@ -205,3 +205,27 @@ def test_idade_da_pagina_no_ar():
     from zoneinfo import ZoneInfo
     p = {"fontes": {"medicao": {"lido_em": "2026-10-23T10:20-03:00"}}}
     assert confere_pagina.idade_horas(p, datetime(2026, 10, 23, 13, 50, tzinfo=ZoneInfo("America/Sao_Paulo"))) == 3.5
+
+
+def test_vigia_sem_resposta_da_comar_segue_e_guarda_o_estado_publicado(monkeypatch, tmp_path):
+    import requests
+    from coletor import vigia_boletins
+    monkeypatch.setattr(config, "ESTADO", tmp_path / "estado.json")
+
+    def cai(args):
+        raise requests.ConnectionError("Connection reset by peer")
+
+    class R:
+        status_code, text = 200, '{"comar_lida_em": "2026-11-26T10:40-03:00"}\n'
+
+    monkeypatch.setattr(vigia_boletins, "rodada", cai)
+    monkeypatch.setattr(vigia_boletins.requests, "get", lambda *a, **k: R())
+    assert vigia_boletins.main([]) == 0
+    assert "2026-11-26T10:40" in config.ESTADO.read_text(encoding="utf-8")
+
+
+def test_horas_desde_a_ultima_leitura_da_comar():
+    from coletor import confere_pagina
+    from zoneinfo import ZoneInfo
+    agora = datetime(2026, 11, 28, 12, 40, tzinfo=ZoneInfo("America/Sao_Paulo"))
+    assert confere_pagina.horas_desde("2026-11-26T10:40-03:00", agora) == 50

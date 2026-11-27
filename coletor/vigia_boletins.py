@@ -97,6 +97,41 @@ def main(argv=None):
     ap.add_argument("--sem-links", action="store_true", help="não confere os links do cadastro")
     args = ap.parse_args(argv)
 
+    # O gov.br derruba ou recusa a conexão dos robôs com frequência (20 a 27/11/2026: 24 rodadas seguidas de falha na
+    # pasta da COMAR, "Connection reset by peer" e 502/503/504, mesmo com as novas tentativas). O boletim muda uma vez
+    # por mês: sem resposta, a rodada pula a COMAR, fica com o dados/boletins.json que já tem e segue com as medições.
+    # O aviso sai só se a COMAR ficar mais de 48 h sem ser lida (coletor/confere_pagina.py, pelo estado.json publicado).
+    try:
+        rodada(args)
+    except requests.RequestException as e:
+        print(f"::warning::A página da COMAR não respondeu ({type(e).__name__}); esta rodada fica com os boletins já "
+              f"conhecidos e segue com as medições.")
+        manter_estado_publicado()
+        return 0
+    gravar_estado(B.hoje_brasilia())
+    return 0
+
+
+def gravar_estado(quando):
+    """docs/dados/estado.json: hora da última leitura da COMAR que deu certo. Vai na página publicada, não no Git."""
+    config.ESTADO.parent.mkdir(parents=True, exist_ok=True)
+    config.ESTADO.write_text(json.dumps({"comar_lida_em": quando.isoformat(timespec="minutes")}) + "\n", encoding="utf-8")
+
+
+def manter_estado_publicado():
+    """Rodada sem COMAR: publica de novo o estado.json que está no ar, para não perder a hora da última leitura boa."""
+    from .confere_pagina import URL_ESTADO
+
+    try:
+        r = requests.get(URL_ESTADO, params={"x": B.hoje_brasilia().strftime("%Y%m%d%H%M")}, timeout=60)
+        if r.status_code == 200:
+            config.ESTADO.parent.mkdir(parents=True, exist_ok=True)
+            config.ESTADO.write_text(r.text, encoding="utf-8")
+    except requests.RequestException as e:
+        print(f"estado.json publicado não lido ({type(e).__name__})")
+
+
+def rodada(args):
     agora = B.hoje_brasilia()
     sistemas = cadastro.sistemas()
     acudes = {}

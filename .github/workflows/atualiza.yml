@@ -74,6 +74,11 @@ jobs:
           git pull --rebase --autostash
           git push
 
+      # o estado.json (hora da última leitura boa da COMAR, gravado pelo vigia) só existe na página publicada; sem isto,
+      # esta publicação o apagaria
+      - name: Manter o estado.json publicado
+        run: python -c "from coletor.vigia_boletins import manter_estado_publicado as m; m()"
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs

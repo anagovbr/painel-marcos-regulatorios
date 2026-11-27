@@ -5,3 +5,4 @@ __pycache__/
 .pytest_cache/
 .claude/
 avisos.md
+docs/dados/estado.json
