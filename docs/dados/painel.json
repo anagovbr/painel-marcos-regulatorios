@@ -1,16 +1,16 @@
 {
  "versao": 1,
- "gerado_em": "2026-11-27T13:20-03:00",
+ "gerado_em": "2026-11-27T16:04-03:00",
  "fontes": {
   "medicao": {
    "nome": "SAR – Sistema de Acompanhamento de Reservatórios (ANA)",
    "url": "https://www.ana.gov.br/sar/",
-   "lido_em": "2026-11-27T13:20-03:00"
+   "lido_em": "2026-11-27T16:04-03:00"
   },
   "boletins": {
    "nome": "Agência Nacional de Águas e Saneamento Básico (ANA) – Coordenação de Marcos Regulatórios e Alocação de Água (COMAR)",
    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios",
-   "lido_em": "2026-11-27T04:40-03:00"
+   "lido_em": "2026-11-27T16:03-03:00"
   }
  },
  "criterio": {
@@ -140,10 +140,10 @@
    "pagina_comar": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/rn",
    "nota": "No SAR, o açude Santo Antônio se chama Sabugi.",
    "boletim": {
-    "mes": "2026-09",
-    "rotulo": "setembro de 2026",
-    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sabugi_09-2026.pdf",
-    "publicado_em": "15/10/2026 11h30",
+    "mes": "2026-10",
+    "rotulo": "outubro de 2026",
+    "url": "https://www.gov.br/ana/pt-br/assuntos/regulacao-e-fiscalizacao/alocacao-de-agua-e-marcos-regulatorios/alocacao-de-agua/sabugi_10-2026.pdf",
+    "publicado_em": "10/11/2026 11h36",
     "campanha": "2026-2027"
    }
   },
